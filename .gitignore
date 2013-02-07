@@ -5,6 +5,11 @@
 *.cache
 *.status
 config.h
+confdefs.h
+stamp-h1
+libtool
+*.tmp
+*.out
 *.log
 *.aux
 *.dvi
