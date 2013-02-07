@@ -1,0 +1,921 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Grammar esterel.g</TITLE>
+</HEAD>
+<BODY>
+<table summary="" border="1" cellpadding="5">
+<tr>
+<td>
+<font size="+2">Grammar EsterelParser</font><br>
+<a href="http://www.ANTLR.org">ANTLR</a>-generated HTML file from esterel.g
+<p>
+Terence Parr, <a href="http://www.magelang.com">MageLang Institute</a>
+<br>ANTLR Version 2.7.2; 1989-1999
+</td>
+</tr>
+</table>
+<PRE>
+
+/**
+ *
+ * Esterel Grammar for ANTLR based on the grammar in the Esterel Primer, v91
+ * Also includes deprecated syntax: see commentary below.
+ *
+ * Author: Stephen A. Edwards
+ *         sedwards@cs.columbia.edu
+ *
+ * This generates a generic AST using ANTLR&#039;s built-in facilities for AST
+ * synthesis.
+ *
+ * Change Log
+ */
+Definition of parser EsterelParser, which is a subclass of LLkParser.
+
+
+<a name="file">file</a>
+	:	( <a href="EsterelParser.html#module">module</a> )+ EOF 
+	;
+
+
+<a name="module">module</a>
+	:	&quot;module&quot; <a href="EsterelParser.html#moduleIdentifier">moduleIdentifier</a> COLON <a href="EsterelParser.html#declarations">declarations</a> <a href="EsterelParser.html#statement">statement</a> 
+		(	&quot;end&quot; &quot;module&quot; 
+		|	PERIOD 
+		) 
+	;
+
+
+<a name="moduleIdentifier">moduleIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="declarations">declarations</a>
+	:	( <a href="EsterelParser.html#interfaceDecls">interfaceDecls</a> )* 
+	;
+
+
+<a name="statement">statement</a>
+	:	<a href="EsterelParser.html#sequence">sequence</a> ( PARALLEL <a href="EsterelParser.html#sequence">sequence</a> )* 
+	;
+
+
+<a name="interfaceDecls">interfaceDecls</a>
+	:	<a href="EsterelParser.html#typeDecls">typeDecls</a> 
+	|	<a href="EsterelParser.html#constantDecls">constantDecls</a> 
+	|	<a href="EsterelParser.html#functionDecls">functionDecls</a> 
+	|	<a href="EsterelParser.html#procedureDecls">procedureDecls</a> 
+	|	<a href="EsterelParser.html#taskDecls">taskDecls</a> 
+	|	<a href="EsterelParser.html#interfacesignalDecls">interfacesignalDecls</a> 
+	|	<a href="EsterelParser.html#sensorDecls">sensorDecls</a> 
+	|	<a href="EsterelParser.html#relationDecls">relationDecls</a> 
+	;
+
+
+<a name="typeDecls">typeDecls</a>
+	:	&quot;type&quot; <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> ( COMMA <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> )* SEMICOLON 
+	;
+
+
+<a name="constantDecls">constantDecls</a>
+	:	&quot;constant&quot; <a href="EsterelParser.html#constantDecl">constantDecl</a> ( COMMA <a href="EsterelParser.html#constantDecl">constantDecl</a> )* SEMICOLON 
+	;
+
+
+<a name="functionDecls">functionDecls</a>
+	:	&quot;function&quot; <a href="EsterelParser.html#functionDecl">functionDecl</a> ( COMMA <a href="EsterelParser.html#functionDecl">functionDecl</a> )* SEMICOLON 
+	;
+
+
+<a name="procedureDecls">procedureDecls</a>
+	:	&quot;procedure&quot; <a href="EsterelParser.html#procedureDecl">procedureDecl</a> ( COMMA <a href="EsterelParser.html#procedureDecl">procedureDecl</a> )* SEMICOLON 
+	;
+
+
+<a name="taskDecls">taskDecls</a>
+	:	&quot;task&quot; <a href="EsterelParser.html#taskDecl">taskDecl</a> ( COMMA <a href="EsterelParser.html#taskDecl">taskDecl</a> )* SEMICOLON 
+	;
+
+
+/**
+    The grammar allows full expressions in the initializers
+    but only constants are permitted in interface signals.
+*/
+<a name="interfacesignalDecls">interfacesignalDecls</a>
+	:	&quot;input&quot; <a href="EsterelParser.html#signalDecl">signalDecl</a> ( COMMA <a href="EsterelParser.html#signalDecl">signalDecl</a> )* SEMICOLON 
+	|	&quot;output&quot; <a href="EsterelParser.html#signalDecl">signalDecl</a> ( COMMA <a href="EsterelParser.html#signalDecl">signalDecl</a> )* SEMICOLON 
+	|	&quot;inputoutput&quot; <a href="EsterelParser.html#signalDecl">signalDecl</a> ( COMMA <a href="EsterelParser.html#signalDecl">signalDecl</a> )* SEMICOLON 
+	|	&quot;return&quot; <a href="EsterelParser.html#signalDecl">signalDecl</a> ( COMMA <a href="EsterelParser.html#signalDecl">signalDecl</a> )* SEMICOLON 
+	;
+
+
+<a name="sensorDecls">sensorDecls</a>
+	:	&quot;sensor&quot; <a href="EsterelParser.html#sensorDecl">sensorDecl</a> ( COMMA <a href="EsterelParser.html#sensorDecl">sensorDecl</a> )* SEMICOLON 
+	;
+
+
+<a name="relationDecls">relationDecls</a>
+	:	&quot;relation&quot; <a href="EsterelParser.html#relationDecl">relationDecl</a> ( COMMA <a href="EsterelParser.html#relationDecl">relationDecl</a> )* SEMICOLON 
+	;
+
+
+<a name="typeIdentifier">typeIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="constantDecl">constantDecl</a>
+	:	(	<a href="EsterelParser.html#constantIdentifier">constantIdentifier</a> 
+			(	<a href="EsterelParser.html#constantInitializer">constantInitializer</a> 
+			|	
+			) 
+		|	<a href="EsterelParser.html#identifierList">identifierList</a> 
+		) 
+		COLON <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> 
+	;
+
+
+<a name="constantIdentifier">constantIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="constantInitializer">constantInitializer</a>
+	:	EQUALS <a href="EsterelParser.html#constantAtom">constantAtom</a> 
+	;
+
+
+<a name="identifierList">identifierList</a>
+	:	ID COMMA ID ( COMMA ID )* 
+	;
+
+
+<a name="constantAtom">constantAtom</a>
+	:	<a href="EsterelParser.html#constantLiteral">constantLiteral</a> 
+	|	<a href="EsterelParser.html#signedNumber">signedNumber</a> 
+	;
+
+
+<a name="functionDecl">functionDecl</a>
+	:	<a href="EsterelParser.html#functionIdentifier">functionIdentifier</a> <a href="EsterelParser.html#optTypeIdentifierList">optTypeIdentifierList</a> COLON <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> 
+	;
+
+
+<a name="functionIdentifier">functionIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="optTypeIdentifierList">optTypeIdentifierList</a>
+	:	LPAREN 
+		(	<a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> ( COMMA <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> )* 
+		|	
+		) 
+		RPAREN 
+	;
+
+
+<a name="procedureDecl">procedureDecl</a>
+	:	<a href="EsterelParser.html#procedureIdentifier">procedureIdentifier</a> <a href="EsterelParser.html#optTypeIdentifierList">optTypeIdentifierList</a> <a href="EsterelParser.html#optTypeIdentifierList">optTypeIdentifierList</a> 
+	;
+
+
+<a name="procedureIdentifier">procedureIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="taskDecl">taskDecl</a>
+	:	<a href="EsterelParser.html#taskIdentifier">taskIdentifier</a> <a href="EsterelParser.html#optTypeIdentifierList">optTypeIdentifierList</a> <a href="EsterelParser.html#optTypeIdentifierList">optTypeIdentifierList</a> 
+	;
+
+
+<a name="taskIdentifier">taskIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="signalDecl">signalDecl</a>
+	:	<a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+		(	
+		|	(	<a href="EsterelParser.html#signalInitializer">signalInitializer</a> 
+			|	
+			) 
+			COLON <a href="EsterelParser.html#channelType">channelType</a> 
+		|	LPAREN <a href="EsterelParser.html#channelType">channelType</a> RPAREN 
+		) 
+		
+	;
+
+
+<a name="signalDeclList">signalDeclList</a>
+	:	<a href="EsterelParser.html#signalDecl">signalDecl</a> ( COMMA <a href="EsterelParser.html#signalDecl">signalDecl</a> )* 
+	;
+
+
+<a name="signalIdentifier">signalIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="signalInitializer">signalInitializer</a>
+	:	COLEQUALS <a href="EsterelParser.html#expression">expression</a> 
+	;
+
+
+<a name="channelType">channelType</a>
+	:	<a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> 
+	|	&quot;combine&quot; <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> &quot;with&quot; 
+		(	<a href="EsterelParser.html#functionIdentifier">functionIdentifier</a> 
+		|	<a href="EsterelParser.html#predefinedCombineFunction">predefinedCombineFunction</a> 
+		) 
+	;
+
+
+/***********************************************************************
+ *
+ * Expressions
+ *
+ ***********************************************************************/
+<a name="expression">expression</a>
+	:	<a href="EsterelParser.html#orexpr">orexpr</a> 
+	;
+
+
+<a name="predefinedCombineFunction">predefinedCombineFunction</a>
+	:	PLUS 
+	|	STAR 
+	|	&quot;or&quot; 
+	|	&quot;and&quot; 
+	;
+
+
+<a name="sensorDecl">sensorDecl</a>
+	:	<a href="EsterelParser.html#sensorIdentifier">sensorIdentifier</a> 
+		(	COLON <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> 
+		|	LPAREN <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> RPAREN 
+		) 
+		
+	;
+
+
+<a name="sensorIdentifier">sensorIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="relationDecl">relationDecl</a>
+	:	<a href="EsterelParser.html#implicationDecl">implicationDecl</a> 
+	|	<a href="EsterelParser.html#exclusionDecl">exclusionDecl</a> 
+	;
+
+
+<a name="implicationDecl">implicationDecl</a>
+	:	<a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> IMPLIES <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+	;
+
+
+<a name="exclusionDecl">exclusionDecl</a>
+	:	<a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> POUND <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> ( POUND <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> )* 
+	;
+
+
+<a name="orexpr">orexpr</a>
+	:	<a href="EsterelParser.html#andexpr">andexpr</a> ( &quot;or&quot; <a href="EsterelParser.html#andexpr">andexpr</a> )* 
+	;
+
+
+<a name="andexpr">andexpr</a>
+	:	<a href="EsterelParser.html#notexpr">notexpr</a> ( &quot;and&quot; <a href="EsterelParser.html#notexpr">notexpr</a> )* 
+	;
+
+
+<a name="notexpr">notexpr</a>
+	:	&quot;not&quot; <a href="EsterelParser.html#cmpexpr">cmpexpr</a> 
+	|	<a href="EsterelParser.html#cmpexpr">cmpexpr</a> 
+	;
+
+
+<a name="cmpexpr">cmpexpr</a>
+	:	<a href="EsterelParser.html#addexpr">addexpr</a> ( (	EQUALS 
+			|	NEQUAL 
+			|	LESSTHAN 
+			|	GREATERTHAN 
+			|	LEQUAL 
+			|	GEQUAL 
+			) 
+			<a href="EsterelParser.html#addexpr">addexpr</a> )* 
+	;
+
+
+<a name="addexpr">addexpr</a>
+	:	<a href="EsterelParser.html#mulexpr">mulexpr</a> ( (	PLUS 
+			|	DASH 
+			) 
+			<a href="EsterelParser.html#mulexpr">mulexpr</a> )* 
+	;
+
+
+<a name="mulexpr">mulexpr</a>
+	:	<a href="EsterelParser.html#unaryexpr">unaryexpr</a> ( (	STAR 
+			|	SLASH 
+			|	&quot;mod&quot; 
+			) 
+			<a href="EsterelParser.html#unaryexpr">unaryexpr</a> )* 
+	;
+
+
+<a name="unaryexpr">unaryexpr</a>
+	:	DASH <a href="EsterelParser.html#unaryexpr">unaryexpr</a> 
+	|	LPAREN <a href="EsterelParser.html#expression">expression</a> RPAREN 
+	|	QUESTION <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+	|	&quot;pre&quot; LPAREN QUESTION <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> RPAREN 
+	|	DQUESTION <a href="EsterelParser.html#trapIdentifier">trapIdentifier</a> 
+	|	<a href="EsterelParser.html#functionCall">functionCall</a> 
+	|	<a href="EsterelParser.html#constant">constant</a> 
+	;
+
+
+<a name="trapIdentifier">trapIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="functionCall">functionCall</a>
+	:	<a href="EsterelParser.html#functionIdentifier">functionIdentifier</a> LPAREN 
+		(	<a href="EsterelParser.html#expression">expression</a> ( COMMA <a href="EsterelParser.html#expression">expression</a> )* 
+		|	
+		) 
+		RPAREN 
+	;
+
+
+<a name="constant">constant</a>
+	:	<a href="EsterelParser.html#constantLiteral">constantLiteral</a> 
+	|	<a href="EsterelParser.html#unsignedNumber">unsignedNumber</a> 
+	;
+
+
+<a name="constantLiteral">constantLiteral</a>
+	:	<a href="EsterelParser.html#constantIdentifier">constantIdentifier</a> 
+	|	&quot;true&quot; 
+	|	&quot;false&quot; 
+	|	<a href="EsterelParser.html#stringConstant">stringConstant</a> 
+	;
+
+
+<a name="unsignedNumber">unsignedNumber</a>
+	:	Integer 
+	|	FloatConst 
+	|	DoubleConst 
+	;
+
+
+<a name="stringConstant">stringConstant</a>
+	:	StringConstant 
+	;
+
+
+<a name="signedNumber">signedNumber</a>
+	:	<a href="EsterelParser.html#unsignedNumber">unsignedNumber</a> 
+	|	DASH <a href="EsterelParser.html#unsignedNumber">unsignedNumber</a> 
+	;
+
+
+<a name="signalExpression">signalExpression</a>
+	:	<a href="EsterelParser.html#sandexpr">sandexpr</a> ( &quot;or&quot; <a href="EsterelParser.html#sandexpr">sandexpr</a> )* 
+	;
+
+
+<a name="sandexpr">sandexpr</a>
+	:	<a href="EsterelParser.html#sunaryexpr">sunaryexpr</a> ( &quot;and&quot; <a href="EsterelParser.html#sunaryexpr">sunaryexpr</a> )* 
+	;
+
+
+<a name="sunaryexpr">sunaryexpr</a>
+	:	<a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+	|	&quot;pre&quot; LPAREN <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> RPAREN 
+	|	&quot;not&quot; <a href="EsterelParser.html#sunaryexpr">sunaryexpr</a> 
+	|	LPAREN <a href="EsterelParser.html#signalExpression">signalExpression</a> RPAREN 
+	;
+
+
+<a name="delayExpression">delayExpression</a>
+	:	(	<a href="EsterelParser.html#delayPair">delayPair</a> 
+		|	<a href="EsterelParser.html#bracketedSignalExpression">bracketedSignalExpression</a> 
+		|	&quot;immediate&quot; <a href="EsterelParser.html#bracketedSignalExpression">bracketedSignalExpression</a> 
+		) 
+	;
+
+
+<a name="bracketedSignalExpression">bracketedSignalExpression</a>
+	:	<a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+	|	LBRACKET <a href="EsterelParser.html#signalExpression">signalExpression</a> RBRACKET 
+	;
+
+
+<a name="delayPair">delayPair</a>
+	:	<a href="EsterelParser.html#expression">expression</a> <a href="EsterelParser.html#bracketedSignalExpression">bracketedSignalExpression</a> 
+	;
+
+
+<a name="sequence">sequence</a>
+	:	<a href="EsterelParser.html#atomicStatement">atomicStatement</a> ( SEMICOLON <a href="EsterelParser.html#atomicStatement">atomicStatement</a> )* 
+		(	SEMICOLON 
+		|	
+		) 
+		
+	;
+
+
+<a name="atomicStatement">atomicStatement</a>
+	:	&quot;nothing&quot; 
+	|	&quot;pause&quot; 
+	|	&quot;halt&quot; 
+	|	<a href="EsterelParser.html#emit">emit</a> 
+	|	<a href="EsterelParser.html#sustain">sustain</a> 
+	|	<a href="EsterelParser.html#assignment">assignment</a> 
+	|	<a href="EsterelParser.html#procedureCall">procedureCall</a> 
+	|	<a href="EsterelParser.html#present">present</a> 
+	|	<a href="EsterelParser.html#ifstatement">ifstatement</a> 
+	|	<a href="EsterelParser.html#loop">loop</a> 
+	|	<a href="EsterelParser.html#repeat">repeat</a> 
+	|	<a href="EsterelParser.html#abort">abort</a> 
+	|	<a href="EsterelParser.html#await">await</a> 
+	|	<a href="EsterelParser.html#every">every</a> 
+	|	<a href="EsterelParser.html#suspend">suspend</a> 
+	|	<a href="EsterelParser.html#trap">trap</a> 
+	|	<a href="EsterelParser.html#exit">exit</a> 
+	|	<a href="EsterelParser.html#exec">exec</a> 
+	|	<a href="EsterelParser.html#localvariableDecl">localvariableDecl</a> 
+	|	<a href="EsterelParser.html#localSignalDecl">localSignalDecl</a> 
+	|	<a href="EsterelParser.html#runModule">runModule</a> 
+	|	LBRACKET <a href="EsterelParser.html#statement">statement</a> RBRACKET 
+	|	<a href="EsterelParser.html#doStatements">doStatements</a> 
+	;
+
+
+<a name="emit">emit</a>
+	:	&quot;emit&quot; <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+		(	LPAREN <a href="EsterelParser.html#expression">expression</a> RPAREN 
+		|	
+		) 
+	;
+
+
+<a name="sustain">sustain</a>
+	:	&quot;sustain&quot; <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+		(	LPAREN <a href="EsterelParser.html#expression">expression</a> RPAREN 
+		|	
+		) 
+	;
+
+
+<a name="assignment">assignment</a>
+	:	<a href="EsterelParser.html#variableIdentifier">variableIdentifier</a> COLEQUALS <a href="EsterelParser.html#expression">expression</a> 
+	;
+
+
+<a name="procedureCall">procedureCall</a>
+	:	&quot;call&quot; <a href="EsterelParser.html#procedureIdentifier">procedureIdentifier</a> <a href="EsterelParser.html#refArgs">refArgs</a> <a href="EsterelParser.html#valueArgs">valueArgs</a> 
+	;
+
+
+<a name="present">present</a>
+	:	&quot;present&quot; 
+		(	<a href="EsterelParser.html#presentThenPart">presentThenPart</a> 
+		|	( <a href="EsterelParser.html#presentCase">presentCase</a> )+ 
+		) 
+		(	<a href="EsterelParser.html#elsePart">elsePart</a> 
+		|	
+		) 
+		&quot;end&quot; 
+		(	&quot;present&quot; 
+		|	
+		) 
+	;
+
+
+<a name="ifstatement">ifstatement</a>
+	:	&quot;if&quot; <a href="EsterelParser.html#expression">expression</a> 
+		(	<a href="EsterelParser.html#thenPart">thenPart</a> 
+		|	
+		) 
+		( <a href="EsterelParser.html#elsif">elsif</a> )* 
+		(	<a href="EsterelParser.html#elsePart">elsePart</a> 
+		|	
+		) 
+		&quot;end&quot; 
+		(	&quot;if&quot; 
+		|	
+		) 
+	;
+
+
+<a name="loop">loop</a>
+	:	&quot;loop&quot; <a href="EsterelParser.html#statement">statement</a> 
+		(	&quot;end&quot; 
+			(	&quot;loop&quot; 
+			|	
+			) 
+		|	&quot;each&quot; <a href="EsterelParser.html#delayExpression">delayExpression</a> 
+		) 
+	;
+
+
+<a name="repeat">repeat</a>
+	:	(	&quot;positive&quot; 
+		|	
+		) 
+		&quot;repeat&quot; <a href="EsterelParser.html#expression">expression</a> &quot;times&quot; <a href="EsterelParser.html#statement">statement</a> &quot;end&quot; 
+		(	&quot;repeat&quot; 
+		|	
+		) 
+	;
+
+
+<a name="abort">abort</a>
+	:	&quot;abort&quot; <a href="EsterelParser.html#statement">statement</a> &quot;when&quot; 
+		(	<a href="EsterelParser.html#abortOneCaseStrong">abortOneCaseStrong</a> 
+		|	( <a href="EsterelParser.html#acase">acase</a> )+ &quot;end&quot; 
+			(	&quot;abort&quot; 
+			|	
+			) 
+		) 
+	|	&quot;weak&quot; &quot;abort&quot; <a href="EsterelParser.html#statement">statement</a> &quot;when&quot; 
+		(	<a href="EsterelParser.html#abortOneCaseWeak">abortOneCaseWeak</a> 
+		|	( <a href="EsterelParser.html#acase">acase</a> )+ &quot;end&quot; 
+			(	(	&quot;weak&quot; 
+				|	
+				) 
+				&quot;abort&quot; 
+			|	
+			) 
+		) 
+	;
+
+
+<a name="await">await</a>
+	:	&quot;await&quot; 
+		(	<a href="EsterelParser.html#awaitOneCase">awaitOneCase</a> 
+		|	( <a href="EsterelParser.html#acase">acase</a> )+ &quot;end&quot; 
+			(	&quot;await&quot; 
+			|	
+			) 
+		) 
+	;
+
+
+<a name="every">every</a>
+	:	&quot;every&quot; <a href="EsterelParser.html#delayExpression">delayExpression</a> &quot;do&quot; <a href="EsterelParser.html#statement">statement</a> &quot;end&quot; 
+		(	&quot;every&quot; 
+		|	
+		) 
+	;
+
+
+<a name="suspend">suspend</a>
+	:	&quot;suspend&quot; <a href="EsterelParser.html#statement">statement</a> &quot;when&quot; <a href="EsterelParser.html#delayExpression">delayExpression</a> 
+	;
+
+
+<a name="trap">trap</a>
+	:	&quot;trap&quot; <a href="EsterelParser.html#trapDeclList">trapDeclList</a> &quot;in&quot; <a href="EsterelParser.html#statement">statement</a> ( <a href="EsterelParser.html#trapHandler">trapHandler</a> )* &quot;end&quot; 
+		(	&quot;trap&quot; 
+		|	
+		) 
+	;
+
+
+<a name="exit">exit</a>
+	:	&quot;exit&quot; <a href="EsterelParser.html#trapIdentifier">trapIdentifier</a> 
+		(	LPAREN <a href="EsterelParser.html#expression">expression</a> RPAREN 
+		|	
+		) 
+	;
+
+
+<a name="exec">exec</a>
+	:	&quot;exec&quot; <a href="EsterelParser.html#execOneCase">execOneCase</a> 
+	|	&quot;exec&quot; ( <a href="EsterelParser.html#execCase">execCase</a> )+ &quot;end&quot; 
+		(	&quot;exec&quot; 
+		|	
+		) 
+	;
+
+
+<a name="localvariableDecl">localvariableDecl</a>
+	:	&quot;var&quot; <a href="EsterelParser.html#variableDeclList">variableDeclList</a> &quot;in&quot; <a href="EsterelParser.html#statement">statement</a> &quot;end&quot; 
+		(	&quot;var&quot; 
+		|	
+		) 
+	;
+
+
+<a name="localSignalDecl">localSignalDecl</a>
+	:	&quot;signal&quot; <a href="EsterelParser.html#signalDeclList">signalDeclList</a> &quot;in&quot; <a href="EsterelParser.html#statement">statement</a> &quot;end&quot; 
+		(	&quot;signal&quot; 
+		|	
+		) 
+	;
+
+
+<a name="runModule">runModule</a>
+	:	(	&quot;run&quot; 
+		|	&quot;copymodule&quot; 
+		) 
+		<a href="EsterelParser.html#moduleIdentifier">moduleIdentifier</a> 
+		(	SLASH <a href="EsterelParser.html#moduleIdentifier">moduleIdentifier</a> 
+		|	
+		) 
+		(	LBRACKET <a href="EsterelParser.html#renaming">renaming</a> ( SEMICOLON <a href="EsterelParser.html#renaming">renaming</a> )* RBRACKET 
+		|	
+		) 
+		
+	;
+
+
+<a name="doStatements">doStatements</a>
+	:	&quot;do&quot; <a href="EsterelParser.html#statement">statement</a> 
+		(	&quot;watching&quot; <a href="EsterelParser.html#delayExpression">delayExpression</a> 
+			(	&quot;timeout&quot; <a href="EsterelParser.html#statement">statement</a> &quot;end&quot; 
+				(	&quot;timeout&quot; 
+				|	
+				) 
+			|	
+			) 
+			
+		|	&quot;upto&quot; <a href="EsterelParser.html#delayExpression">delayExpression</a> 
+		) 
+	;
+
+
+<a name="variableIdentifier">variableIdentifier</a>
+	:	ID 
+	;
+
+
+<a name="refArgs">refArgs</a>
+	:	LPAREN 
+		(	<a href="EsterelParser.html#variableIdentifier">variableIdentifier</a> ( COMMA <a href="EsterelParser.html#variableIdentifier">variableIdentifier</a> )* 
+		|	
+		) 
+		RPAREN 
+	;
+
+
+<a name="valueArgs">valueArgs</a>
+	:	LPAREN 
+		(	<a href="EsterelParser.html#expression">expression</a> ( COMMA <a href="EsterelParser.html#expression">expression</a> )* 
+		|	
+		) 
+		RPAREN 
+	;
+
+
+<a name="presentThenPart">presentThenPart</a>
+	:	<a href="EsterelParser.html#presentEvent">presentEvent</a> 
+		(	&quot;then&quot; <a href="EsterelParser.html#statement">statement</a> 
+		|	
+		) 
+		
+	;
+
+
+<a name="presentCase">presentCase</a>
+	:	&quot;case&quot; <a href="EsterelParser.html#presentEvent">presentEvent</a> 
+		(	&quot;do&quot; <a href="EsterelParser.html#statement">statement</a> 
+		|	
+		) 
+		
+	;
+
+
+<a name="elsePart">elsePart</a>
+	:	&quot;else&quot; <a href="EsterelParser.html#statement">statement</a> 
+	;
+
+
+<a name="presentEvent">presentEvent</a>
+	:	(	<a href="EsterelParser.html#signalExpression">signalExpression</a> 
+		|	LBRACKET <a href="EsterelParser.html#signalExpression">signalExpression</a> RBRACKET 
+		) 
+	;
+
+
+<a name="thenPart">thenPart</a>
+	:	&quot;then&quot; <a href="EsterelParser.html#statement">statement</a> 
+	;
+
+
+<a name="elsif">elsif</a>
+	:	&quot;elsif&quot; <a href="EsterelParser.html#expression">expression</a> &quot;then&quot; <a href="EsterelParser.html#statement">statement</a> 
+	;
+
+
+<a name="abortOneCaseStrong">abortOneCaseStrong</a>
+	:	<a href="EsterelParser.html#delayExpression">delayExpression</a> 
+		(	&quot;do&quot; <a href="EsterelParser.html#statement">statement</a> &quot;end&quot; 
+			(	&quot;abort&quot; 
+			|	
+			) 
+		|	
+		) 
+		
+	;
+
+
+<a name="acase">acase</a>
+	:	&quot;case&quot; <a href="EsterelParser.html#delayExpression">delayExpression</a> 
+		(	&quot;do&quot; <a href="EsterelParser.html#statement">statement</a> 
+		|	
+		) 
+		
+	;
+
+
+<a name="abortOneCaseWeak">abortOneCaseWeak</a>
+	:	<a href="EsterelParser.html#delayExpression">delayExpression</a> 
+		(	&quot;do&quot; <a href="EsterelParser.html#statement">statement</a> &quot;end&quot; 
+			(	(	&quot;weak&quot; 
+				|	
+				) 
+				&quot;abort&quot; 
+			|	
+			) 
+		|	
+		) 
+		
+	;
+
+
+<a name="awaitOneCase">awaitOneCase</a>
+	:	<a href="EsterelParser.html#delayExpression">delayExpression</a> 
+		(	&quot;do&quot; <a href="EsterelParser.html#statement">statement</a> &quot;end&quot; 
+			(	&quot;await&quot; 
+			|	
+			) 
+		|	
+		) 
+		
+	;
+
+
+<a name="trapDeclList">trapDeclList</a>
+	:	<a href="EsterelParser.html#trapDecl">trapDecl</a> ( COMMA <a href="EsterelParser.html#trapDecl">trapDecl</a> )* 
+	;
+
+
+<a name="trapHandler">trapHandler</a>
+	:	&quot;handle&quot; <a href="EsterelParser.html#trapEvent">trapEvent</a> &quot;do&quot; <a href="EsterelParser.html#statement">statement</a> 
+	;
+
+
+<a name="trapDecl">trapDecl</a>
+	:	<a href="EsterelParser.html#trapIdentifier">trapIdentifier</a> 
+		(	(	<a href="EsterelParser.html#trapInitializer">trapInitializer</a> 
+			|	
+			) 
+			COLON <a href="EsterelParser.html#channelType">channelType</a> 
+		|	
+		) 
+		
+	;
+
+
+<a name="trapInitializer">trapInitializer</a>
+	:	COLEQUALS <a href="EsterelParser.html#expression">expression</a> 
+	;
+
+
+<a name="trapEvent">trapEvent</a>
+	:	<a href="EsterelParser.html#eand">eand</a> ( &quot;or&quot; <a href="EsterelParser.html#eand">eand</a> )* 
+	;
+
+
+<a name="eand">eand</a>
+	:	<a href="EsterelParser.html#eunary">eunary</a> ( &quot;and&quot; <a href="EsterelParser.html#eunary">eunary</a> )* 
+	;
+
+
+<a name="eunary">eunary</a>
+	:	<a href="EsterelParser.html#trapIdentifier">trapIdentifier</a> 
+	|	LPAREN <a href="EsterelParser.html#trapEvent">trapEvent</a> RPAREN 
+	|	&quot;not&quot; <a href="EsterelParser.html#eunary">eunary</a> 
+	;
+
+
+<a name="execOneCase">execOneCase</a>
+	:	<a href="EsterelParser.html#taskIdentifier">taskIdentifier</a> <a href="EsterelParser.html#refArgs">refArgs</a> <a href="EsterelParser.html#valueArgs">valueArgs</a> &quot;return&quot; <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+		(	&quot;do&quot; <a href="EsterelParser.html#statement">statement</a> &quot;end&quot; 
+			(	&quot;exec&quot; 
+			|	
+			) 
+		|	
+		) 
+		
+	;
+
+
+<a name="execCase">execCase</a>
+	:	&quot;case&quot; <a href="EsterelParser.html#taskIdentifier">taskIdentifier</a> <a href="EsterelParser.html#refArgs">refArgs</a> <a href="EsterelParser.html#valueArgs">valueArgs</a> &quot;return&quot; <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+		(	&quot;do&quot; <a href="EsterelParser.html#statement">statement</a> 
+		|	
+		) 
+		
+	;
+
+
+<a name="variableDeclList">variableDeclList</a>
+	:	<a href="EsterelParser.html#variableDecls">variableDecls</a> ( COMMA <a href="EsterelParser.html#variableDecls">variableDecls</a> )* 
+	;
+
+
+<a name="variableDecls">variableDecls</a>
+	:	<a href="EsterelParser.html#variableDeclList2">variableDeclList2</a> COLON <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> 
+	;
+
+
+<a name="variableDeclList2">variableDeclList2</a>
+	:	( <a href="EsterelParser.html#variableDecl">variableDecl</a> ( COMMA <a href="EsterelParser.html#variableDecl">variableDecl</a> )* ) 
+	;
+
+
+<a name="variableDecl">variableDecl</a>
+	:	<a href="EsterelParser.html#variableIdentifier">variableIdentifier</a> 
+		(	<a href="EsterelParser.html#variableInitializer">variableInitializer</a> 
+		|	
+		) 
+		
+	;
+
+
+<a name="variableInitializer">variableInitializer</a>
+	:	COLEQUALS <a href="EsterelParser.html#expression">expression</a> 
+	;
+
+
+<a name="renaming">renaming</a>
+	:	&quot;type&quot; <a href="EsterelParser.html#typeRenaming">typeRenaming</a> ( COMMA <a href="EsterelParser.html#typeRenaming">typeRenaming</a> )* 
+	|	&quot;constant&quot; <a href="EsterelParser.html#constantRenaming">constantRenaming</a> ( COMMA <a href="EsterelParser.html#constantRenaming">constantRenaming</a> )* 
+	|	&quot;function&quot; <a href="EsterelParser.html#functionRenaming">functionRenaming</a> ( COMMA <a href="EsterelParser.html#functionRenaming">functionRenaming</a> )* 
+	|	&quot;procedure&quot; <a href="EsterelParser.html#procedureRenaming">procedureRenaming</a> ( COMMA <a href="EsterelParser.html#procedureRenaming">procedureRenaming</a> )* 
+	|	&quot;task&quot; <a href="EsterelParser.html#taskRenaming">taskRenaming</a> ( COMMA <a href="EsterelParser.html#taskRenaming">taskRenaming</a> )* 
+	|	&quot;signal&quot; <a href="EsterelParser.html#signalRenaming">signalRenaming</a> ( COMMA <a href="EsterelParser.html#signalRenaming">signalRenaming</a> )* 
+	;
+
+
+<a name="typeRenaming">typeRenaming</a>
+	:	<a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> SLASH <a href="EsterelParser.html#typeIdentifier">typeIdentifier</a> 
+	;
+
+
+<a name="constantRenaming">constantRenaming</a>
+	:	<a href="EsterelParser.html#constantAtom">constantAtom</a> SLASH <a href="EsterelParser.html#constantIdentifier">constantIdentifier</a> 
+	;
+
+
+<a name="functionRenaming">functionRenaming</a>
+	:	(	<a href="EsterelParser.html#functionIdentifier">functionIdentifier</a> SLASH <a href="EsterelParser.html#functionIdentifier">functionIdentifier</a> 
+		|	<a href="EsterelParser.html#predefinedFunction">predefinedFunction</a> SLASH <a href="EsterelParser.html#functionIdentifier">functionIdentifier</a> 
+		) 
+		
+	;
+
+
+<a name="procedureRenaming">procedureRenaming</a>
+	:	<a href="EsterelParser.html#procedureIdentifier">procedureIdentifier</a> SLASH <a href="EsterelParser.html#procedureIdentifier">procedureIdentifier</a> 
+	;
+
+
+<a name="taskRenaming">taskRenaming</a>
+	:	<a href="EsterelParser.html#taskIdentifier">taskIdentifier</a> SLASH <a href="EsterelParser.html#taskIdentifier">taskIdentifier</a> 
+	;
+
+
+<a name="signalRenaming">signalRenaming</a>
+	:	<a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> SLASH <a href="EsterelParser.html#signalIdentifier">signalIdentifier</a> 
+	;
+
+
+<a name="predefinedFunction">predefinedFunction</a>
+	:	&quot;and&quot; 
+	|	&quot;or&quot; 
+	|	&quot;not&quot; 
+	|	PLUS 
+	|	DASH 
+	|	STAR 
+	|	SLASH 
+	|	&quot;mod&quot; 
+	|	LESSTHAN 
+	|	GREATERTHAN 
+	|	LEQUAL 
+	|	GEQUAL 
+	|	NEQUAL 
+	|	EQUALS 
+	;
+
+</PRE>
+</BODY>
+</HTML>

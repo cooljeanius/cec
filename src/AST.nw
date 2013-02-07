@@ -1,0 +1,1342 @@
+\documentclass[twoside]{article}
+\usepackage{noweb}
+\noweboptions{smallcode}
+\usepackage{pstricks}
+\usepackage{hyperref}
+
+\pagestyle{noweb}
+
+\title{CEC Abstract Syntax Tree\\[10pt]\psset{unit=0.2cm}\input{cec-logo}}
+\author{Stephen A. Edwards\\
+Columbia University\\
+sedwards@cs.columbia.edu}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This uses the CEC IR system (responsible for XML serialization of
+objects) to represent Esterel programs at various stages of
+compilation.  The AST classes represent the program at a syntactic
+level; the GRC classes represent the program as a control flow graph
+variant.  Many GRC nodes refer to AST symbol tables and whatnot.
+
+This file generates a Bourne shell script that generates .hpp and .cpp
+for the C++ classes.
+\end{abstract}
+
+\tableofcontents
+
+\section{The ASTNode Class}
+
+All AST nodes are derived from this class; the [[Visitor]] class takes
+an [[ASTNode]] as an argument.
+
+<<ASTNode class>>=
+abstract "ASTNode : Node
+
+
+  virtual Status welcome(Visitor&) = 0;
+"
+@
+
+\section{Symbols and Types}
+
+Symbols represent names in the Esterel source code, such as those for
+signals, functions, variables, and other modules.
+
+<<Symbols>>=
+abstract "Symbol : ASTNode
+  string name;
+
+  Symbol(string s) : name(s) {}"
+@
+
+\subsection{Module}
+
+Symbol representing a module.
+
+<<Symbols>>=
+class "ModuleSymbol : Symbol
+  Module *module;
+
+  ModuleSymbol(string s) : Symbol(s), module(0) {}"
+@
+
+\subsection{Signals, Sensors, Traps, Variables, and Constants}
+
+Variable, Trap, and Signal symbols have a type and optional initializing
+expression, represented by this abstract class.
+
+<<Symbols>>=
+abstract "ValuedSymbol : Symbol
+  TypeSymbol *type;
+  Expression *initializer;
+
+  ValuedSymbol(string n, TypeSymbol *t, Expression *e)
+    : Symbol(n), type(t), initializer(e) {}"
+@
+
+Variables and constants are simply ValuedSymbols.  Constants much have
+an initializing expression.  BuiltinConstantSymbol is for the
+constants true and false.
+
+<<Symbols>>=
+class "VariableSymbol : ValuedSymbol
+
+  VariableSymbol(string n, TypeSymbol *t, Expression *e)
+    : ValuedSymbol(n, t, e) {}"
+
+class "ConstantSymbol : VariableSymbol
+
+  ConstantSymbol(string n, TypeSymbol *t, Expression *i)
+     : VariableSymbol(n, t, i) {}"
+
+class "BuiltinConstantSymbol : ConstantSymbol
+
+  BuiltinConstantSymbol(string n, TypeSymbol *t, Expression *i)
+     : ConstantSymbol(n, t, i) {}"
+@
+
+SignalSymbol represents a signal, trap, sensor, or return signal for a
+task.  Pure signals and traps have a NULL type. The [[combine]] field
+points to the ``combine'' function (e.g., combine integer with +) if
+there is one, and NULL otherwise.
+
+When valued signals are reincarnated, they may need a separate status
+to represent their presence, but their values may need to persist.
+The reincarnation field points to the signal of which this is one is a
+recinarnation, or is NULL if this is the ``master'' signal for a group.
+
+<<Symbols>>=
+class "SignalSymbol : ValuedSymbol
+  typedef enum { Input,Output,Inputoutput,Sensor,Return,Local,Trap,Unknown } kinds;
+  int kind;
+  FunctionSymbol *combine; // combining function, if any
+  SignalSymbol *reincarnation; // the signal this is a reincarnation of, if any
+
+  SignalSymbol(string n, TypeSymbol *t, kinds k, FunctionSymbol *f,
+               Expression *e, SignalSymbol *r)
+    : ValuedSymbol(n, t, e), kind(k), combine(f), reincarnation(r) {}
+"
+@
+
+For the built-in signal ``tick.''
+
+<<Symbols>>=
+class "BuiltinSignalSymbol : SignalSymbol
+
+  BuiltinSignalSymbol(string n, TypeSymbol *t, kinds k, FunctionSymbol *f)
+    : SignalSymbol(n, t, k, f, NULL, NULL) {}"
+@
+
+\subsection{Type Symbols}
+
+Esterel's type system provides a way to import types from a host
+language.  A [[TypeSymbol]] is just a name, while the function and
+procedure types are for representing functions (return a value) and
+procedures (do not return a value, but have pass-by-reference
+parameters).
+
+<<Symbols>>=
+class "TypeSymbol : Symbol
+
+   TypeSymbol(string s) : Symbol(s) {}"
+@
+
+A [[BuiltinTypeSymbol]] represents one of the five built-in types:
+boolean, integer, float, double, and string.
+
+<<Symbols>>=
+class "BuiltinTypeSymbol : TypeSymbol
+
+   BuiltinTypeSymbol(string s) : TypeSymbol(s) {}"
+@
+
+A imported function, e.g., ``function foo(integer) : boolean;''
+
+<<Symbols>>=
+class "FunctionSymbol : TypeSymbol
+  vector<TypeSymbol*> arguments;
+  TypeSymbol *result;
+
+  FunctionSymbol(string s) : TypeSymbol(s), result(NULL) {}"
+@
+
+BuiltinFunctionSymbols are used in ``combine'' declarations or module
+renamings.  Some of them have a null return type because they're
+polymorphic (e.g., [[*]]).
+
+<<Symbols>>=
+class "BuiltinFunctionSymbol : FunctionSymbol
+
+  BuiltinFunctionSymbol(string s) : FunctionSymbol(s) {}"
+@
+
+An imported procedure or task, e.g., ``procedure bar(integer)(boolean)''
+
+<<Symbols>>=
+class "ProcedureSymbol : TypeSymbol
+  vector<TypeSymbol*> reference_arguments;
+  vector<TypeSymbol*> value_arguments;
+
+  ProcedureSymbol(string s) : TypeSymbol(s) {}"
+@
+
+<<Symbols>>=
+class "TaskSymbol : ProcedureSymbol
+
+  TaskSymbol(string s) : ProcedureSymbol(s) {}"
+@
+
+\section{Symbol Tables}
+
+A symbol table is basically a vector of symbols with a linear search
+function.  Although a map might be more efficient, the order in which
+the symbols appear in the table is important because no forward
+references are allowed.
+
+The [[local_contains]] method indicates whether a symbol with the
+given name is contained in this particular table table.  The
+[[contains]] method also searches in containing scopes.
+
+The [[enter]] method adds a symbol to the table.  It assumes the table
+does not already contain a symbol with the same name.
+
+The [[get]] method returns the symbol with the given name.  It assumes
+the symbol is present in the table.
+
+<<SymbolTable>>=
+class "SymbolTable : ASTNode
+  SymbolTable *parent;
+  typedef vector<Symbol*> stvec;
+  stvec symbols;
+
+  SymbolTable() : parent(NULL) {}
+
+  class const_iterator {
+    stvec::const_iterator i;
+  public:
+    const_iterator(stvec::const_iterator ii) : i(ii) {}
+    void operator ++(int) { i++; } // int argument denotes postfix
+    void operator ++() { ++i; } // int argument denotes postfix
+    bool operator !=(const const_iterator &ii) { return i != ii.i; }
+    Symbol *operator *() { return *i; }
+  };
+
+  const_iterator begin() const { return const_iterator(symbols.begin()); }
+  const_iterator end() const { return const_iterator(symbols.end()); }
+  size_t size() const { return symbols.size(); }
+  void clear() { symbols.clear(); }
+
+  bool local_contains(const string) const;
+  bool contains(const string) const;
+  void enter(Symbol *);
+  Symbol* get(const string);
+" "
+bool SymbolTable::local_contains(const string s) const {
+  for ( stvec::const_iterator i = symbols.begin() ; i != symbols.end() ; i++ ) {
+    assert(*i);
+    if ( (*i)->name == s) return true;
+  }
+  return false;
+}
+
+bool SymbolTable::contains(const string s) const {
+  for ( const SymbolTable *st = this ; st ; st = st->parent )
+    if (st->local_contains(s)) return true;
+  return false;
+}
+
+void SymbolTable::enter(Symbol *sym) {
+  assert(sym);
+  assert(!local_contains(sym->name));
+  symbols.push_back( sym );
+}
+
+Symbol* SymbolTable::get(const string s) {
+  for ( SymbolTable *st = this; st ; st = st->parent ) {
+    for ( const_iterator i = st->begin() ; i != st->end() ; i++ )
+      if ( (*i)->name == s) return *i;
+  }
+  assert(0); // get should not be called unless contains returned true
+}
+"
+@
+
+\section{Expressions}
+
+<<Expression classes>>=
+<<Expression>>
+
+<<Literal>>
+<<LoadVariableExpression>>
+<<LoadSignalExpression>>
+<<LoadSignalValueExpression>>
+
+<<UnaryOp>>
+<<BinaryOp>>
+<<FunctionCall>>
+<<Delay>>
+<<CheckCounter>>
+@
+
+Every [[Expression]] has a type.
+
+<<Expression>>=
+abstract "Expression : ASTNode
+  TypeSymbol *type;
+
+  Expression(TypeSymbol *t) : type(t) {}"
+@
+
+\subsection{Literal}
+
+A literal is an integer, float, double, or string literal value.  All
+are stored as strings to maintain precision.
+
+<<Literal>>=
+class "Literal : Expression
+  string value;
+
+  Literal(string v, TypeSymbol *t) : Expression(t), value(v) {}"
+@
+
+\subsection{Variables, Signals, and Traps}
+
+[[LoadVariableExpression]] is a reference to a variable or constant.
+It is also used to reference the built-in boolean constants [[true]]
+and [[false]].
+
+<<LoadVariableExpression>>=
+class "LoadVariableExpression : Expression
+  VariableSymbol *variable;
+
+  LoadVariableExpression(VariableSymbol *v)
+    : Expression(v->type), variable(v) {}"
+@
+
+[[LoadSignalExpression]] returns the presence/absence of a signal or trap.
+Used by present, etc.  Its [[type]] should always be the built-in boolean
+
+<<LoadSignalExpression>>=
+class "LoadSignalExpression : Expression
+  SignalSymbol *signal;
+
+  LoadSignalExpression(TypeSymbol *t, SignalSymbol *s)
+    : Expression(t), signal(s) {}"
+@
+
+[[LoadSignalValueExpression]] returns the value of a valued signal or trap,
+i.e., the [[?]] operator for signals, the [[??]] operator for traps.
+
+<<LoadSignalValueExpression>>=
+class "LoadSignalValueExpression : Expression
+  SignalSymbol *signal;
+  
+  LoadSignalValueExpression(SignalSymbol *s)
+    : Expression(s->type), signal(s) {}"
+@
+
+\subsection{Operators}
+
+Esterel has the usual unary and binary operators.  The [[op]] field
+represents the actual type of the operator.  Its value is the
+Esterel syntax for the operator, e.g., [[<>]] for not equal.
+
+<<UnaryOp>>=
+class "UnaryOp : Expression
+  string op;
+  Expression *source;
+
+  UnaryOp(TypeSymbol *t, string s, Expression *e)
+    : Expression(t), op(s), source(e) {}"
+@
+
+<<BinaryOp>>=
+class "BinaryOp : Expression
+  string op;
+  Expression *source1;
+  Expression *source2;
+
+  BinaryOp(TypeSymbol *t, string s, Expression *e1, Expression *e2)
+    : Expression(t), op(s), source1(e1), source2(e2) {}"  
+@
+
+\subsection{Function Call}
+
+This is a function call in an expression.  Callee must be defined.
+
+<<FunctionCall>>=
+class "FunctionCall : Expression
+  FunctionSymbol *callee;
+  vector<Expression*> arguments;
+
+  FunctionCall(FunctionSymbol *s)
+    : Expression(s->result), callee(s) {}"
+@
+
+\subsection{Delay}
+
+This is a delay, e.g., the argument of await 5 SECOND.  The predicate
+is a pure signal expression that returns the built-in boolean.  The
+count may be undefined.  [[is_immediate]] is true for expressions such
+as ``await immediate A.''  The [[counter]] variable is used when the
+delay is a counted one, and is 0 for immediate delays.
+
+<<Delay>>=
+class "Delay : Expression
+  Expression *predicate;
+  Expression *count;
+  bool is_immediate;
+  Counter *counter;
+
+  Delay(TypeSymbol *t, Expression *e1, Expression *e2,
+	 bool i, Counter *c)
+   : Expression(t), predicate(e1), count(e2), is_immediate(i), counter(c) {}"
+@
+
+\subsection{CheckCounter}
+
+Not part of Esterel's grammar, a CheckCounter expression decrements
+its counter if the predicate expression is true and returns true if
+the counter has reached~0.  This is generated during the dismantling
+phase for statements such as [[await 5 A]].
+
+<<CheckCounter>>=
+class "CheckCounter : Expression
+  Counter *counter;
+  Expression *predicate;
+
+  CheckCounter(TypeSymbol *t, Counter *c, Expression *p )
+    : Expression(t), counter(c), predicate(p) {}
+"
+@
+
+\section{Modules}
+
+<<Module classes>>=
+<<Module>>
+<<InputRelation classes>>
+<<Counter>>
+<<Modules>>
+@
+
+Esterel places signals, types, variables/constants, functions,
+procedures, tasks, and traps in separate namespaces, so each
+has its own symbol table here except traps, which are only in scopes.
+
+The [[variables]] symbol table holds [[VariableSymbols]] representing
+signal presence and value, trap status and values, counters, state
+variables, etc., all generated during the disamantling process.
+
+<<Module>>=
+class "Module : ASTNode
+  ModuleSymbol *symbol;
+  SymbolTable *types;
+  SymbolTable *constants;
+  SymbolTable *functions;
+  SymbolTable *procedures;
+  SymbolTable *tasks;
+  SymbolTable *signals;
+  SymbolTable *variables;
+  vector<Counter*> counters;
+  vector<InputRelation*> relations;
+  ASTNode *body;
+  
+  Module() {}
+  Module(ModuleSymbol *);
+  ~Module();    
+" "
+Module::Module(ModuleSymbol *s) : symbol(s), body(NULL) {
+  signals = new SymbolTable();
+  constants = new SymbolTable();
+  types = new SymbolTable();
+  functions = new SymbolTable();
+  procedures = new SymbolTable();
+  tasks = new SymbolTable();
+  variables = new SymbolTable();
+}
+
+Module::~Module() {
+   delete signals;
+   delete types;
+   delete constants;
+   delete functions;
+   delete procedures;
+   delete tasks;
+   delete body;
+   delete variables;
+}"
+@
+
+Relations are constraints (either exclusion or implication) among two
+or more input signals.
+
+<<InputRelation classes>>=
+abstract "InputRelation : ASTNode"
+
+class "Exclusion : InputRelation
+  vector<SignalSymbol *> signals;"
+
+class "Implication : InputRelation
+  SignalSymbol *predicate;
+  SignalSymbol *implication;
+
+  Implication(SignalSymbol *ss1, SignalSymbol*ss2)
+    : predicate(ss1), implication(ss2) {}"
+@
+
+Counters are implicit objects used by counted delays and the
+\emph{repeat} statement, e.g., [[abort halt when 5 A]] and
+[[repeat 5 times ... end]].  This object is little more than a placeholder.
+All the action takes place in the StartCounter statement and
+CheckCounter expressions.
+
+<<Counter>>=
+class "Counter : ASTNode"
+@
+
+<<Modules>>=
+class "Modules : ASTNode
+  SymbolTable module_symbols;
+  vector<Module*> modules;
+
+  void add(Module*);
+" "
+void Modules::add(Module* m) {
+  assert(m);
+  assert(m->symbol);
+  assert(!module_symbols.contains(m->symbol->name));
+  modules.push_back(m);
+  module_symbols.enter(m->symbol);
+}"
+@
+
+\section{Statements}
+
+<<Statements>>=
+abstract "Statement : ASTNode"
+@
+
+The following helper statements are used as parts of other high-level
+statements or as base classes.  A [[BodyStatement]] is simply one that
+contains another.  A Boolean predicate expression controls the
+execution of the body of a [[PredicatedStatement]].  A
+[[CaseStatement]] is an abstract notion of a series of choices: if the
+first predicate is true, execute the first body, else check and
+execute the second, etc.  If none hold, execute the optional default.
+
+<<Statements>>=
+abstract "BodyStatement : Statement
+  Statement *body;
+
+  BodyStatement(Statement *s) : body(s) {}"
+@
+
+<<Statements>>=
+class "PredicatedStatement : BodyStatement
+  Expression *predicate;
+
+  PredicatedStatement(Statement *s, Expression *e)
+    : BodyStatement(s), predicate(e) {}"
+@
+
+<<Statements>>=
+abstract "CaseStatement : Statement
+  vector<PredicatedStatement *> cases;
+  Statement *default_stmt;
+
+  CaseStatement() : default_stmt(0) {}
+  PredicatedStatement *newCase(Statement *s, Expression *e) {
+    PredicatedStatement *ps = new PredicatedStatement(s, e);
+    cases.push_back(ps);
+    return ps;
+  }"
+@
+
+\subsection{Sequential and Parallel Statement Lists}
+
+[[StatementList]] handles sequences of statements, i.e., those
+separated by [[;]]; [[ParallelStatementList]] handles sequences
+separated by [[||]].
+
+<<Statements>>=
+class "StatementList : Statement
+  vector<Statement *> statements;
+
+  StatementList& operator <<(Statement *s) {
+    assert(s);
+    statements.push_back(s);
+    return *this;
+  }"
+@
+
+<<Statements>>=
+class "ParallelStatementList : Statement 
+  vector<Statement *> threads;"
+@
+
+\subsection{Nothing, Pause, Halt, Emit, Exit, Sustain, and Assign}
+
+Nothing does nothing, pause delays a cycle, halt delays indefinitely,
+emit emits a signal, perhaps with a value, exit raises a trap, also
+with an optional value, sustain emits a signal continously, and the
+assignment statement implements [[:=]], assignment to a variable.
+Emit has a flag for three-valued that marks the signal as being unknown.
+
+<<Statements>>=
+class "Nothing : Statement"
+class "Pause : Statement"
+class "Halt : Statement"
+
+class "Emit : Statement
+  SignalSymbol *signal;
+  Expression *value;
+  bool unknown;
+
+  Emit(SignalSymbol *s, Expression *e)
+    : signal(s), value(e), unknown(false) {}"
+
+class "Exit : Statement
+  SignalSymbol *trap;
+  Expression *value;
+
+  Exit(SignalSymbol *t, Expression *e) : trap(t), value(e) {}"
+
+class "Sustain : Emit
+
+  Sustain(SignalSymbol *s, Expression *e) : Emit(s, e) {}"
+
+class "Assign : Statement
+  VariableSymbol *variable;
+  Expression *value;
+
+  Assign(VariableSymbol *v, Expression *e) : variable(v), value(e) {}"
+@
+
+\subsection{Procedure Call}
+
+Procedure call is a statement that takes a procedure, a collection of
+pass-by-reference arguments, and a collection of pass-by-value arguments.
+
+<<Statements>>=
+class "ProcedureCall : Statement
+  ProcedureSymbol *procedure;
+  vector<VariableSymbol*> reference_args;
+  vector<Expression*> value_args;
+
+  ProcedureCall(ProcedureSymbol *ps) : procedure(ps) {}"
+@
+
+\subsection{Present, If, and If-Then-Else}
+
+Conditional statements test their expressions.  Esterel draws a
+textual distinction between testing signals and expressions, but
+semantically they are the same.
+
+<<Statements>>=
+class "Present : CaseStatement"
+class "If : CaseStatement"
+@
+
+The IfThenElse statement is not part of Esterel; it is generated
+during the dismantling phase.
+
+<<low-level classes>>=
+class "IfThenElse : Statement
+  Expression *predicate;
+  Statement *then_part;
+  Statement *else_part;
+
+  IfThenElse(Expression *e) : predicate(e) , then_part(0), else_part(0) {}
+  IfThenElse(Expression *e, Statement *s1, Statement *s2)
+    : predicate(e) , then_part(s1), else_part(s2) {}"
+@
+
+\subsection{Loop and Repeat}
+
+<<Statements>>=
+class "Loop : BodyStatement
+
+  Loop(Statement *s) : BodyStatement(s) {}"
+
+class "Repeat : Loop
+  Expression *count;
+  bool is_positive;
+  Counter *counter;
+
+  Repeat(Statement *s, Expression *e, bool p, Counter *c)
+    : Loop(s), count(e), is_positive(p), counter(c) {}"
+@
+
+\subsection{Abort, Await, Every, Suspend, Dowatching, and DoUpto}
+
+<<Statements>>=
+class "Abort : CaseStatement
+  Statement *body;
+  bool is_weak;
+
+  Abort(Statement *s, bool i) : body(s), is_weak(i) {}
+  Abort(Statement *s, Expression *e, Statement *s1)
+    : body(s), is_weak(false) {
+    newCase(s1, e);
+  }"
+
+class "Await : CaseStatement"
+
+class "LoopEach : PredicatedStatement
+
+  LoopEach(Statement *s, Expression *e) : PredicatedStatement(s, e) {}"
+
+class "Every : PredicatedStatement
+
+  Every(Statement *s, Expression *e) : PredicatedStatement(s, e) {}"
+
+class "Suspend : PredicatedStatement
+
+  Suspend(Statement *s, Expression *e) : PredicatedStatement(s, e) {}"
+
+class "DoWatching : PredicatedStatement
+  Statement *timeout;
+
+  DoWatching(Statement *s1, Expression *e, Statement *s2)
+    : PredicatedStatement(s1, e), timeout(s2) {}"
+
+class "DoUpto : PredicatedStatement
+
+  DoUpto(Statement *s, Expression *e) : PredicatedStatement(s, e) {}"
+@
+
+\subsection{Exec}
+
+This is for handing the invocation of tasks.  It is complex in that
+many tasks can be initiated at once.
+
+<<Statements>>=
+class "TaskCall : ProcedureCall
+  SignalSymbol *signal;
+  Statement *body;
+
+  TaskCall(TaskSymbol *ts) : ProcedureCall(ts), signal(0), body(0) {}
+"
+
+class "Exec : Statement
+  vector <TaskCall *> calls;"
+@
+
+\subsection{Trap, Signal, and Var}
+
+<<Statements>>=
+abstract "ScopeStatement : BodyStatement
+   SymbolTable *symbols;"
+@
+
+The parent symbol table of a [[trap]] statement is the innermost
+enclosing [[trap]]'s symbol table or null.
+
+<<Statements>>=
+class "Trap : ScopeStatement
+  vector<PredicatedStatement *> handlers;
+
+  PredicatedStatement* newHandler(Expression *e, Statement *s) {
+    PredicatedStatement *ps = new PredicatedStatement(s, e);
+    handlers.push_back(ps);
+    return ps;
+  }"
+@
+
+<<Statements>>=
+class "Signal : ScopeStatement"
+@
+
+The parent symbol table of the [[var]] statement is either that for
+the innermost enclosing [[var]] statement or the [[constants]] table
+in its module.
+
+<<Statements>>=
+class "Var : ScopeStatement"
+@
+
+\subsection{Run}
+
+<<Run classes>>=
+abstract "Renaming : ASTNode
+  string old_name;
+
+Renaming(string s) : old_name(s) {}"
+
+class "TypeRenaming : Renaming
+  TypeSymbol *new_type;
+
+  TypeRenaming(string s, TypeSymbol *t) : Renaming(s), new_type(t) {}"
+
+class "ConstantRenaming : Renaming
+  Expression *new_value;
+
+  ConstantRenaming(string s, Expression *e) : Renaming(s), new_value(e) {}"
+
+class "FunctionRenaming : Renaming
+  FunctionSymbol *new_func;
+
+  FunctionRenaming(string s, FunctionSymbol *f) : Renaming(s), new_func(f) {}"
+
+class "ProcedureRenaming : Renaming
+  ProcedureSymbol *new_proc;
+
+  ProcedureRenaming(string s, ProcedureSymbol *p)
+    : Renaming(s), new_proc(p) {}"
+
+class "SignalRenaming : Renaming
+  SignalSymbol *new_sig;
+
+  SignalRenaming(string s, SignalSymbol *ss) : Renaming(s), new_sig(ss) {}"
+@
+
+The run statement itself is a pair of names (old and new), vectors of
+renaming, and finally a pointer to the innermost enclosing scope for
+signals.  The Run statement does not own this symbol table, unlike,
+say, the var statement.  This pointer is used by the expander to find
+the signals referred to in the instantiated module.
+
+<<Run classes>>=
+class "Run : Statement
+  string old_name;
+  string new_name;
+  vector<TypeRenaming *> types;
+  vector<ConstantRenaming *> constants;
+  vector<FunctionRenaming *> functions;
+  vector<ProcedureRenaming *> procedures;
+  vector<ProcedureRenaming *> tasks;
+  vector<SignalRenaming *> signals;
+  SymbolTable *signalScope;
+
+  Run(string s, SymbolTable *ss) : old_name(s), new_name(s), signalScope(ss)
+    {}"
+@
+
+\subsection{StartCounter}
+
+Not a part of Esterel's grammar, this statement initializes its
+counter to the value of the given expression.  Statements such as
+[[await 5 A]] generate these.
+
+<<Statements>>=
+class "StartCounter : Statement
+  Counter *counter;
+  Expression *count;
+
+  StartCounter(Counter *c, Expression *i): counter(c), count(i) {}"
+@
+
+\section{GRC Nodes}
+
+These follow the GRC format defined in Potop-Butcaru's thesis.
+
+The root of the GRC graph.  By convention, its first child is the root
+of the selection tree, the second is the unique EnterGRC node for the
+imperative part of the graph.
+
+A GRC graph for a program consists of two linked parts: a selection
+tree representing the state of the program between cycles and a
+control-flow graph that represents the behavior of the program in a
+cycle.  Certain nodes in the control-flow graph point to nodes in the
+selection tree.
+
+The [[enumerate]] method builds two maps: one for GRCNodes (in the
+control-flow graph) and the other for STNodes (in the selection tree)
+that assigns each node to a unique integer.  These numbers are used
+primarily for debugging output.
+
+<<GRC graph class>>=
+class "GRCgraph : ASTNode
+  STNode *selection_tree;
+  GRCNode *control_flow_graph;
+
+  GRCgraph(STNode *st, GRCNode *cfg)
+     : selection_tree(st), control_flow_graph(cfg) {}
+
+  int enumerate(GRCNode::NumMap &, STNode::NumMap &, int max = 1);
+" "
+ int GRCgraph::enumerate(GRCNode::NumMap &cfgmap, STNode::NumMap &stmap, int max)
+{
+  std::set<GRCNode*> cfg_visited;
+  std::set<STNode*>   st_visited;
+
+  assert(selection_tree);
+  assert(control_flow_graph);
+
+  max = selection_tree->enumerate(stmap, st_visited, max);
+  max = control_flow_graph->enumerate(cfgmap, cfg_visited, max);
+  return max;
+}
+
+"
+@
+
+\subsection{GRC control-flow nodes}
+
+Successors may contain NULL nodes; these are used, e.g., to represent
+an unused continuation from a parallel synchronizer.  Predecessors
+should all be non-NULL.
+
+The [[>>]] operator adds a control successor to the given node, i.e.,
+a node that may be executed after the current one terminates.  Thus
+[[a >> b]] makes [[b]] a child of [[a]].
+
+The [[<<]] operator adds a data predecessor to the given node, i.e., a
+node that generates data that is used by the current node. Thus [[a <<
+b]] means [[a]] depends on data from node [[b]].
+
+Data predecessors point to GRC nodes that emit signals this node cares
+about.  Data successors point to GRC nodes that listen to signals this
+node emits.
+
+<<GRC classes>>=
+abstract "GRCNode : ASTNode
+  vector<GRCNode*> predecessors;
+  vector<GRCNode*> successors;
+  vector<GRCNode*> dataPredecessors;
+  vector<GRCNode*> dataSuccessors;
+
+  virtual Status welcome(Visitor&) = 0;
+
+  GRCNode& operator >>(GRCNode*);
+  GRCNode& operator <<(GRCNode*);
+  typedef map<GRCNode *, int> NumMap;
+  int enumerate(NumMap &, std::set<GRCNode *> &, int);
+" "
+  GRCNode& GRCNode::operator >>(GRCNode *s) {
+    successors.push_back(s);
+    if (s) s->predecessors.push_back(this);
+    return *this;
+  }
+
+  GRCNode& GRCNode::operator <<(GRCNode *p) {
+    assert(p);
+    dataPredecessors.push_back(p);
+    p->dataSuccessors.push_back(this);
+    return *this;
+  }
+
+  int GRCNode::enumerate(NumMap &number, std::set<GRCNode *> &visited, int next) {
+    
+    if (visited.find(this) != visited.end()) return next;
+    visited.insert(this);
+    if (number.find(this) == number.end() || number[this] == 0) {
+      number[this] = next++;
+    }
+    for (vector<GRCNode*>::const_iterator i = successors.begin();
+	  i != successors.end() ; i++)
+        	if (*i) next = (*i)->enumerate(number, visited, next);
+    for (vector<GRCNode*>::const_iterator i = predecessors.begin();
+	   i != predecessors.end() ; i++)
+        	if(*i) next = (*i)->enumerate(number, visited, next);
+    for (vector<GRCNode*>::const_iterator i = dataSuccessors.begin();
+	   i != dataSuccessors.end() ; i++)
+        	if(*i) next = (*i)->enumerate(number, visited, next);
+    for (vector<GRCNode*>::const_iterator i = dataPredecessors.begin();
+	   i != dataPredecessors.end() ; i++)
+ 		if(*i) next = (*i)->enumerate(number, visited, next);      
+    return next;
+  }
+"
+@
+
+Certain GRC nodes have pointers to the selection tree.  The
+\texttt{GRCSTNode} class represents this.
+
+<<GRC classes>>=
+abstract "GRCSTNode : GRCNode
+  STNode *st;
+
+  GRCSTNode(STNode *s) : st(s) {}
+"
+@
+
+\subsubsection{Additional Flow Control}
+
+The [[EnterGRC]] and [[ExitGRC]] nodes are placeholders
+usually placed at the beginning and end of the control-flow graph.
+
+<<GRC classes>>=
+class "EnterGRC : GRCNode"
+class "ExitGRC : GRCNode"
+@
+
+[[Nop]] is overloaded: it may or may not do anything.
+
+<<GRC classes>>=
+class "Nop : GRCNode
+  int type;
+  int code;
+  string body;
+
+  Nop(): type(0), code(0) {}
+
+  int isflowin() { return type == 1;}
+  void setflowin() { type = 1;}
+  // a shorcut Nop gives "up" flow to child 0
+  int isshortcut() { return type == 2;}
+  void setshortcut() { type = 2;}
+"
+@
+
+[[DefineSignal]] is used at the beginning of local signal declarations
+to indicate when a signal enters scope.  The [[is_surface]] flag is
+true when this is a surface entry to a scope, meaning the value, if
+any, should be initialized.
+
+<<GRC classes>>=
+class "DefineSignal : GRCNode
+  SignalSymbol *signal;
+  bool is_surface;
+
+  DefineSignal(SignalSymbol *s, bool ss) : signal(s), is_surface(ss) {}
+"
+@
+
+\subsubsection{Switch}
+
+Multi-way branch on the state of a thread.
+
+<<GRC classes>>=
+class "Switch : GRCSTNode
+
+  Switch(STNode *s) : GRCSTNode(s) {}
+"
+@
+
+\subsubsection{Test}
+
+An if-then-else statement.
+
+<<GRC classes>>=
+class "Test : GRCSTNode
+  Expression *predicate;
+  
+  Test(STNode *s, Expression *e) : GRCSTNode(s), predicate(e) {}
+"
+@
+
+\subsubsection{STSuspend}
+
+<<GRC classes>>=
+class "STSuspend : GRCSTNode
+
+  STSuspend(STNode *s) : GRCSTNode(s) {}
+"
+@
+
+
+\subsubsection{Fork}
+
+Sends control to all its successors; just fan-out in the circuit.
+The sync field, when set, points to the Sync node that joins these
+threads.
+
+<<GRC classes>>=
+class "Fork : GRCNode
+  Sync* sync;
+
+  Fork() : sync(0) {}
+  Fork(Sync* sync) : sync(sync) {}
+"
+@
+
+\subsubsection{Sync and Terminate}
+
+A parallel synchronizer.  Its predecessors should all be Terminate
+nodes.  When executed, it executes one of its successors: the one
+corresponding to the maximum exit level, i.e., the highest code of the
+executed terminate nodes preceeding it.  Some of its successors may be
+NULL.
+
+<<GRC classes>>=
+class "Sync : GRCSTNode
+ 
+  Sync(STNode *s) : GRCSTNode(s) {}
+"
+@
+
+Terminates a thread with the given completion code.  Should have a
+single successor, a [[Sync]] node.  The [[index]] field should be zero
+for all Terminate nodes reachable from the first successor of the
+corresponding fork, one for those reachable from the second child, and
+so forth.
+
+<<GRC classes>>=
+class "Terminate : GRCNode
+  int code;
+  int index;
+
+  Terminate(int c, int i) : code(c), index(i) {}
+"
+@
+
+\subsubsection{Action}
+
+Perform an action such as emission or assignment.  Should have a
+single successor.
+
+<<GRC classes>>=
+class "Action : GRCNode
+  Statement *body;
+
+  Action(Statement *s) : body(s) {}
+"
+@
+
+\subsubsection{Enter}
+
+This represents the activation of a particular statement.
+
+<<GRC classes>>=
+class "Enter : GRCSTNode
+
+  Enter(STNode *s) : GRCSTNode(s) {}
+"
+@
+
+\subsection{Selection Tree Nodes}
+
+The selection tree is the part of GRC that controls the state of the
+program between cycles.
+
+The [[enumerate]] method is used to assign a unique number to each STNode
+object, mostly for debugging.
+
+<<GRC classes>>=
+abstract "STNode : ASTNode
+  STNode *parent;
+  vector<STNode*> children;
+
+  STNode() : parent(0) {}
+  virtual Status welcome(Visitor&) = 0;
+
+  STNode& operator >>(STNode*);
+  typedef map<STNode *, int> NumMap;
+  int enumerate(NumMap &, std::set<STNode*> &visited, int);
+" "
+  STNode& STNode::operator >>(STNode *s) {
+//    assert(s);
+    children.push_back(s);
+    if(s) s->parent = this;
+    return *this;
+  }
+
+  int STNode::enumerate(NumMap &number, std::set<STNode*> &visited, int next) {
+    if(visited.find(this) != visited.end()) return next;
+    visited.insert(this);
+
+    if(number.find(this) == number.end() || number[this] == 0){
+       	number[this] = next++;
+    }
+    for (vector<STNode*>::const_iterator i = children.begin() ;
+	 i != children.end() ; i++) if(*i)
+      next = (*i)->enumerate(number, visited,  next);
+    return next;
+  }
+"
+@
+
+<<GRC classes>>=
+class "STexcl : STNode"
+@
+
+<<GRC classes>>=
+class "STpar : STNode"
+@
+
+<<GRC classes>>=
+class "STref : STNode
+  int type;
+
+  STref(): type(0) {}
+
+  int isabort() { return type == 1;}
+  void setabort() { type = 1;}
+  int issuspend() { return type == 2;}
+  void setsuspend() { type = 2;}
+"
+@
+
+<<GRC classes>>=
+class "STleaf : STNode
+  int type;
+
+  STleaf(): type(0) {}
+ 
+  int isfinal() { return type == 1;}
+  void setfinal() { type = 1;}
+"
+@
+
+\section{The Shell Script}
+
+This generates the AST.hpp and AST.cpp files from the instructions in
+this file.  The overall idea of this came from a similar system in
+Stanford's SUIF system.  This implementation is simpler, less
+powerful, and with luck, more maintainable since it's implemented in a
+familiar, portable programming langugage: the Bourne shell.
+
+<<AST.sh>>=
+#!/bin/sh
+
+abstract() {
+  class "$1" "$2" "abstract"
+}
+
+class() {  
+  # The classname is the string before the : on the first line
+  classname=`echo "$1" | sed -n '1 s/ *:.*$//p'`
+  # The parent's class name is the string after the : on the first line
+  parent=`echo "$1" | sed -n '1 s/^.*: *//p'` ; # String after :
+  # The fields come from the second line through the first empty line
+  # Each is the identifier just before the semicolon
+  # Lines with "typedef" are skipped
+  fields=`echo "$1" | sed '/typedef/d' | sed -n '2,/^\$/ s/^.*[^a-zA-Z0-9_]\([a-zA-Z0-9_]*\);.*/\1/p'`
+  # The body for the header file starts at the second line
+  hppbody=`echo "$1" | sed -n '2,$p'`
+
+  # Any additional methods are defined in the second argument
+
+  #echo "[$classname]"
+  #echo "[$parent]"
+  #echo "[$fields]"
+  #echo "[$hppbody]"
+
+  forwarddefs="$forwarddefs
+  class $classname;"
+
+  # Define a default (zero-argument) constructor if one isn't already
+  # defined in the body
+  if (echo $hppbody | grep -q "$classname()"); then
+    defaultconstructor=
+  else
+    defaultconstructor="$classname() {}
+"    
+  fi
+
+  if test -z "$3"; then
+      visitorclassdefs="$visitorclassdefs
+  virtual Status visit($classname& n) { assert(0); return Status(); }"
+      welcome="
+    IRCLASSDEFS;
+  public:
+    Status welcome(Visitor&);"
+      welcomedef="
+  IRCLASS($classname);
+  Status $classname::welcome(Visitor &v) { return v.visit(*this); }"    
+  else
+    welcome="public:"
+    welcomedef=
+  fi
+
+  classdefs="$classdefs
+
+  class $classname : public $parent {
+    $welcome
+    $copyme
+    void read(XMListream &);
+    void write(XMLostream &) const;
+    $defaultconstructor
+$hppbody
+  };
+"
+
+  if test -n "$fields"; then
+    writefields=`echo $fields | sed "s/ / << /g"`;
+    writefields="
+    w << $writefields;"
+    readfields=`echo $fields | sed "s/ / >> /g"`;
+    readfields="
+    r >> $readfields;"
+  else
+    readfields=
+    writefields=
+  fi
+  
+  methoddefs="$methoddefs
+
+  void $classname::read(XMListream &r) {
+    $parent::read(r); $readfields
+  }
+
+  void $classname::write(XMLostream &w) const {
+    $parent::write(w); $writefields
+  }
+$welcomedef
+  $2
+  "
+}
+
+<<ASTNode class>>
+<<Symbols>>
+<<SymbolTable>>
+<<Expression classes>>
+<<Module classes>>
+<<Statements>>
+<<Run classes>>
+<<low-level classes>>
+<<GRC classes>>
+<<GRC graph class>>
+
+######################################################################
+
+echo "#ifndef _AST_HPP
+#  define _AST_HPP
+
+/* Automatically generated by AST.sh -- do not edit */
+
+#  include \"IR.hpp\"
+#  include <string>
+#  include <vector>
+#  include <map>
+#  include <cassert>
+#  include <set>
+
+namespace AST {
+  using IR::Node;
+  using IR::XMListream;
+  using IR::XMLostream;
+  using std::string;
+  using std::vector;
+  using std::map;
+
+  class Visitor;
+$forwarddefs
+
+  union Status {
+    int i;
+    ASTNode *n;
+    Status() {}
+    Status(int ii) : i(ii) {}
+    Status(ASTNode *nn) : n(nn) {}
+  };
+
+$classdefs
+
+  class Visitor {
+  public:
+  virtual ~Visitor() {}
+$visitorclassdefs
+  };
+
+}
+
+#endif
+" > AST.hpp
+
+echo "/* Automatically generated by AST.sh -- do not edit */
+#include \"AST.hpp\"
+namespace AST {
+
+$methoddefs
+
+}
+" > AST.cpp
+@
+
+\end{document}

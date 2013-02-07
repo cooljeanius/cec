@@ -1,0 +1,12 @@
+This is the ANTLR runtime library from the ANTLR 2.7.2 release.
+
+These directories were constructed by copying all .hpp files from
+antlr-2.7.2/lib/cpp/antlr into antlr/ and all .cpp files (save dll.cpp) from
+antlr-2.7.2/lib/cpp/src in src/
+
+This becomes a library (libantlr.a) that is statically linked into the
+compiler front-end, eliminating the need for any ANTLR installation in the
+end.
+
+Please see the file COPYING in this directory for copyright information
+for this library.

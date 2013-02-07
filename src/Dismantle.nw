@@ -1,0 +1,803 @@
+\documentclass[twoside]{article}
+\usepackage{noweb}
+\noweboptions{smallcode}
+\usepackage{pstricks}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\lstdefinelanguage{Esterel}
+{
+  keywords={module,end,type,constant,function,procedure,task,input,output,%
+inputoutput,return,combine,or,and,not,sensor,relation,pre,true,false,nothing,%
+pause,halt,emit,sustain,call,present,then,else,if,elsif,abort,repeat,times,%
+when,weak,await,immediate,do,case,loop,each,every,suspend,trap,in,handle,exit,%
+exec,signal,var,run,copymodule,mod,timeout,upto,watching,||%
+%
+try,break,continue,resume,goto,catch,thread,parallel,synchronize},%
+%comments=\%
+}
+\lstset{language=Esterel,boxpos=t}
+
+\pagestyle{noweb}
+
+\title{CEC High-level Statement Dismantlers\\[10pt]\psset{unit=0.2cm}\input{cec-logo}}
+\author{Stephen A. Edwards\\
+Columbia University\\
+sedwards@cs.columbia.edu}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Rewriting Class}
+
+By itself, this class simply does a depth-first walk of the AST; it is
+meant as a base class for rewriting classes that actually do
+something.
+
+<<rewriter class>>=
+class Rewriter : public Visitor {
+protected:
+  Module *module;
+public:
+  template <class T> T* transform(T* n) {
+    T* result = n ? dynamic_cast<T*>(n->welcome(*this).n) : 0;
+    assert(result || !n);
+    return result;
+  }
+
+  template <class T> void rewrite(T* &n) { n = transform(n); }
+
+  StatementList& sl() { return *(new StatementList()); }
+
+  Rewriter() : module(0) {}
+
+  <<rewriter methods>>
+};
+@
+
+\subsection{Composite Statements}
+
+These call rewrite on each of their children (e.g., bodies).
+
+<<rewriter methods>>=
+Status visit(Modules &m) {
+  for (vector<Module*>::iterator i = m.modules.begin() ;
+       i != m.modules.end() ; i++ ) {
+    rewrite(*i);
+    assert(*i);
+  }
+  return &m;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Module &m) {
+  module = &m;
+  rewrite(m.body);
+  assert(m.body);
+  return &m;
+}
+@
+
+<<rewriter methods>>=
+Status visit(StatementList &l) {
+  for (vector<Statement*>::iterator i = l.statements.begin() ;
+       i != l.statements.end() ; i++ ) {
+    rewrite(*i);
+    assert(*i);
+  }
+  return &l;
+}
+@
+
+<<rewriter methods>>=
+Status visit(ParallelStatementList &l) {
+  for (vector<Statement*>::iterator i = l.threads.begin() ;
+       i != l.threads.end() ; i++ ) {
+    rewrite(*i);
+    assert(*i);
+  }
+  return &l;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Loop &s) {
+  rewrite(s.body);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Repeat &s) {
+  rewrite(s.count);
+  rewrite(s.body);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Every &s) {
+  rewrite(s.body);
+  rewrite(s.predicate);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Suspend &s) {
+  rewrite(s.predicate);
+  rewrite(s.body);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Abort &s) {
+  rewrite(s.body);
+  for (vector<PredicatedStatement*>::iterator i = s.cases.begin() ;
+       i != s.cases.end() ; i++) {
+    assert(*i);
+    rewrite(*i);
+  }
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(PredicatedStatement &s) {
+  rewrite(s.predicate);
+  rewrite(s.body);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Trap &s) {
+  rewrite(s.body);
+  for (vector<PredicatedStatement*>::iterator i = s.handlers.begin() ;
+       i != s.handlers.end() ; i++) {
+    assert(*i);
+    rewrite((*i)->body);
+  }
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(IfThenElse& n) {
+  rewrite(n.predicate);
+  rewrite(n.then_part);
+  rewrite(n.else_part);
+  return &n;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Signal& s) {
+  rewrite(s.body);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Var& s) {
+  rewrite(s.body);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(ProcedureCall& s) {
+  for ( vector<Expression*>::iterator i = s.value_args.begin() ;
+	i != s.value_args.end() ; i++ ) {
+    assert(*i);
+    rewrite(*i);
+  }
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Emit& s) {
+  rewrite(s.value);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Assign& s) {
+  rewrite(s.value);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Present& s) {
+  for ( vector<PredicatedStatement*>::iterator i = s.cases.begin() ;
+	i != s.cases.end() ; i++ ) {
+    assert(*i);
+    rewrite(*i);
+  }
+  if (s.default_stmt) rewrite(s.default_stmt);
+  return &s;
+}
+@
+
+<<rewriter methods>>=
+Status visit(If& s) {
+  for ( vector<PredicatedStatement*>::iterator i = s.cases.begin() ;
+	i != s.cases.end() ; i++ ) {
+    assert(*i);
+    rewrite(*i);
+  }
+  if (s.default_stmt) rewrite(s.default_stmt);
+  return &s;
+}
+@
+
+\subsection{Leaf Statements}
+
+These stop the recursion and return themselves;
+
+<<rewriter methods>>=
+Status visit(Nothing& n) { return &n; }
+Status visit(Pause& n) { return &n; }
+Status visit(Halt& n) { return &n; }
+Status visit(Sustain& n) { return &n; }
+Status visit(Await& n) { return &n; }
+Status visit(LoopEach& n) { return &n; }
+Status visit(DoWatching& n) { return &n; }
+Status visit(DoUpto& n) { return &n; }
+Status visit(TaskCall& n) { return &n; }
+Status visit(Exec& n) { return &n; }
+Status visit(Exit& n) { return &n; }
+Status visit(Run& n) { return &n; }
+@
+
+\subsection{Expressions}
+
+<<rewriter methods>>=
+Status visit(LoadVariableExpression &e) { return &e; }
+Status visit(LoadSignalExpression &e) { return &e; }
+Status visit(LoadSignalValueExpression &e) { return &e; }
+Status visit(Literal &e) { return &e; }
+@
+
+<<rewriter methods>>=
+Status visit(UnaryOp &e) {
+  rewrite(e.source);
+  return &e;
+}
+@
+
+<<rewriter methods>>=
+Status visit(BinaryOp &e) {
+  rewrite(e.source1);
+  rewrite(e.source2);
+  return &e;
+}
+@
+
+<<rewriter methods>>=
+Status visit(FunctionCall &e) {
+  for ( vector<Expression*>::iterator i = e.arguments.begin() ;
+	i != e.arguments.end() ; i++ ) {
+    assert(*i);
+    rewrite(*i);
+  }
+  return &e;
+}
+@
+
+<<rewriter methods>>=
+Status visit(Delay &e) {
+  rewrite(e.predicate);
+  rewrite(e.count);
+  return &e;
+}
+@
+
+\section{Statement Dismantlers}
+
+This uses the [[Rewriter]] class to perform a preorder traversal of
+the tree of statements in each module to rewrite each node as it goes.
+After a method has dismantled its object, it calls [[rewrite]] on
+itself to insure things are dismantled as far as possible.
+
+Once this pass is complete,
+
+\begin{itemize}
+\item Present and If statements have been converted to cascades of
+  IfThenElse statements
+\item Await, Do watching, and Do Upto statements have been replaced
+  with appropriate Abort statements
+\item Weak abort statements have been replaced with equivalent cascades
+  of Trap statements.
+\item Traps with multiple traps and/or handlers have been replaced
+  with a single, more complex handler.
+\item Loop Each has been replaced with Look and Abort
+\item Halt has been replaced with loop pause end.
+\item Sustain has been replaced by a loop and emit.
+\item Nothing has been replaced by an empty instruction sequence.
+\end{itemize}
+
+<<first pass class>>=
+class Dismantler1 : public Rewriter {
+public:
+  <<first pass methods>>
+};
+@
+
+\subsection{Case Statements: Present and If}
+
+Present and If statements are dismantled into a cascade of
+if-then-else statements:
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+  present
+    case p1 do s1
+    case p2 do s2
+    else s3
+  end
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+  if (p1) s1
+  else if (p2) s2
+       else s3
+\end{lstlisting}
+\hfil
+}
+
+<<first pass methods>>=
+IfThenElse *dismantle_case(CaseStatement &c) {
+  assert(c.cases.size() > 0);
+  IfThenElse *result = 0;
+  IfThenElse *lastif = 0;
+
+  for (vector<PredicatedStatement*>::iterator i = c.cases.begin() ;
+       i != c.cases.end() ; i++ ) {
+    assert(*i);
+    assert((*i)->predicate);
+    IfThenElse *thisif = new IfThenElse((*i)->predicate);
+    thisif->then_part = transform((*i)->body);
+    if (result)
+      lastif->else_part = thisif;
+    else
+      result = thisif;
+    lastif = thisif;
+  }
+  assert(lastif);
+  lastif->else_part = c.default_stmt;
+  assert(result);
+  return transform(result);
+}
+
+virtual Status visit(Present &s) { return dismantle_case(s); }
+virtual Status visit(If &s) { return dismantle_case(s); }
+@
+
+\subsection{Await}
+
+Await becomes an \emph{abort} running a halt statement.
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+   await
+    case immediate p1 do s1
+    case p2 do s2
+    case p3 do s3
+   end
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+   abort
+    loop pause end
+   when
+    case immediate p1 do s1
+    case p2 do s2
+    case p3 do s3
+   end     
+\end{lstlisting}
+\hfil
+}
+
+<<first pass methods>>=
+Status visit(Await &a) {
+  Pause *p = new Pause();
+  Loop *l = new Loop(p);
+  Abort *ab = new Abort(l, false);
+  // Copy the predicates
+  for ( vector<PredicatedStatement*>::const_iterator i = a.cases.begin();
+	i != a.cases.end() ; i++ )
+    ab->cases.push_back(*i);     
+  return transform(ab);
+}
+@
+
+\subsection{Trap}
+
+Multi-handler trap statements are transformed into a single one.
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+   trap T1, T2 in
+     s1
+   handle T1 and T2 do s2
+   handle not T2 do s3
+   end trap
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+   trap T1, T2 in
+     s1
+   handle T1 or T2 do
+     if [T1 and T2] then s2
+   ||
+     if [not T2] then s3
+   end     
+\end{lstlisting}
+\hfil
+}
+
+<<first pass methods>>=
+Status visit(Trap &t) {
+  assert(t.symbols);
+  if (t.handlers.size() > 1 ||
+      (t.handlers.size() >= 1 && t.symbols->size() > 1) ) {
+
+   // More than one trap or more than one handler: transform
+
+   ParallelStatementList *psl = new ParallelStatementList();
+
+   BuiltinTypeSymbol *boolean_type = NULL;
+
+   for (vector<PredicatedStatement*>::const_iterator i = t.handlers.begin() ; 
+         i != t.handlers.end() ; i++ ) {
+     assert(*i);
+     assert((*i)->predicate);
+     IfThenElse *ite = new IfThenElse((*i)->predicate, (*i)->body, NULL);
+     boolean_type = dynamic_cast<BuiltinTypeSymbol*>((*i)->predicate->type);
+     psl->threads.push_back(ite);
+   }
+
+   assert(boolean_type); // Should have found at least one
+
+   Expression *newExpr = NULL;
+
+   for (SymbolTable::const_iterator i = t.symbols->begin() ;
+	i != t.symbols->end() ; i++) {
+     SignalSymbol *ss = dynamic_cast<SignalSymbol*>(*i);
+     assert(ss);
+     assert(ss->kind == SignalSymbol::Trap);
+     LoadSignalExpression *lse = new LoadSignalExpression(boolean_type, ss);
+     if (newExpr)
+       newExpr = new BinaryOp(boolean_type, "or", newExpr, lse);
+     else
+       newExpr = lse;                
+   }
+
+   assert(newExpr); // Should have found at least one
+
+   t.handlers.clear(); // Old handlers are now unneeded: should garbage collect
+
+   t.newHandler(newExpr, psl);
+  }
+
+  assert(t.handlers.size() <= 1);
+
+  return Rewriter::visit(t);
+}
+@
+
+\subsection{Weak Abort}
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+weak abort
+  b
+when
+  case p1 do h1
+  case p2 do h2
+end weak abort
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+trap T1 in
+  trap T2 in
+    trap T3 in
+      b;
+      exit T3
+    ||
+      await
+        case p1 do exit T1
+        case p2 do exit T2
+      end await
+    end trap % T3
+  handle T2 do h2
+  end trap   % T2
+handle T1 do h1
+end trap     % T1
+\end{lstlisting}
+\hfil}
+
+<<first pass methods>>=
+Trap *newTrap(SignalSymbol *&ts) {
+  static unsigned int nextIndex = 0;
+
+  Trap *result = new Trap();
+  result->symbols = new SymbolTable();
+  // Note: The parent of this symbol table is incorrectly NULL
+
+  char buf[10];
+  sprintf(buf, "%d", nextIndex++);
+  string name = "weak_trap_" + string(buf);
+  ts = new SignalSymbol(name, NULL, SignalSymbol::Trap, NULL, NULL, NULL);
+  result->symbols->enter(ts);
+  return result;
+}
+@
+
+<<first pass methods>>=
+Status visit(Abort &a) { 
+  if (a.is_weak) {
+
+    SignalSymbol *innerTrap;
+    Trap *inner = newTrap(innerTrap);
+
+    StatementList *newbody = new StatementList();
+    if (a.body) *newbody << a.body;
+    *newbody << new Exit(innerTrap, 0);
+
+    Await *await = new Await();
+
+    ParallelStatementList *psl = new ParallelStatementList();
+    psl->threads.push_back(newbody);
+    psl->threads.push_back(await);
+
+    inner->body = psl;
+
+    Statement *result = inner;
+
+    BuiltinTypeSymbol *boolean_type =
+      dynamic_cast<BuiltinTypeSymbol*>(module->types->get("boolean"));
+    assert(boolean_type);
+
+    for (vector<PredicatedStatement*>::reverse_iterator i = a.cases.rbegin() ;
+	 i != a.cases.rend() ; i++) {
+      SignalSymbol *trapSymbol;
+      Trap *theNewTrap = newTrap(trapSymbol);
+      theNewTrap->body = result;
+      Statement *body = (*i)->body;
+      if (!body) body = new Nothing();
+      theNewTrap->newHandler(
+	  new LoadSignalExpression(boolean_type, trapSymbol), body);
+
+      await->cases.insert(await->cases.begin(),
+        new PredicatedStatement(new Exit(trapSymbol, NULL), (*i)->predicate));
+
+      result = theNewTrap;
+    }
+ 
+    return transform(result);
+  } else {
+    // A normal Abort: recurse
+    return Rewriter::visit(a);
+  }
+}
+@
+
+\subsection{Var}
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+var v1 := e1, v2 := e2 in
+  b
+end var
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+var v1, v2 in
+  v1 := e1;
+  v2 := e2;
+  b
+end var
+\end{lstlisting}
+\hfil}
+
+<<first pass methods>>=
+Status visit(Var &v) {
+
+  bool hasInitializer = false;
+
+  assert(v.symbols);
+
+  for ( SymbolTable::const_iterator i = v.symbols->begin() ;
+	i != v.symbols->end() ; i++ ) {
+    VariableSymbol *vs = dynamic_cast<VariableSymbol *>(*i);
+    assert(vs);
+    if (vs->initializer) {
+      hasInitializer = true;
+      break;
+    }
+  }
+
+  if (hasInitializer) {
+    StatementList *sl = new StatementList();
+
+    for ( SymbolTable::const_iterator i = v.symbols->begin() ;
+	  i != v.symbols->end() ; i++ ) {
+      VariableSymbol *vs = dynamic_cast<VariableSymbol *>(*i);
+      assert(vs);
+      if (vs->initializer) {
+	*sl << new Assign(vs, vs->initializer);
+	vs->initializer = NULL;
+      }
+    }
+    // Add the body of the var statement to the list
+    *sl << v.body;
+    v.body = sl;
+  }
+
+  rewrite(v.body);
+  return &v;
+}
+@
+
+\subsection{Do Watching and Do Upto}
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+do
+  b
+watching p timeout s
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+abort
+  b
+when p do s
+\end{lstlisting}
+\hfil}
+
+<<first pass methods>>=
+Status visit(DoWatching &s) {
+  return transform(new Abort(s.body, s.predicate, s.timeout));
+}
+@
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+do
+   b
+upto p
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+abort
+  b;
+  halt
+when p
+\end{lstlisting}
+\hfil}
+
+<<first pass methods>>=
+Status visit(DoUpto &s) {
+  return transform(new Abort(&(sl() << s.body << new Halt()), s.predicate, 0));
+}
+@
+
+\subsection{Loop Each}
+
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+loop
+   b
+each p
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+loop
+  abort
+    b;
+    halt
+  when p
+end
+\end{lstlisting}
+\hfil}
+
+<<first pass methods>>=
+Status visit(LoopEach &s) {
+  return transform(new Loop(new Abort(&(sl() << s.body << new Halt()),
+				      s.predicate, 0)));
+}
+@
+
+\subsection{Halt}
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+halt
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+loop
+  pause
+end
+\end{lstlisting}
+\hfil}
+
+<<first pass methods>>=
+Status visit(Halt &s) {
+  return transform(new Loop(new Pause()));
+}
+@
+
+\subsection{Sustain}
+
+\hbox to \textwidth{
+\begin{lstlisting}{}
+sustain s
+\end{lstlisting}
+\hfil
+\begin{lstlisting}{}
+loop
+  emit s;
+  pause
+end
+\end{lstlisting}
+\hfil}
+
+<<first pass methods>>=
+Status visit(Sustain &s) {
+  return transform(new Loop(&(sl() <<
+			      new Emit(s.signal, s.value) << new Pause())));
+}
+@
+
+\subsection{Nothing}
+
+A nothing statement is replaced with an empty instruction sequence.
+
+<<first pass methods>>=
+Status visit(Nothing &) {
+  return transform(new StatementList());
+}
+@
+
+\section{Dismantle.hpp and .cpp}
+
+<<Dismantle.hpp>>=
+#ifndef _DISMANTLE_HPP
+#  define _DISMANTLE_HPP
+
+#  include "AST.hpp"
+#  include <assert.h>
+#  include <sstream>
+#  include <set>
+#  include <stdio.h>
+
+namespace Dismantle {
+  using namespace IR;
+  using namespace AST;
+
+  <<rewriter class>>
+  <<first pass class>>
+}
+#endif
+@
+
+<<Dismantle.cpp>>=
+#include <stdio.h>
+#include "Dismantle.hpp"
+
+namespace Dismantle {
+}
+@
+
+\end{document}

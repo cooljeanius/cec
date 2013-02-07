@@ -1,0 +1,47 @@
+This is cec, the Columbia Esterel Compiler.
+
+Esterel is a synchronous language developed by Gerard Berry et al.
+See www.esterel-technologies.com for documentation on the language.
+
+This is an automake/autoconf-based project.  Compilation can be as
+simple as
+
+./configure
+make
+
+Compilation requires the expat XML parser.  Configuration will fail if
+it is not found.  In addition to may packaged copies, expat can be found at
+http://www.jclark.com/xml/expat.html
+
+Rebuilding from primary sources (only necessary for developers)
+requires the noweb system, the ANTLR parser generator (version 2.7.2),
+a TeX distribution to generate the documentation, and Ghostscript to
+convert Postscript to PDF.
+
+There is a bug in the noweb.sty file in the noweb-2.10a release that
+can be fixed by adding the line
+
+\@savsf=1
+
+at the beginning.
+
+----------------------------------------------------------------------
+Much of the system is documented using Norman Ramsey's Noweb system.
+See http://www.eecs.harvard.edu/~nr/noweb/ for details.
+
+The compiler uses XML as an on-disk intermediate representation.
+See IR.pdf for a description.
+
+The AST and GRC intermediate representations are described in the file AST.pdf.
+
+High-level dismantlers are described in Dismantle.pdf.
+
+The AST-to-GRC dismantler is described in ASTGRC.pdf.
+
+The Esterel grammar is in esterel.g.
+
+The static semantic checker is in staticsemantics.g
+----------------------------------------------------------------------
+This compiler is built using Terrance Parr et al.'s ANTLR system.
+A unmodified copy of the C++ runtime library from ANTLR 2.7.2 is
+included in the libantlr/ directory to reduce compilation dependencies.

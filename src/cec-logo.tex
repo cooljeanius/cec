@@ -1,0 +1,23 @@
+\begin{pspicture}(16,13)
+\psset{fillstyle=solid,fillcolor=black,linestyle=none}
+\def\myc{
+  \pscustom{
+    \psline(7.5,0)(3,0)
+    \psarcn(3,3){3}{-90}{-180}
+    \psarcn(3,10){3}{180}{90}
+    \psline(6.6,13)(3,9.3)
+    \psarc(3,10){1}{90}{180} 
+    \psarc(3,3){1}{180}{270}
+    \psline(7.5,2)(7.5,0)
+  }
+}
+\myc
+\rput[br](16,0){\psscalebox{-1 1}{\myc}}
+\pscustom{
+  \psline(3,3)(3,7.8)(5,9.9)(5,5)(7,5)(7,9.5)(9,9.5)(9,5)
+     (11,5)(11,9.9)(13,7.8)(13,3)(3,3)
+}
+\pscustom{
+  \psline(5.6,10.5)(8,13)(10.4,10.5)(5.6,10.5)
+}
+\end{pspicture}
