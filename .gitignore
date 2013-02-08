@@ -1,5 +1,7 @@
 *.DS_Store
 *.o
+*.Po
+*.Tpo
 *.a
 *~
 *.cache
@@ -17,7 +19,9 @@ libtool
 *.ps
 AST.sh
 clean-test
+*/.deps/*
 */.deps/*.Po
+*/.deps/*.Tpo
 cec-strlxml
 cec-xmlstrl
 cec-expandmodules
