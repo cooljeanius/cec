@@ -23,6 +23,9 @@ clean-test
 */.deps/*.Po
 */.deps/*.Tpo
 *.dirstamp
+Makefile
+*/Makefile
+src/cec
 cec-strlxml
 cec-xmlstrl
 cec-expandmodules
