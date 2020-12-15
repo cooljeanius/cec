@@ -1,0 +1,10 @@
+build-aux/compile linguist-vendored
+build-aux/config.guess linguist-vendored
+build-aux/config.sub linguist-vendored
+build-aux/depcomp linguist-vendored
+build-aux/install-sh linguist-vendored
+build-aux/ltmain.sh linguist-vendored
+build-aux/missing linguist-vendored
+build-aux/mkinstalldirs linguist-vendored
+build-aux/test-driver linguist-vendored
+ChangeLog    merge=cl-merge

@@ -2,15 +2,17 @@
 # then run automake
 # then run autoconf
 
-AC_PREREQ([2.69])
-AC_INIT([cec], [0.4], [cec-users@lists.cs.columbia.edu])
+AC_PREREQ([2.70])
+AC_INIT([cec],[0.4],[cec-users@lists.cs.columbia.edu])
 AC_CONFIG_SRCDIR([src/cec-strlxml.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE
+AC_CONFIG_AUX_DIR([build-aux])
+AC_REQUIRE_AUX_FILE([mkinstalldirs])
+AM_INIT_AUTOMAKE([subdir-objects])
 AM_MAINTAINER_MODE
 AM_SANITY_CHECK
-AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix])
 AM_SET_LEADING_DOT
 AC_EXEEXT
 AC_CANONICAL_HOST
@@ -73,7 +75,15 @@ exit 1
 ])
 
 # Checks for header files.
-AC_HEADER_STDC
+dnl# message from autoupdate:
+dnl# The preprocessor macro `STDC_HEADERS' is obsolete.
+dnl# Except in unusual embedded environments, you can safely include all
+dnl# ISO C90 headers unconditionally.
+# Autoupdate added the next two lines to ensure that your configure
+# script's behavior did not change.  They are probably safe to remove.
+AC_CHECK_INCLUDES_DEFAULT
+AC_PROG_EGREP
+
 AC_CHECK_HEADERS([stdlib.h string.h])
 
 # These are useful for development, but aren't necessary for building
@@ -117,6 +127,7 @@ AC_TYPE_SIZE_T
 AC_FUNC_ERROR_AT_LINE
 AC_CHECK_FUNCS([alarm select strcasecmp strdup])
 
+# Output.
 AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile libantlr/Makefile])
 AC_CONFIG_FILES([src/cec],[chmod +x src/cec])
 AC_OUTPUT

@@ -22,6 +22,7 @@ clean-test
 */.deps/*
 */.deps/*.Po
 */.deps/*.Tpo
+*.dirstamp
 cec-strlxml
 cec-xmlstrl
 cec-expandmodules
