@@ -30,6 +30,9 @@
 /* define if the compiler supports ISO C++ standard library */
 #undef HAVE_STD
 
+/* Define to 1 if stdbool.h conforms to C99. */
+#undef HAVE_STDBOOL_H
+
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
 

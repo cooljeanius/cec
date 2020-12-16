@@ -1,6 +1,7 @@
-# Run aclocal to generate aclocal.m4
-# then run automake
-# then run autoconf
+dnl# cec/configure.ac                                          -*- Autoconf -*-
+dnl# Run aclocal to generate aclocal.m4
+dnl# then run automake
+dnl# then run autoconf
 
 AC_PREREQ([2.70])
 AC_INIT([cec],[0.4],[cec-users@lists.cs.columbia.edu])
@@ -17,14 +18,18 @@ AM_SET_LEADING_DOT
 AC_EXEEXT
 AC_CANONICAL_HOST
 
-AC_PROG_AWK
 AC_PROG_INSTALL
 AC_PROG_LN_S
-AC_PROG_MAKE_SET
 
-AC_PROG_CC
-AM_PROG_CC_C_O
-AC_LANG([C])
+AC_DEFUN([AC_REQUIRE_PROGS],[
+  AC_REQUIRE([AC_PROG_AWK])dnl
+  AC_REQUIRE([AC_PROG_MAKE_SET])dnl
+  AC_REQUIRE([AC_PROG_CC])dnl
+  AC_REQUIRE([AM_PROG_CC_C_O])dnl
+  AC_REQUIRE([AC_PROG_EGREP])dnl
+])dnl
+AC_REQUIRE_PROGS
+AC_LANG([C])dnl
 
 AC_PROG_CPP
 AC_PROG_CXX
@@ -32,6 +37,8 @@ AC_LANG([C++])
 AC_PROG_RANLIB
 AC_PROG_GCC_TRADITIONAL
 LT_INIT
+LT_LANG([C])
+LT_LANG([C++])dnl
 
 AC_MSG_CHECKING([for C++ standard library headers])
 AC_COMPILE_IFELSE([AC_LANG_SOURCE([
@@ -64,37 +71,33 @@ AX_CXX_TEMPLATES
 # FIXME: Add an option for the user to specify expat library/header paths
 
 AC_CHECK_HEADER([expat.h],[],[
-echo The required expat header file expat.h was not found.
-echo Please re-run configure with CPPFLAGS=-Idirectory
+echo "The required expat header file expat.h was not found."
+echo "Please re-run configure with CPPFLAGS=-Idirectory"
 exit 1
 ])
-AC_CHECK_LIB([expat], [XML_ParserCreate],[],[
-echo The required expat XML parser library was not found.
-echo Please re-run configure with LIBS=-Ldirectory
+AC_CHECK_LIB([expat],[XML_ParserCreate],[],[
+echo "The required expat XML parser library was not found."
+echo "Please re-run configure with LIBS=-Ldirectory"
 exit 1
-])
+])dnl
 
 # Checks for header files.
 dnl# message from autoupdate:
 dnl# The preprocessor macro `STDC_HEADERS' is obsolete.
 dnl# Except in unusual embedded environments, you can safely include all
 dnl# ISO C90 headers unconditionally.
-# Autoupdate added the next two lines to ensure that your configure
-# script's behavior did not change.  They are probably safe to remove.
 AC_CHECK_INCLUDES_DEFAULT
-AC_PROG_EGREP
+AC_HEADER_STDBOOL dnl# also "_CHECK"s it
+AC_CHECK_HEADERS_ONCE([stdlib.h string.h])dnl
 
-AC_CHECK_HEADERS([stdlib.h string.h])
-
-# These are useful for development, but aren't necessary for building
-
-AC_PATH_PROG([NOTANGLE], [notangle])
-AC_PATH_PROG([NOWEAVE], [noweave])
+# These progs are useful for development, but aren't necessary for building:
+AC_PATH_PROG([NOTANGLE],[notangle])
+AC_PATH_PROG([NOWEAVE],[noweave])dnl
 
 # Check for the ability to run ANTLR -- necessary for development, but not
 # for a build
 
-AC_SUBST([ANTLR])
+AC_SUBST([ANTLR])dnl
 
 AC_MSG_CHECKING([for ANTLR])
 AC_CACHE_VAL([ac_cv_found_antlr],
@@ -116,16 +119,15 @@ else
   ANTLR=""
   AC_MSG_RESULT([no])
 fi
-AC_PATH_PROG([ANTLR_BIN], [antlr])
+AC_PATH_PROG([ANTLR_BIN],[antlr])dnl
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_CHECK_HEADER_STDBOOL
 AC_C_INLINE
 AC_TYPE_SIZE_T
 
 # Checks for library functions.
 AC_FUNC_ERROR_AT_LINE
-AC_CHECK_FUNCS([alarm select strcasecmp strdup])
+AC_CHECK_FUNCS([alarm select strcasecmp strdup])dnl
 
 # Output.
 AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile libantlr/Makefile])
