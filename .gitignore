@@ -8,6 +8,7 @@
 *.status
 config.h
 confdefs.h
+conftest*
 stamp-h1
 libtool
 *.tmp

@@ -18424,8 +18424,7 @@ if test ${ax_cv_cxx_gcc_abi_demangle+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-
- ac_ext=cpp
+  ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
@@ -18488,8 +18487,7 @@ if test ${ax_cv_cxx_gnucxx_hashmap+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-
- ac_ext=cpp
+  ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
@@ -18536,8 +18534,7 @@ if test ${ax_cv_cxx_namespaces+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-
- ac_ext=cpp
+  ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
@@ -18546,13 +18543,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 namespace Outer { namespace Inner { int i = 0; }}
-int
-main (void)
-{
-using namespace Outer::Inner; return i;
-  ;
-  return 0;
-}
+                                   using namespace Outer::Inner; int foo(void) { return i;}
 _ACEOF
 if ac_fn_cxx_try_compile "$LINENO"
 then :
@@ -18583,7 +18574,6 @@ if test ${ax_cv_cxx_have_std+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-
 
  ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
@@ -18638,7 +18628,6 @@ then :
   printf %s "(cached) " >&6
 else $as_nop
 
-
  ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -18691,7 +18680,6 @@ if test ${ax_cv_cxx_have_std_namespace+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-
   ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -18739,8 +18727,7 @@ if test ${ax_cv_cxx_namespaces+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-
- ac_ext=cpp
+  ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
@@ -18749,13 +18736,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 namespace Outer { namespace Inner { int i = 0; }}
-int
-main (void)
-{
-using namespace Outer::Inner; return i;
-  ;
-  return 0;
-}
+                                   using namespace Outer::Inner; int foo(void) { return i;}
 _ACEOF
 if ac_fn_cxx_try_compile "$LINENO"
 then :
@@ -18780,27 +18761,27 @@ printf "%s\n" "#define HAVE_NAMESPACES /**/" >>confdefs.h
 
 fi
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether the compiler supports basic templates" >&5
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether the compiler supports basic templates" >&5
 printf %s "checking whether the compiler supports basic templates... " >&6; }
 if test ${ax_cv_cxx_templates+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
-
- ac_ext=cpp
+  ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
- cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+     cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
-template<class T> class A {public:A(){}};
-template<class T> void f(const A<T>& ){}
+
+           template<class T> class A {public:A(){};};
+           template<class T> void f(const A<T>& ){};
+
 int
 main (void)
 {
-
 A<double> d; A<int> i; f(d); f(i); return 0;
   ;
   return 0;
@@ -18813,7 +18794,7 @@ else $as_nop
   ax_cv_cxx_templates=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
- ac_ext=cpp
+     ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
@@ -18823,7 +18804,8 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ax_cv_cxx_templates" >&5
 printf "%s\n" "$ax_cv_cxx_templates" >&6; }
-if test "$ax_cv_cxx_templates" = yes; then
+  if test "X$ax_cv_cxx_templates" = "Xyes"
+then :
 
 printf "%s\n" "#define HAVE_TEMPLATES /**/" >>confdefs.h
 

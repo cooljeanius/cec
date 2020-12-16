@@ -348,7 +348,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I m4 --install
 SUBDIRS = libantlr tests src
 EXTRA_DIST = \
 	figures/figAssignTranslation.eps \
