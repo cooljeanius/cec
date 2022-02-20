@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.2: "esterel.g" -> "EsterelLexer.cpp"$ */
+/* $ANTLR 2.7.7 (2006-11-01): "esterel.g" -> "EsterelLexer.cpp"$ */
 #include "EsterelLexer.hpp"
 #include <antlr/CharBuffer.hpp>
 #include <antlr/TokenStreamException.hpp>
@@ -30,58 +30,58 @@ EsterelLexer::EsterelLexer(const ANTLR_USE_NAMESPACE(antlr)LexerSharedInputState
 
 void EsterelLexer::initLiterals()
 {
+	literals["copymodule"] = 114;
+	literals["pause"] = 83;
 	literals["exec"] = 110;
-	literals["times"] = 97;
 	literals["sustain"] = 86;
 	literals["case"] = 91;
-	literals["procedure"] = 47;
 	literals["loop"] = 102;
 	literals["trap"] = 106;
 	literals["immediate"] = 78;
-	literals["pause"] = 83;
-	literals["copymodule"] = 114;
+	literals["procedure"] = 47;
+	literals["times"] = 97;
 	literals["call"] = 87;
 	literals["exit"] = 108;
 	literals["present"] = 88;
-	literals["abort"] = 98;
+	literals["false"] = 77;
 	literals["true"] = 76;
 	literals["sensor"] = 60;
-	literals["await"] = 101;
 	literals["and"] = 59;
-	literals["input"] = 49;
+	literals["elsif"] = 94;
 	literals["nothing"] = 82;
 	literals["suspend"] = 105;
-	literals["positive"] = 95;
 	literals["pre"] = 74;
 	literals["end"] = 36;
 	literals["upto"] = 117;
-	literals["every"] = 104;
+	literals["handle"] = 109;
 	literals["when"] = 99;
 	literals["signal"] = 111;
-	literals["output"] = 50;
 	literals["timeout"] = 116;
+	literals["combine"] = 54;
 	literals["mod"] = 72;
 	literals["do"] = 92;
 	literals["type"] = 38;
 	literals["in"] = 107;
-	literals["combine"] = 54;
 	literals["watching"] = 115;
 	literals["function"] = 44;
 	literals["inputoutput"] = 51;
+	literals["output"] = 50;
 	literals["each"] = 103;
-	literals["handle"] = 109;
+	literals["every"] = 104;
 	literals["repeat"] = 96;
 	literals["or"] = 58;
 	literals["constant"] = 41;
-	literals["elsif"] = 94;
-	literals["relation"] = 61;
+	literals["positive"] = 95;
 	literals["return"] = 52;
+	literals["relation"] = 61;
+	literals["input"] = 49;
 	literals["emit"] = 85;
 	literals["if"] = 93;
 	literals["task"] = 48;
+	literals["await"] = 101;
 	literals["run"] = 113;
 	literals["halt"] = 84;
-	literals["false"] = 77;
+	literals["abort"] = 98;
 	literals["module"] = 34;
 	literals["else"] = 90;
 	literals["var"] = 112;
@@ -100,227 +100,227 @@ ANTLR_USE_NAMESPACE(antlr)RefToken EsterelLexer::nextToken()
 		resetText();
 		try {   // for lexical and char stream error handling
 			switch ( LA(1)) {
-			case static_cast<unsigned char>('#'):
+			case 0x23 /* '#' */ :
 			{
 				mPOUND(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('+'):
+			case 0x2b /* '+' */ :
 			{
 				mPLUS(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('-'):
+			case 0x2d /* '-' */ :
 			{
 				mDASH(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('/'):
+			case 0x2f /* '/' */ :
 			{
 				mSLASH(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('*'):
+			case 0x2a /* '*' */ :
 			{
 				mSTAR(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('|'):
+			case 0x7c /* '|' */ :
 			{
 				mPARALLEL(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>(','):
+			case 0x2c /* ',' */ :
 			{
 				mCOMMA(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>(';'):
+			case 0x3b /* ';' */ :
 			{
 				mSEMICOLON(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('('):
+			case 0x28 /* '(' */ :
 			{
 				mLPAREN(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>(')'):
+			case 0x29 /* ')' */ :
 			{
 				mRPAREN(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('['):
+			case 0x5b /* '[' */ :
 			{
 				mLBRACKET(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>(']'):
+			case 0x5d /* ']' */ :
 			{
 				mRBRACKET(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('A'):
-			case static_cast<unsigned char>('B'):
-			case static_cast<unsigned char>('C'):
-			case static_cast<unsigned char>('D'):
-			case static_cast<unsigned char>('E'):
-			case static_cast<unsigned char>('F'):
-			case static_cast<unsigned char>('G'):
-			case static_cast<unsigned char>('H'):
-			case static_cast<unsigned char>('I'):
-			case static_cast<unsigned char>('J'):
-			case static_cast<unsigned char>('K'):
-			case static_cast<unsigned char>('L'):
-			case static_cast<unsigned char>('M'):
-			case static_cast<unsigned char>('N'):
-			case static_cast<unsigned char>('O'):
-			case static_cast<unsigned char>('P'):
-			case static_cast<unsigned char>('Q'):
-			case static_cast<unsigned char>('R'):
-			case static_cast<unsigned char>('S'):
-			case static_cast<unsigned char>('T'):
-			case static_cast<unsigned char>('U'):
-			case static_cast<unsigned char>('V'):
-			case static_cast<unsigned char>('W'):
-			case static_cast<unsigned char>('X'):
-			case static_cast<unsigned char>('Y'):
-			case static_cast<unsigned char>('Z'):
-			case static_cast<unsigned char>('a'):
-			case static_cast<unsigned char>('b'):
-			case static_cast<unsigned char>('c'):
-			case static_cast<unsigned char>('d'):
-			case static_cast<unsigned char>('e'):
-			case static_cast<unsigned char>('f'):
-			case static_cast<unsigned char>('g'):
-			case static_cast<unsigned char>('h'):
-			case static_cast<unsigned char>('i'):
-			case static_cast<unsigned char>('j'):
-			case static_cast<unsigned char>('k'):
-			case static_cast<unsigned char>('l'):
-			case static_cast<unsigned char>('m'):
-			case static_cast<unsigned char>('n'):
-			case static_cast<unsigned char>('o'):
-			case static_cast<unsigned char>('p'):
-			case static_cast<unsigned char>('q'):
-			case static_cast<unsigned char>('r'):
-			case static_cast<unsigned char>('s'):
-			case static_cast<unsigned char>('t'):
-			case static_cast<unsigned char>('u'):
-			case static_cast<unsigned char>('v'):
-			case static_cast<unsigned char>('w'):
-			case static_cast<unsigned char>('x'):
-			case static_cast<unsigned char>('y'):
-			case static_cast<unsigned char>('z'):
+			case 0x41 /* 'A' */ :
+			case 0x42 /* 'B' */ :
+			case 0x43 /* 'C' */ :
+			case 0x44 /* 'D' */ :
+			case 0x45 /* 'E' */ :
+			case 0x46 /* 'F' */ :
+			case 0x47 /* 'G' */ :
+			case 0x48 /* 'H' */ :
+			case 0x49 /* 'I' */ :
+			case 0x4a /* 'J' */ :
+			case 0x4b /* 'K' */ :
+			case 0x4c /* 'L' */ :
+			case 0x4d /* 'M' */ :
+			case 0x4e /* 'N' */ :
+			case 0x4f /* 'O' */ :
+			case 0x50 /* 'P' */ :
+			case 0x51 /* 'Q' */ :
+			case 0x52 /* 'R' */ :
+			case 0x53 /* 'S' */ :
+			case 0x54 /* 'T' */ :
+			case 0x55 /* 'U' */ :
+			case 0x56 /* 'V' */ :
+			case 0x57 /* 'W' */ :
+			case 0x58 /* 'X' */ :
+			case 0x59 /* 'Y' */ :
+			case 0x5a /* 'Z' */ :
+			case 0x61 /* 'a' */ :
+			case 0x62 /* 'b' */ :
+			case 0x63 /* 'c' */ :
+			case 0x64 /* 'd' */ :
+			case 0x65 /* 'e' */ :
+			case 0x66 /* 'f' */ :
+			case 0x67 /* 'g' */ :
+			case 0x68 /* 'h' */ :
+			case 0x69 /* 'i' */ :
+			case 0x6a /* 'j' */ :
+			case 0x6b /* 'k' */ :
+			case 0x6c /* 'l' */ :
+			case 0x6d /* 'm' */ :
+			case 0x6e /* 'n' */ :
+			case 0x6f /* 'o' */ :
+			case 0x70 /* 'p' */ :
+			case 0x71 /* 'q' */ :
+			case 0x72 /* 'r' */ :
+			case 0x73 /* 's' */ :
+			case 0x74 /* 't' */ :
+			case 0x75 /* 'u' */ :
+			case 0x76 /* 'v' */ :
+			case 0x77 /* 'w' */ :
+			case 0x78 /* 'x' */ :
+			case 0x79 /* 'y' */ :
+			case 0x7a /* 'z' */ :
 			{
 				mID(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('0'):
-			case static_cast<unsigned char>('1'):
-			case static_cast<unsigned char>('2'):
-			case static_cast<unsigned char>('3'):
-			case static_cast<unsigned char>('4'):
-			case static_cast<unsigned char>('5'):
-			case static_cast<unsigned char>('6'):
-			case static_cast<unsigned char>('7'):
-			case static_cast<unsigned char>('8'):
-			case static_cast<unsigned char>('9'):
+			case 0x30 /* '0' */ :
+			case 0x31 /* '1' */ :
+			case 0x32 /* '2' */ :
+			case 0x33 /* '3' */ :
+			case 0x34 /* '4' */ :
+			case 0x35 /* '5' */ :
+			case 0x36 /* '6' */ :
+			case 0x37 /* '7' */ :
+			case 0x38 /* '8' */ :
+			case 0x39 /* '9' */ :
 			{
 				mNumber(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('"'):
+			case 0x22 /* '\"' */ :
 			{
 				mStringConstant(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('\t'):
-			case static_cast<unsigned char>('\14'):
-			case static_cast<unsigned char>(' '):
+			case 0x9 /* '\t' */ :
+			case 0xc /* '\14' */ :
+			case 0x20 /* ' ' */ :
 			{
 				mWhitespace(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('\n'):
-			case static_cast<unsigned char>('\r'):
+			case 0xa /* '\n' */ :
+			case 0xd /* '\r' */ :
 			{
 				mNewline(true);
 				theRetToken=_returnToken;
 				break;
 			}
-			case static_cast<unsigned char>('%'):
+			case 0x25 /* '%' */ :
 			{
 				mComment(true);
 				theRetToken=_returnToken;
 				break;
 			}
 			default:
-				if ((LA(1) == static_cast<unsigned char>(':')) && (LA(2) == static_cast<unsigned char>('='))) {
+				if ((LA(1) == 0x3a /* ':' */ ) && (LA(2) == 0x3d /* '=' */ )) {
 					mCOLEQUALS(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('?')) && (LA(2) == static_cast<unsigned char>('?'))) {
+				else if ((LA(1) == 0x3f /* '?' */ ) && (LA(2) == 0x3f /* '?' */ )) {
 					mDQUESTION(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('<')) && (LA(2) == static_cast<unsigned char>('='))) {
+				else if ((LA(1) == 0x3c /* '<' */ ) && (LA(2) == 0x3d /* '=' */ )) {
 					mLEQUAL(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('>')) && (LA(2) == static_cast<unsigned char>('='))) {
+				else if ((LA(1) == 0x3e /* '>' */ ) && (LA(2) == 0x3d /* '=' */ )) {
 					mGEQUAL(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('<')) && (LA(2) == static_cast<unsigned char>('>'))) {
+				else if ((LA(1) == 0x3c /* '<' */ ) && (LA(2) == 0x3e /* '>' */ )) {
 					mNEQUAL(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('=')) && (LA(2) == static_cast<unsigned char>('>'))) {
+				else if ((LA(1) == 0x3d /* '=' */ ) && (LA(2) == 0x3e /* '>' */ )) {
 					mIMPLIES(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('.')) && ((LA(2) >= static_cast<unsigned char>('0') && LA(2) <= static_cast<unsigned char>('9')))) {
+				else if ((LA(1) == 0x2e /* '.' */ ) && ((LA(2) >= 0x30 /* '0' */  && LA(2) <= 0x39 /* '9' */ ))) {
 					mFractionalNumber(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('.')) && (true)) {
+				else if ((LA(1) == 0x2e /* '.' */ ) && (true)) {
 					mPERIOD(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('<')) && (true)) {
+				else if ((LA(1) == 0x3c /* '<' */ ) && (true)) {
 					mLESSTHAN(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('>')) && (true)) {
+				else if ((LA(1) == 0x3e /* '>' */ ) && (true)) {
 					mGREATERTHAN(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('=')) && (true)) {
+				else if ((LA(1) == 0x3d /* '=' */ ) && (true)) {
 					mEQUALS(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>(':')) && (true)) {
+				else if ((LA(1) == 0x3a /* ':' */ ) && (true)) {
 					mCOLON(true);
 					theRetToken=_returnToken;
 				}
-				else if ((LA(1) == static_cast<unsigned char>('?')) && (true)) {
+				else if ((LA(1) == 0x3f /* '?' */ ) && (true)) {
 					mQUESTION(true);
 					theRetToken=_returnToken;
 				}
@@ -354,11 +354,11 @@ tryAgain:;
 }
 
 void EsterelLexer::mPERIOD(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = PERIOD;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('.'));
+	match('.' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -368,11 +368,11 @@ void EsterelLexer::mPERIOD(bool _createToken) {
 }
 
 void EsterelLexer::mPOUND(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = POUND;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('#'));
+	match('#' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -382,11 +382,11 @@ void EsterelLexer::mPOUND(bool _createToken) {
 }
 
 void EsterelLexer::mPLUS(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = PLUS;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('+'));
+	match('+' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -396,11 +396,11 @@ void EsterelLexer::mPLUS(bool _createToken) {
 }
 
 void EsterelLexer::mDASH(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = DASH;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('-'));
+	match('-' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -410,11 +410,11 @@ void EsterelLexer::mDASH(bool _createToken) {
 }
 
 void EsterelLexer::mSLASH(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = SLASH;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('/'));
+	match('/' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -424,11 +424,11 @@ void EsterelLexer::mSLASH(bool _createToken) {
 }
 
 void EsterelLexer::mSTAR(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = STAR;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('*'));
+	match('*' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -438,9 +438,9 @@ void EsterelLexer::mSTAR(bool _createToken) {
 }
 
 void EsterelLexer::mPARALLEL(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = PARALLEL;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match("||");
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -452,11 +452,11 @@ void EsterelLexer::mPARALLEL(bool _createToken) {
 }
 
 void EsterelLexer::mLESSTHAN(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = LESSTHAN;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('<'));
+	match('<' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -466,11 +466,11 @@ void EsterelLexer::mLESSTHAN(bool _createToken) {
 }
 
 void EsterelLexer::mGREATERTHAN(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = GREATERTHAN;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('>'));
+	match('>' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -480,11 +480,11 @@ void EsterelLexer::mGREATERTHAN(bool _createToken) {
 }
 
 void EsterelLexer::mCOMMA(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = COMMA;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>(','));
+	match(',' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -494,11 +494,11 @@ void EsterelLexer::mCOMMA(bool _createToken) {
 }
 
 void EsterelLexer::mEQUALS(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = EQUALS;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('='));
+	match('=' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -508,11 +508,11 @@ void EsterelLexer::mEQUALS(bool _createToken) {
 }
 
 void EsterelLexer::mSEMICOLON(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = SEMICOLON;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>(';'));
+	match(';' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -522,11 +522,11 @@ void EsterelLexer::mSEMICOLON(bool _createToken) {
 }
 
 void EsterelLexer::mCOLON(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = COLON;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>(':'));
+	match(':' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -536,9 +536,9 @@ void EsterelLexer::mCOLON(bool _createToken) {
 }
 
 void EsterelLexer::mCOLEQUALS(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = COLEQUALS;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(":=");
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -550,11 +550,11 @@ void EsterelLexer::mCOLEQUALS(bool _createToken) {
 }
 
 void EsterelLexer::mLPAREN(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = LPAREN;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('('));
+	match('(' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -564,11 +564,11 @@ void EsterelLexer::mLPAREN(bool _createToken) {
 }
 
 void EsterelLexer::mRPAREN(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = RPAREN;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>(')'));
+	match(')' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -578,11 +578,11 @@ void EsterelLexer::mRPAREN(bool _createToken) {
 }
 
 void EsterelLexer::mLBRACKET(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = LBRACKET;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('['));
+	match('[' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -592,11 +592,11 @@ void EsterelLexer::mLBRACKET(bool _createToken) {
 }
 
 void EsterelLexer::mRBRACKET(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = RBRACKET;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>(']'));
+	match(']' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -606,11 +606,11 @@ void EsterelLexer::mRBRACKET(bool _createToken) {
 }
 
 void EsterelLexer::mQUESTION(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = QUESTION;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('?'));
+	match('?' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -620,9 +620,9 @@ void EsterelLexer::mQUESTION(bool _createToken) {
 }
 
 void EsterelLexer::mDQUESTION(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = DQUESTION;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match("??");
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -634,9 +634,9 @@ void EsterelLexer::mDQUESTION(bool _createToken) {
 }
 
 void EsterelLexer::mLEQUAL(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = LEQUAL;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match("<=");
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -648,9 +648,9 @@ void EsterelLexer::mLEQUAL(bool _createToken) {
 }
 
 void EsterelLexer::mGEQUAL(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = GEQUAL;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(">=");
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -662,9 +662,9 @@ void EsterelLexer::mGEQUAL(bool _createToken) {
 }
 
 void EsterelLexer::mNEQUAL(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = NEQUAL;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match("<>");
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -676,9 +676,9 @@ void EsterelLexer::mNEQUAL(bool _createToken) {
 }
 
 void EsterelLexer::mIMPLIES(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = IMPLIES;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match("=>");
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -690,70 +690,70 @@ void EsterelLexer::mIMPLIES(bool _createToken) {
 }
 
 void EsterelLexer::mID(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = ID;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{
 	switch ( LA(1)) {
-	case static_cast<unsigned char>('a'):
-	case static_cast<unsigned char>('b'):
-	case static_cast<unsigned char>('c'):
-	case static_cast<unsigned char>('d'):
-	case static_cast<unsigned char>('e'):
-	case static_cast<unsigned char>('f'):
-	case static_cast<unsigned char>('g'):
-	case static_cast<unsigned char>('h'):
-	case static_cast<unsigned char>('i'):
-	case static_cast<unsigned char>('j'):
-	case static_cast<unsigned char>('k'):
-	case static_cast<unsigned char>('l'):
-	case static_cast<unsigned char>('m'):
-	case static_cast<unsigned char>('n'):
-	case static_cast<unsigned char>('o'):
-	case static_cast<unsigned char>('p'):
-	case static_cast<unsigned char>('q'):
-	case static_cast<unsigned char>('r'):
-	case static_cast<unsigned char>('s'):
-	case static_cast<unsigned char>('t'):
-	case static_cast<unsigned char>('u'):
-	case static_cast<unsigned char>('v'):
-	case static_cast<unsigned char>('w'):
-	case static_cast<unsigned char>('x'):
-	case static_cast<unsigned char>('y'):
-	case static_cast<unsigned char>('z'):
+	case 0x61 /* 'a' */ :
+	case 0x62 /* 'b' */ :
+	case 0x63 /* 'c' */ :
+	case 0x64 /* 'd' */ :
+	case 0x65 /* 'e' */ :
+	case 0x66 /* 'f' */ :
+	case 0x67 /* 'g' */ :
+	case 0x68 /* 'h' */ :
+	case 0x69 /* 'i' */ :
+	case 0x6a /* 'j' */ :
+	case 0x6b /* 'k' */ :
+	case 0x6c /* 'l' */ :
+	case 0x6d /* 'm' */ :
+	case 0x6e /* 'n' */ :
+	case 0x6f /* 'o' */ :
+	case 0x70 /* 'p' */ :
+	case 0x71 /* 'q' */ :
+	case 0x72 /* 'r' */ :
+	case 0x73 /* 's' */ :
+	case 0x74 /* 't' */ :
+	case 0x75 /* 'u' */ :
+	case 0x76 /* 'v' */ :
+	case 0x77 /* 'w' */ :
+	case 0x78 /* 'x' */ :
+	case 0x79 /* 'y' */ :
+	case 0x7a /* 'z' */ :
 	{
-		matchRange(static_cast<unsigned char>('a'),static_cast<unsigned char>('z'));
+		matchRange('a','z');
 		break;
 	}
-	case static_cast<unsigned char>('A'):
-	case static_cast<unsigned char>('B'):
-	case static_cast<unsigned char>('C'):
-	case static_cast<unsigned char>('D'):
-	case static_cast<unsigned char>('E'):
-	case static_cast<unsigned char>('F'):
-	case static_cast<unsigned char>('G'):
-	case static_cast<unsigned char>('H'):
-	case static_cast<unsigned char>('I'):
-	case static_cast<unsigned char>('J'):
-	case static_cast<unsigned char>('K'):
-	case static_cast<unsigned char>('L'):
-	case static_cast<unsigned char>('M'):
-	case static_cast<unsigned char>('N'):
-	case static_cast<unsigned char>('O'):
-	case static_cast<unsigned char>('P'):
-	case static_cast<unsigned char>('Q'):
-	case static_cast<unsigned char>('R'):
-	case static_cast<unsigned char>('S'):
-	case static_cast<unsigned char>('T'):
-	case static_cast<unsigned char>('U'):
-	case static_cast<unsigned char>('V'):
-	case static_cast<unsigned char>('W'):
-	case static_cast<unsigned char>('X'):
-	case static_cast<unsigned char>('Y'):
-	case static_cast<unsigned char>('Z'):
+	case 0x41 /* 'A' */ :
+	case 0x42 /* 'B' */ :
+	case 0x43 /* 'C' */ :
+	case 0x44 /* 'D' */ :
+	case 0x45 /* 'E' */ :
+	case 0x46 /* 'F' */ :
+	case 0x47 /* 'G' */ :
+	case 0x48 /* 'H' */ :
+	case 0x49 /* 'I' */ :
+	case 0x4a /* 'J' */ :
+	case 0x4b /* 'K' */ :
+	case 0x4c /* 'L' */ :
+	case 0x4d /* 'M' */ :
+	case 0x4e /* 'N' */ :
+	case 0x4f /* 'O' */ :
+	case 0x50 /* 'P' */ :
+	case 0x51 /* 'Q' */ :
+	case 0x52 /* 'R' */ :
+	case 0x53 /* 'S' */ :
+	case 0x54 /* 'T' */ :
+	case 0x55 /* 'U' */ :
+	case 0x56 /* 'V' */ :
+	case 0x57 /* 'W' */ :
+	case 0x58 /* 'X' */ :
+	case 0x59 /* 'Y' */ :
+	case 0x5a /* 'Z' */ :
 	{
-		matchRange(static_cast<unsigned char>('A'),static_cast<unsigned char>('Z'));
+		matchRange('A','Z');
 		break;
 	}
 	default:
@@ -765,83 +765,83 @@ void EsterelLexer::mID(bool _createToken) {
 	{ // ( ... )*
 	for (;;) {
 		switch ( LA(1)) {
-		case static_cast<unsigned char>('a'):
-		case static_cast<unsigned char>('b'):
-		case static_cast<unsigned char>('c'):
-		case static_cast<unsigned char>('d'):
-		case static_cast<unsigned char>('e'):
-		case static_cast<unsigned char>('f'):
-		case static_cast<unsigned char>('g'):
-		case static_cast<unsigned char>('h'):
-		case static_cast<unsigned char>('i'):
-		case static_cast<unsigned char>('j'):
-		case static_cast<unsigned char>('k'):
-		case static_cast<unsigned char>('l'):
-		case static_cast<unsigned char>('m'):
-		case static_cast<unsigned char>('n'):
-		case static_cast<unsigned char>('o'):
-		case static_cast<unsigned char>('p'):
-		case static_cast<unsigned char>('q'):
-		case static_cast<unsigned char>('r'):
-		case static_cast<unsigned char>('s'):
-		case static_cast<unsigned char>('t'):
-		case static_cast<unsigned char>('u'):
-		case static_cast<unsigned char>('v'):
-		case static_cast<unsigned char>('w'):
-		case static_cast<unsigned char>('x'):
-		case static_cast<unsigned char>('y'):
-		case static_cast<unsigned char>('z'):
+		case 0x61 /* 'a' */ :
+		case 0x62 /* 'b' */ :
+		case 0x63 /* 'c' */ :
+		case 0x64 /* 'd' */ :
+		case 0x65 /* 'e' */ :
+		case 0x66 /* 'f' */ :
+		case 0x67 /* 'g' */ :
+		case 0x68 /* 'h' */ :
+		case 0x69 /* 'i' */ :
+		case 0x6a /* 'j' */ :
+		case 0x6b /* 'k' */ :
+		case 0x6c /* 'l' */ :
+		case 0x6d /* 'm' */ :
+		case 0x6e /* 'n' */ :
+		case 0x6f /* 'o' */ :
+		case 0x70 /* 'p' */ :
+		case 0x71 /* 'q' */ :
+		case 0x72 /* 'r' */ :
+		case 0x73 /* 's' */ :
+		case 0x74 /* 't' */ :
+		case 0x75 /* 'u' */ :
+		case 0x76 /* 'v' */ :
+		case 0x77 /* 'w' */ :
+		case 0x78 /* 'x' */ :
+		case 0x79 /* 'y' */ :
+		case 0x7a /* 'z' */ :
 		{
-			matchRange(static_cast<unsigned char>('a'),static_cast<unsigned char>('z'));
+			matchRange('a','z');
 			break;
 		}
-		case static_cast<unsigned char>('A'):
-		case static_cast<unsigned char>('B'):
-		case static_cast<unsigned char>('C'):
-		case static_cast<unsigned char>('D'):
-		case static_cast<unsigned char>('E'):
-		case static_cast<unsigned char>('F'):
-		case static_cast<unsigned char>('G'):
-		case static_cast<unsigned char>('H'):
-		case static_cast<unsigned char>('I'):
-		case static_cast<unsigned char>('J'):
-		case static_cast<unsigned char>('K'):
-		case static_cast<unsigned char>('L'):
-		case static_cast<unsigned char>('M'):
-		case static_cast<unsigned char>('N'):
-		case static_cast<unsigned char>('O'):
-		case static_cast<unsigned char>('P'):
-		case static_cast<unsigned char>('Q'):
-		case static_cast<unsigned char>('R'):
-		case static_cast<unsigned char>('S'):
-		case static_cast<unsigned char>('T'):
-		case static_cast<unsigned char>('U'):
-		case static_cast<unsigned char>('V'):
-		case static_cast<unsigned char>('W'):
-		case static_cast<unsigned char>('X'):
-		case static_cast<unsigned char>('Y'):
-		case static_cast<unsigned char>('Z'):
+		case 0x41 /* 'A' */ :
+		case 0x42 /* 'B' */ :
+		case 0x43 /* 'C' */ :
+		case 0x44 /* 'D' */ :
+		case 0x45 /* 'E' */ :
+		case 0x46 /* 'F' */ :
+		case 0x47 /* 'G' */ :
+		case 0x48 /* 'H' */ :
+		case 0x49 /* 'I' */ :
+		case 0x4a /* 'J' */ :
+		case 0x4b /* 'K' */ :
+		case 0x4c /* 'L' */ :
+		case 0x4d /* 'M' */ :
+		case 0x4e /* 'N' */ :
+		case 0x4f /* 'O' */ :
+		case 0x50 /* 'P' */ :
+		case 0x51 /* 'Q' */ :
+		case 0x52 /* 'R' */ :
+		case 0x53 /* 'S' */ :
+		case 0x54 /* 'T' */ :
+		case 0x55 /* 'U' */ :
+		case 0x56 /* 'V' */ :
+		case 0x57 /* 'W' */ :
+		case 0x58 /* 'X' */ :
+		case 0x59 /* 'Y' */ :
+		case 0x5a /* 'Z' */ :
 		{
-			matchRange(static_cast<unsigned char>('A'),static_cast<unsigned char>('Z'));
+			matchRange('A','Z');
 			break;
 		}
-		case static_cast<unsigned char>('_'):
+		case 0x5f /* '_' */ :
 		{
-			match(static_cast<unsigned char>('_'));
+			match('_' /* charlit */ );
 			break;
 		}
-		case static_cast<unsigned char>('0'):
-		case static_cast<unsigned char>('1'):
-		case static_cast<unsigned char>('2'):
-		case static_cast<unsigned char>('3'):
-		case static_cast<unsigned char>('4'):
-		case static_cast<unsigned char>('5'):
-		case static_cast<unsigned char>('6'):
-		case static_cast<unsigned char>('7'):
-		case static_cast<unsigned char>('8'):
-		case static_cast<unsigned char>('9'):
+		case 0x30 /* '0' */ :
+		case 0x31 /* '1' */ :
+		case 0x32 /* '2' */ :
+		case 0x33 /* '3' */ :
+		case 0x34 /* '4' */ :
+		case 0x35 /* '5' */ :
+		case 0x36 /* '6' */ :
+		case 0x37 /* '7' */ :
+		case 0x38 /* '8' */ :
+		case 0x39 /* '9' */ :
 		{
-			matchRange(static_cast<unsigned char>('0'),static_cast<unsigned char>('9'));
+			matchRange('0','9');
 			break;
 		}
 		default:
@@ -868,15 +868,15 @@ void EsterelLexer::mID(bool _createToken) {
   itself), which collides with the lookahead set for the single-period rule.
  */
 void EsterelLexer::mNumber(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = Number;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{ // ( ... )+
 	int _cnt310=0;
 	for (;;) {
-		if (((LA(1) >= static_cast<unsigned char>('0') && LA(1) <= static_cast<unsigned char>('9')))) {
-			matchRange(static_cast<unsigned char>('0'),static_cast<unsigned char>('9'));
+		if (((LA(1) >= 0x30 /* '0' */  && LA(1) <= 0x39 /* '9' */ ))) {
+			matchRange('0','9');
 		}
 		else {
 			if ( _cnt310>=1 ) { goto _loop310; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
@@ -887,12 +887,12 @@ void EsterelLexer::mNumber(bool _createToken) {
 	_loop310:;
 	}  // ( ... )+
 	{
-	if ((LA(1) == static_cast<unsigned char>('.'))) {
-		match(static_cast<unsigned char>('.'));
+	if ((LA(1) == 0x2e /* '.' */ )) {
+		match('.' /* charlit */ );
 		{ // ( ... )*
 		for (;;) {
-			if (((LA(1) >= static_cast<unsigned char>('0') && LA(1) <= static_cast<unsigned char>('9')))) {
-				matchRange(static_cast<unsigned char>('0'),static_cast<unsigned char>('9'));
+			if (((LA(1) >= 0x30 /* '0' */  && LA(1) <= 0x39 /* '9' */ ))) {
+				matchRange('0','9');
 			}
 			else {
 				goto _loop313;
@@ -902,7 +902,7 @@ void EsterelLexer::mNumber(bool _createToken) {
 		_loop313:;
 		} // ( ... )*
 		{
-		if ((LA(1) == static_cast<unsigned char>('E') || LA(1) == static_cast<unsigned char>('e'))) {
+		if ((LA(1) == 0x45 /* 'E' */  || LA(1) == 0x65 /* 'e' */ )) {
 			mExponent(false);
 		}
 		else {
@@ -910,17 +910,17 @@ void EsterelLexer::mNumber(bool _createToken) {
 		
 		}
 		{
-		if ((LA(1) == static_cast<unsigned char>('F') || LA(1) == static_cast<unsigned char>('f'))) {
+		if ((LA(1) == 0x46 /* 'F' */  || LA(1) == 0x66 /* 'f' */ )) {
 			{
 			switch ( LA(1)) {
-			case static_cast<unsigned char>('f'):
+			case 0x66 /* 'f' */ :
 			{
-				match(static_cast<unsigned char>('f'));
+				match('f' /* charlit */ );
 				break;
 			}
-			case static_cast<unsigned char>('F'):
+			case 0x46 /* 'F' */ :
 			{
-				match(static_cast<unsigned char>('F'));
+				match('F' /* charlit */ );
 				break;
 			}
 			default:
@@ -963,20 +963,20 @@ void EsterelLexer::mNumber(bool _createToken) {
 }
 
 void EsterelLexer::mExponent(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = Exponent;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{
 	switch ( LA(1)) {
-	case static_cast<unsigned char>('e'):
+	case 0x65 /* 'e' */ :
 	{
-		match(static_cast<unsigned char>('e'));
+		match('e' /* charlit */ );
 		break;
 	}
-	case static_cast<unsigned char>('E'):
+	case 0x45 /* 'E' */ :
 	{
-		match(static_cast<unsigned char>('E'));
+		match('E' /* charlit */ );
 		break;
 	}
 	default:
@@ -987,26 +987,26 @@ void EsterelLexer::mExponent(bool _createToken) {
 	}
 	{
 	switch ( LA(1)) {
-	case static_cast<unsigned char>('+'):
+	case 0x2b /* '+' */ :
 	{
-		match(static_cast<unsigned char>('+'));
+		match('+' /* charlit */ );
 		break;
 	}
-	case static_cast<unsigned char>('-'):
+	case 0x2d /* '-' */ :
 	{
-		match(static_cast<unsigned char>('-'));
+		match('-' /* charlit */ );
 		break;
 	}
-	case static_cast<unsigned char>('0'):
-	case static_cast<unsigned char>('1'):
-	case static_cast<unsigned char>('2'):
-	case static_cast<unsigned char>('3'):
-	case static_cast<unsigned char>('4'):
-	case static_cast<unsigned char>('5'):
-	case static_cast<unsigned char>('6'):
-	case static_cast<unsigned char>('7'):
-	case static_cast<unsigned char>('8'):
-	case static_cast<unsigned char>('9'):
+	case 0x30 /* '0' */ :
+	case 0x31 /* '1' */ :
+	case 0x32 /* '2' */ :
+	case 0x33 /* '3' */ :
+	case 0x34 /* '4' */ :
+	case 0x35 /* '5' */ :
+	case 0x36 /* '6' */ :
+	case 0x37 /* '7' */ :
+	case 0x38 /* '8' */ :
+	case 0x39 /* '9' */ :
 	{
 		break;
 	}
@@ -1019,8 +1019,8 @@ void EsterelLexer::mExponent(bool _createToken) {
 	{ // ( ... )+
 	int _cnt327=0;
 	for (;;) {
-		if (((LA(1) >= static_cast<unsigned char>('0') && LA(1) <= static_cast<unsigned char>('9')))) {
-			matchRange(static_cast<unsigned char>('0'),static_cast<unsigned char>('9'));
+		if (((LA(1) >= 0x30 /* '0' */  && LA(1) <= 0x39 /* '9' */ ))) {
+			matchRange('0','9');
 		}
 		else {
 			if ( _cnt327>=1 ) { goto _loop327; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
@@ -1039,16 +1039,16 @@ void EsterelLexer::mExponent(bool _createToken) {
 }
 
 void EsterelLexer::mFractionalNumber(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = FractionalNumber;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('.'));
+	match('.' /* charlit */ );
 	{ // ( ... )+
 	int _cnt319=0;
 	for (;;) {
-		if (((LA(1) >= static_cast<unsigned char>('0') && LA(1) <= static_cast<unsigned char>('9')))) {
-			matchRange(static_cast<unsigned char>('0'),static_cast<unsigned char>('9'));
+		if (((LA(1) >= 0x30 /* '0' */  && LA(1) <= 0x39 /* '9' */ ))) {
+			matchRange('0','9');
 		}
 		else {
 			if ( _cnt319>=1 ) { goto _loop319; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
@@ -1059,7 +1059,7 @@ void EsterelLexer::mFractionalNumber(bool _createToken) {
 	_loop319:;
 	}  // ( ... )+
 	{
-	if ((LA(1) == static_cast<unsigned char>('E') || LA(1) == static_cast<unsigned char>('e'))) {
+	if ((LA(1) == 0x45 /* 'E' */  || LA(1) == 0x65 /* 'e' */ )) {
 		mExponent(false);
 	}
 	else {
@@ -1067,17 +1067,17 @@ void EsterelLexer::mFractionalNumber(bool _createToken) {
 	
 	}
 	{
-	if ((LA(1) == static_cast<unsigned char>('F') || LA(1) == static_cast<unsigned char>('f'))) {
+	if ((LA(1) == 0x46 /* 'F' */  || LA(1) == 0x66 /* 'f' */ )) {
 		{
 		switch ( LA(1)) {
-		case static_cast<unsigned char>('f'):
+		case 0x66 /* 'f' */ :
 		{
-			match(static_cast<unsigned char>('f'));
+			match('f' /* charlit */ );
 			break;
 		}
-		case static_cast<unsigned char>('F'):
+		case 0x46 /* 'F' */ :
 		{
-			match(static_cast<unsigned char>('F'));
+			match('F' /* charlit */ );
 			break;
 		}
 		default:
@@ -1116,21 +1116,21 @@ void EsterelLexer::mFractionalNumber(bool _createToken) {
       "This is a constant with ""double quotes""" 
 */
 void EsterelLexer::mStringConstant(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = StringConstant;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	_saveIndex=text.length();
-	match(static_cast<unsigned char>('"'));
+	_saveIndex = text.length();
+	match('\"' /* charlit */ );
 	text.erase(_saveIndex);
 	{ // ( ... )*
 	for (;;) {
-		if ((LA(1) == static_cast<unsigned char>('"')) && (LA(2) == static_cast<unsigned char>('"'))) {
+		if ((LA(1) == 0x22 /* '\"' */ ) && (LA(2) == 0x22 /* '\"' */ )) {
 			{
-			_saveIndex=text.length();
-			match(static_cast<unsigned char>('"'));
+			_saveIndex = text.length();
+			match('\"' /* charlit */ );
 			text.erase(_saveIndex);
-			match(static_cast<unsigned char>('"'));
+			match('\"' /* charlit */ );
 			}
 		}
 		else if ((_tokenSet_0.member(LA(1)))) {
@@ -1145,8 +1145,8 @@ void EsterelLexer::mStringConstant(bool _createToken) {
 	}
 	_loop332:;
 	} // ( ... )*
-	_saveIndex=text.length();
-	match(static_cast<unsigned char>('"'));
+	_saveIndex = text.length();
+	match('\"' /* charlit */ );
 	text.erase(_saveIndex);
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
@@ -1157,27 +1157,27 @@ void EsterelLexer::mStringConstant(bool _createToken) {
 }
 
 void EsterelLexer::mWhitespace(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = Whitespace;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{ // ( ... )+
 	int _cnt335=0;
 	for (;;) {
 		switch ( LA(1)) {
-		case static_cast<unsigned char>(' '):
+		case 0x20 /* ' ' */ :
 		{
-			match(static_cast<unsigned char>(' '));
+			match(' ' /* charlit */ );
 			break;
 		}
-		case static_cast<unsigned char>('\t'):
+		case 0x9 /* '\t' */ :
 		{
-			match(static_cast<unsigned char>('\t'));
+			match('\t' /* charlit */ );
 			break;
 		}
-		case static_cast<unsigned char>('\14'):
+		case 0xc /* '\14' */ :
 		{
-			match(static_cast<unsigned char>('\14'));
+			match('\14' /* charlit */ );
 			break;
 		}
 		default:
@@ -1203,19 +1203,19 @@ void EsterelLexer::mWhitespace(bool _createToken) {
 }
 
 void EsterelLexer::mNewline(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = Newline;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{
-	if ((LA(1) == static_cast<unsigned char>('\r')) && (LA(2) == static_cast<unsigned char>('\n'))) {
+	if ((LA(1) == 0xd /* '\r' */ ) && (LA(2) == 0xa /* '\n' */ )) {
 		match("\r\n");
 	}
-	else if ((LA(1) == static_cast<unsigned char>('\n'))) {
-		match(static_cast<unsigned char>('\n'));
+	else if ((LA(1) == 0xa /* '\n' */ )) {
+		match('\n' /* charlit */ );
 	}
-	else if ((LA(1) == static_cast<unsigned char>('\r')) && (true)) {
-		match(static_cast<unsigned char>('\r'));
+	else if ((LA(1) == 0xd /* '\r' */ ) && (true)) {
+		match('\r' /* charlit */ );
 	}
 	else {
 		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());
@@ -1241,20 +1241,20 @@ void EsterelLexer::mNewline(bool _createToken) {
   Single-line comments start with %
 */
 void EsterelLexer::mComment(bool _createToken) {
-	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; int _begin=text.length();
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = Comment;
-	int _saveIndex;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match(static_cast<unsigned char>('%'));
+	match('%' /* charlit */ );
 	{
 	bool synPredMatched341 = false;
-	if (((LA(1) == static_cast<unsigned char>('{')) && ((LA(2) >= static_cast<unsigned char>('\3') && LA(2) <= static_cast<unsigned char>('\377'))))) {
+	if (((LA(1) == 0x7b /* '{' */ ) && ((LA(2) >= 0x3 /* '\3' */  && LA(2) <= 0xff)))) {
 		int _m341 = mark();
 		synPredMatched341 = true;
 		inputState->guessing++;
 		try {
 			{
-			match(static_cast<unsigned char>('{'));
+			match('{' /* charlit */ );
 			}
 		}
 		catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& pe) {
@@ -1264,22 +1264,22 @@ void EsterelLexer::mComment(bool _createToken) {
 		inputState->guessing--;
 	}
 	if ( synPredMatched341 ) {
-		match(static_cast<unsigned char>('{'));
+		match('{' /* charlit */ );
 		{ // ( ... )*
 		for (;;) {
 			// nongreedy exit test
-			if ((LA(1) == static_cast<unsigned char>('}')) && (LA(2) == static_cast<unsigned char>('%'))) goto _loop347;
-			if (((LA(1) >= static_cast<unsigned char>('\3') && LA(1) <= static_cast<unsigned char>('\377'))) && ((LA(2) >= static_cast<unsigned char>('\3') && LA(2) <= static_cast<unsigned char>('\377')))) {
+			if ((LA(1) == 0x7d /* '}' */ ) && (LA(2) == 0x25 /* '%' */ )) goto _loop347;
+			if (((LA(1) >= 0x3 /* '\3' */  && LA(1) <= 0xff)) && ((LA(2) >= 0x3 /* '\3' */  && LA(2) <= 0xff))) {
 				{
 				bool synPredMatched345 = false;
-				if (((LA(1) == static_cast<unsigned char>('\r')) && (LA(2) == static_cast<unsigned char>('\n')))) {
+				if (((LA(1) == 0xd /* '\r' */ ) && (LA(2) == 0xa /* '\n' */ ))) {
 					int _m345 = mark();
 					synPredMatched345 = true;
 					inputState->guessing++;
 					try {
 						{
-						match(static_cast<unsigned char>('\r'));
-						match(static_cast<unsigned char>('\n'));
+						match('\r' /* charlit */ );
+						match('\n' /* charlit */ );
 						}
 					}
 					catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& pe) {
@@ -1289,24 +1289,24 @@ void EsterelLexer::mComment(bool _createToken) {
 					inputState->guessing--;
 				}
 				if ( synPredMatched345 ) {
-					match(static_cast<unsigned char>('\r'));
-					match(static_cast<unsigned char>('\n'));
+					match('\r' /* charlit */ );
+					match('\n' /* charlit */ );
 					if ( inputState->guessing==0 ) {
 #line 855 "esterel.g"
 						newline();
 #line 1298 "EsterelLexer.cpp"
 					}
 				}
-				else if ((LA(1) == static_cast<unsigned char>('\r')) && ((LA(2) >= static_cast<unsigned char>('\3') && LA(2) <= static_cast<unsigned char>('\377')))) {
-					match(static_cast<unsigned char>('\r'));
+				else if ((LA(1) == 0xd /* '\r' */ ) && ((LA(2) >= 0x3 /* '\3' */  && LA(2) <= 0xff))) {
+					match('\r' /* charlit */ );
 					if ( inputState->guessing==0 ) {
 #line 856 "esterel.g"
 						newline();
 #line 1306 "EsterelLexer.cpp"
 					}
 				}
-				else if ((LA(1) == static_cast<unsigned char>('\n'))) {
-					match(static_cast<unsigned char>('\n'));
+				else if ((LA(1) == 0xa /* '\n' */ )) {
+					match('\n' /* charlit */ );
 					if ( inputState->guessing==0 ) {
 #line 857 "esterel.g"
 						newline();
@@ -1333,12 +1333,12 @@ void EsterelLexer::mComment(bool _createToken) {
 		} // ( ... )*
 		match("}%");
 	}
-	else if (((LA(1) >= static_cast<unsigned char>('\3') && LA(1) <= static_cast<unsigned char>('\377'))) && (true)) {
+	else if (((LA(1) >= 0x3 /* '\3' */  && LA(1) <= 0xff)) && (true)) {
 		{ // ( ... )*
 		for (;;) {
 			if ((_tokenSet_2.member(LA(1)))) {
 				{
-				matchNot(static_cast<unsigned char>('\n'));
+				matchNot('\n' /* charlit */ );
 				}
 			}
 			else {
@@ -1348,7 +1348,7 @@ void EsterelLexer::mComment(bool _createToken) {
 		}
 		_loop350:;
 		} // ( ... )*
-		match(static_cast<unsigned char>('\n'));
+		match('\n' /* charlit */ );
 		if ( inputState->guessing==0 ) {
 #line 862 "esterel.g"
 			newline();
@@ -1375,51 +1375,24 @@ void EsterelLexer::mComment(bool _createToken) {
 
 
 const unsigned long EsterelLexer::_tokenSet_0_data_[] = { 4294966264UL, 4294967291UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL };
-// NULL_TREE_LOOKAHEAD SIGS VARS TYPES DECLS TRAPS SEQUENCE CASE DELAY 
-// DOWATCHING DOUPTO CDECL TDECL FDECL PDECL TADECL VDECLS VDECL SDECL 
-// CALL RUN TRENAME CRENAME SRENAME TARENAME FRENAME PRENAME Integer FloatConst 
-// DoubleConst COLON "end" PERIOD "type" COMMA SEMICOLON "constant" EQUALS 
-// ID "function" LPAREN RPAREN "procedure" "task" "input" "output" "inputoutput" 
-// "return" COLEQUALS "combine" "with" PLUS STAR "or" "and" "sensor" "relation" 
-// IMPLIES POUND "not" NEQUAL LESSTHAN GREATERTHAN LEQUAL GEQUAL DASH SLASH 
-// "mod" QUESTION "pre" DQUESTION "true" "false" "immediate" LBRACKET RBRACKET 
-// PARALLEL "nothing" "pause" "halt" "emit" "sustain" "call" "present" 
-// "then" "else" "case" "do" "if" "elsif" "positive" "repeat" "times" "abort" 
-// "when" "weak" "await" "loop" "each" "every" "suspend" "trap" "in" "exit" 
-// "handle" "exec" "signal" "var" "run" "copymodule" "watching" "timeout" 
-// "upto" StringConstant Number FractionalNumber Exponent Whitespace Newline 
-// Comment 
+// 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xb 0xc 0xd 0xe 0xf 0x10 0x11 0x12 0x13 
+// 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 0x1f   ! # $ 
+// % & \' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ A B C D E F 
+// G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` a b c d e f g 
+// h i j k l m n o p q r s t u v w x y z { | 
 const ANTLR_USE_NAMESPACE(antlr)BitSet EsterelLexer::_tokenSet_0(_tokenSet_0_data_,16);
 const unsigned long EsterelLexer::_tokenSet_1_data_[] = { 4294958072UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL };
-// NULL_TREE_LOOKAHEAD SIGS VARS TYPES DECLS TRAPS SEQUENCE CASE DELAY 
-// DOUPTO CDECL TDECL FDECL PDECL TADECL VDECLS VDECL SDECL CALL RUN TRENAME 
-// CRENAME SRENAME TARENAME FRENAME PRENAME Integer FloatConst DoubleConst 
-// "module" COLON "end" PERIOD "type" COMMA SEMICOLON "constant" EQUALS 
-// ID "function" LPAREN RPAREN "procedure" "task" "input" "output" "inputoutput" 
-// "return" COLEQUALS "combine" "with" PLUS STAR "or" "and" "sensor" "relation" 
-// IMPLIES POUND "not" NEQUAL LESSTHAN GREATERTHAN LEQUAL GEQUAL DASH SLASH 
-// "mod" QUESTION "pre" DQUESTION "true" "false" "immediate" LBRACKET RBRACKET 
-// PARALLEL "nothing" "pause" "halt" "emit" "sustain" "call" "present" 
-// "then" "else" "case" "do" "if" "elsif" "positive" "repeat" "times" "abort" 
-// "when" "weak" "await" "loop" "each" "every" "suspend" "trap" "in" "exit" 
-// "handle" "exec" "signal" "var" "run" "copymodule" "watching" "timeout" 
-// "upto" StringConstant Number FractionalNumber Exponent Whitespace Newline 
-// Comment 
+// 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xb 0xc 0xe 0xf 0x10 0x11 0x12 0x13 0x14 
+// 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 0x1f   ! \" # $ % 
+// & \' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ A B C D E F G 
+// H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` a b c d e f g h 
+// i j k l m n o p q r s t u v w x y z { | 
 const ANTLR_USE_NAMESPACE(antlr)BitSet EsterelLexer::_tokenSet_1(_tokenSet_1_data_,16);
 const unsigned long EsterelLexer::_tokenSet_2_data_[] = { 4294966264UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL };
-// NULL_TREE_LOOKAHEAD SIGS VARS TYPES DECLS TRAPS SEQUENCE CASE DELAY 
-// DOWATCHING DOUPTO CDECL TDECL FDECL PDECL TADECL VDECLS VDECL SDECL 
-// CALL RUN TRENAME CRENAME SRENAME TARENAME FRENAME PRENAME Integer FloatConst 
-// DoubleConst "module" COLON "end" PERIOD "type" COMMA SEMICOLON "constant" 
-// EQUALS ID "function" LPAREN RPAREN "procedure" "task" "input" "output" 
-// "inputoutput" "return" COLEQUALS "combine" "with" PLUS STAR "or" "and" 
-// "sensor" "relation" IMPLIES POUND "not" NEQUAL LESSTHAN GREATERTHAN 
-// LEQUAL GEQUAL DASH SLASH "mod" QUESTION "pre" DQUESTION "true" "false" 
-// "immediate" LBRACKET RBRACKET PARALLEL "nothing" "pause" "halt" "emit" 
-// "sustain" "call" "present" "then" "else" "case" "do" "if" "elsif" "positive" 
-// "repeat" "times" "abort" "when" "weak" "await" "loop" "each" "every" 
-// "suspend" "trap" "in" "exit" "handle" "exec" "signal" "var" "run" "copymodule" 
-// "watching" "timeout" "upto" StringConstant Number FractionalNumber Exponent 
-// Whitespace Newline Comment 
+// 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xb 0xc 0xd 0xe 0xf 0x10 0x11 0x12 0x13 
+// 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 0x1f   ! \" # 
+// $ % & \' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ A B C D E 
+// F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` a b c d e f 
+// g h i j k l m n o p q r s t u v w x y z { | 
 const ANTLR_USE_NAMESPACE(antlr)BitSet EsterelLexer::_tokenSet_2(_tokenSet_2_data_,16);
 

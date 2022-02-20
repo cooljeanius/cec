@@ -358,7 +358,7 @@ for ( map<Sync *, set<int> >::iterator i = sync_levels.begin() ;
 
   for ( vector<GRCNode*>::iterator j = sync->successors.begin() ;
 	j != sync->successors.end() ; j++ ) {
-    if ( *j && !contains(levels, j - sync->successors.begin()) ) {
+    if ( *j && !contains(levels, static_cast<int>(j - sync->successors.begin())) ) {
        erase((*j)->predecessors, (GRCNode*) sync);
        *j = NULL;
     }
@@ -939,10 +939,19 @@ STNode *STSimplify::check_st(STNode *n, STNode *realpar)
       if(c) keep=1;
     }
     
-  if(is_simpleref)
-    if(keep) return c; else return NULL;
+  if(is_simpleref) {
+    if(keep)
+		return c;
+	else
+		return NULL;
+  }
     
-  if(keep) { stkept.insert(n); return n; } else return NULL;
+  if(keep) {
+	stkept.insert(n);
+	return n;
+  }
+  else
+	return NULL;
 }
 @
 

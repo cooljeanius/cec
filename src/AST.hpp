@@ -116,7 +116,7 @@ namespace AST {
   union Status {
     int i;
     ASTNode *n;
-    Status() {}
+    Status() : n(0) {}
     Status(int ii) : i(ii) {}
     Status(ASTNode *nn) : n(nn) {}
   };

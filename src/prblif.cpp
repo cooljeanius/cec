@@ -139,14 +139,17 @@ namespace CVER{
 
       // toggle
       o<<".names "<<cenable->name<<" ";
-      for(i=t-1;i>=0;i--) o<<qname[i]<<" ";
+      for(i=t-1;i>=0;i--)
+		  o<<qname[i]<<" ";
       o<<toggle<<"\n";
-      for(i=0;i<t+1;i++)o<<"1"; o<<" 1\n";
+      for(i=0;i<t+1;i++)
+		  o<<"1";
+	  o<<" 1\n";
 
       o<<".names "<<start->name<<" "<<qname[t]<<" "<<toggle<<" "<<dname[t]<<"\n";
       // start value
       if(stbits[t]) {
-	o<<"1-- 1\n";
+		  o<<"1-- 1\n";
       }
       o<<"001 1\n";
       o<<"010 1\n";
@@ -155,9 +158,12 @@ namespace CVER{
     }
    
     o<<".names ";
-    for(i=0;i<sz;i++) o<<qname[i]<<" "; o<<alarm->name<<"\n";
-    for(i=0;i<sz;i++)o<<"1"; o<<" 1\n";
-
+    for(i=0;i<sz;i++)
+	   o<<qname[i]<<" ";
+	o<<alarm->name<<"\n";
+    for(i=0;i<sz;i++)
+		o<<"1";
+	o<<" 1\n";
   }
-
 }
+

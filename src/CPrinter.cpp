@@ -21,13 +21,13 @@ Printer::Printer(std::ostream &o, Module &m, bool three_val)
   // Note: float and double aren't in this list because they are equivalent
   // to Esterel's types of the same name
 
-  char *keywords[] = {
+  const char *keywords[] = {
     "int", "break", "char", "continue", "if", "else",
     "struct", "for", "auto", "do", "extern", "while", "register", "switch",
     "static", "case", "goto", "default", "return", "entry", "sizeof", NULL
   };
 
-  for (char **k = keywords ; *k != NULL ; k++) identifiers.insert(*k);
+  for (const char **k = keywords ; *k != NULL ; k++) identifiers.insert(*k);
 }
 #line 109 "CPrinter.nw"
 string Printer::uniqueID(string name)
@@ -701,7 +701,7 @@ void Printer::printDeclarations(string basename)
   for ( vector<Counter*>::const_iterator i = m.counters.begin() ;
 	i != m.counters.end() ; i++ ) {
     char buf[15];
-    sprintf(buf, "_counter_%d", i-m.counters.begin() );
+    sprintf(buf, "_counter_%d", static_cast<unsigned int>(i-m.counters.begin()) );
     string var = uniqueID(buf);
     counterVar[*i] = var;
     o << "static int " << var << ";\n";
