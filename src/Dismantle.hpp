@@ -1,4 +1,4 @@
-#line 776 "Dismantle.nw"
+#line 774 "Dismantle.nw"
 #ifndef _DISMANTLE_HPP
 #  define _DISMANTLE_HPP
 
@@ -216,7 +216,7 @@ Status visit(Delay &e) {
 }
 #line 57 "Dismantle.nw"
 };
-#line 790 "Dismantle.nw"
+#line 788 "Dismantle.nw"
   
 #line 328 "Dismantle.nw"
 class Dismantler1 : public Rewriter {
@@ -315,14 +315,12 @@ Trap *newTrap(SignalSymbol *&ts) {
   result->symbols = new SymbolTable();
   // Note: The parent of this symbol table is incorrectly NULL
 
-  char buf[10];
-  sprintf(buf, "%d", nextIndex++);
-  string name = "weak_trap_" + string(buf);
+  string name = "weak_trap_" + std::to_string(nextIndex++);
   ts = new SignalSymbol(name, NULL, SignalSymbol::Trap, NULL, NULL, NULL);
   result->symbols->enter(ts);
   return result;
 }
-#line 546 "Dismantle.nw"
+#line 544 "Dismantle.nw"
 Status visit(Abort &a) { 
   if (a.is_weak) {
 
@@ -369,7 +367,7 @@ Status visit(Abort &a) {
     return Rewriter::visit(a);
   }
 }
-#line 613 "Dismantle.nw"
+#line 611 "Dismantle.nw"
 Status visit(Var &v) {
 
   bool hasInitializer = false;
@@ -406,34 +404,34 @@ Status visit(Var &v) {
   rewrite(v.body);
   return &v;
 }
-#line 668 "Dismantle.nw"
+#line 666 "Dismantle.nw"
 Status visit(DoWatching &s) {
   return transform(new Abort(s.body, s.predicate, s.timeout));
 }
-#line 689 "Dismantle.nw"
+#line 687 "Dismantle.nw"
 Status visit(DoUpto &s) {
   return transform(new Abort(&(sl() << s.body << new Halt()), s.predicate, 0));
 }
-#line 715 "Dismantle.nw"
+#line 713 "Dismantle.nw"
 Status visit(LoopEach &s) {
   return transform(new Loop(new Abort(&(sl() << s.body << new Halt()),
 				      s.predicate, 0)));
 }
-#line 736 "Dismantle.nw"
+#line 734 "Dismantle.nw"
 Status visit(Halt &s) {
   return transform(new Loop(new Pause()));
 }
-#line 757 "Dismantle.nw"
+#line 755 "Dismantle.nw"
 Status visit(Sustain &s) {
   return transform(new Loop(&(sl() <<
 			      new Emit(s.signal, s.value) << new Pause())));
 }
-#line 768 "Dismantle.nw"
+#line 766 "Dismantle.nw"
 Status visit(Nothing &) {
   return transform(new StatementList());
 }
 #line 331 "Dismantle.nw"
 };
-#line 791 "Dismantle.nw"
+#line 789 "Dismantle.nw"
 }
 #endif

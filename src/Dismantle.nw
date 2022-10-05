@@ -533,9 +533,7 @@ Trap *newTrap(SignalSymbol *&ts) {
   result->symbols = new SymbolTable();
   // Note: The parent of this symbol table is incorrectly NULL
 
-  char buf[10];
-  sprintf(buf, "%d", nextIndex++);
-  string name = "weak_trap_" + string(buf);
+  string name = "weak_trap_" + std::to_string(nextIndex++);
   ts = new SignalSymbol(name, NULL, SignalSymbol::Trap, NULL, NULL, NULL);
   result->symbols->enter(ts);
   return result;

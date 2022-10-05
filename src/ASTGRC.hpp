@@ -1,4 +1,4 @@
-#line 3197 "ASTGRC.nw"
+#line 3193 "ASTGRC.nw"
 #ifndef _ASTGRC_HPP
 #  define _ASTGRC_HPP
 
@@ -145,7 +145,7 @@ Status visit(Trap &s) {
 #line 47 "ASTGRC.nw"
 };
 
-#line 3217 "ASTGRC.nw"
+#line 3213 "ASTGRC.nw"
   
 #line 211 "ASTGRC.nw"
 class Cloner : public Visitor {
@@ -167,9 +167,7 @@ SignalSymbol *cloneLocalSignal(SignalSymbol *s, SymbolTable *st) {
   string name = s->name;
   int next = 1;
   while (st->contains(name)) {
-    char buf[10];
-    sprintf(buf, "%d", next++);
-    name = s->name + '_' + buf;
+    name = s->name + '_' + std::to_string(next++);
   }
   SignalSymbol::kinds kind =
     (s->kind == SignalSymbol::Trap) ? SignalSymbol::Trap : SignalSymbol::Local;
@@ -189,22 +187,22 @@ SignalSymbol *cloneLocalSignal(SignalSymbol *s, SymbolTable *st) {
   newsig[s] = result;
   return result;
 }
-#line 385 "ASTGRC.nw"
+#line 383 "ASTGRC.nw"
 void sameSig(SignalSymbol *s) {
   assert(s);
   assert(newsig.find(s) == newsig.end());
   newsig[s] = s;
 }
-#line 395 "ASTGRC.nw"
+#line 393 "ASTGRC.nw"
 void clearSig(SignalSymbol *orig) {
   assert(orig);
   map<SignalSymbol*, SignalSymbol*>::iterator i = newsig.find(orig);
   assert(i != newsig.end());
   newsig.erase(i);
 }
-#line 424 "ASTGRC.nw"
+#line 422 "ASTGRC.nw"
 map<VariableSymbol*, VariableSymbol*> newvar;
-#line 428 "ASTGRC.nw"
+#line 426 "ASTGRC.nw"
 VariableSymbol *hoistLocalVariable(VariableSymbol *s, SymbolTable *st) {
   assert(s);
   assert(newvar.find(s) == newvar.end()); // should not be remapped yet
@@ -215,9 +213,7 @@ VariableSymbol *hoistLocalVariable(VariableSymbol *s, SymbolTable *st) {
   string name = s->name;
   int next = 1;
   while (st->contains(name)) {
-    char buf[10];
-    sprintf(buf, "%d", next++);
-    name = s->name + '_' + buf;
+    name = s->name + '_' + std::to_string(next++);
   }
 
   VariableSymbol *result =
@@ -226,7 +222,7 @@ VariableSymbol *hoistLocalVariable(VariableSymbol *s, SymbolTable *st) {
   newvar[s] = result;
   return result;
 }
-#line 452 "ASTGRC.nw"
+#line 448 "ASTGRC.nw"
 void sameVar(VariableSymbol *s) {
   assert(s);
   assert(newvar.find(s) == newvar.end());
@@ -319,12 +315,12 @@ Status visit(BuiltinFunctionSymbol &s) { return &s; }
 Status visit(Counter &s) { return &s; }
 #line 343 "ASTGRC.nw"
 map<SignalSymbol*, SignalSymbol*> newsig;
-#line 412 "ASTGRC.nw"
+#line 410 "ASTGRC.nw"
 Status visit(SignalSymbol &s) {
   assert(newsig.find(&s) != newsig.end()); // should be there
   return newsig[&s];
 }
-#line 462 "ASTGRC.nw"
+#line 458 "ASTGRC.nw"
 Status visit(VariableSymbol &s) {
   assert(newvar.find(&s) != newvar.end()); // should be there
   return newvar[&s];
@@ -332,9 +328,9 @@ Status visit(VariableSymbol &s) {
 #line 233 "ASTGRC.nw"
 };
 
-#line 3219 "ASTGRC.nw"
+#line 3215 "ASTGRC.nw"
   
-#line 511 "ASTGRC.nw"
+#line 507 "ASTGRC.nw"
 struct Context {
   int size;
   std::stack<GRCNode**> continuations;
@@ -366,9 +362,9 @@ struct Context {
     return continuations.top()[k];
   }
 };
-#line 3220 "ASTGRC.nw"
+#line 3216 "ASTGRC.nw"
   
-#line 710 "ASTGRC.nw"
+#line 706 "ASTGRC.nw"
 class GrcWalker : public Visitor {
 protected:
   Context &context;
@@ -399,44 +395,90 @@ public:
 
   STNode *stnode(const ASTNode &);
 };
-#line 3221 "ASTGRC.nw"
+#line 3217 "ASTGRC.nw"
   
-#line 785 "ASTGRC.nw"
+#line 781 "ASTGRC.nw"
 class Surface : public GrcWalker {
 public:
   Surface(Context &c, GrcSynth &e) : GrcWalker(c, e) {}
   
-#line 827 "ASTGRC.nw"
+#line 823 "ASTGRC.nw"
 Status visit(Pause &);
-#line 866 "ASTGRC.nw"
+#line 862 "ASTGRC.nw"
 Status visit(Exit &);
-#line 893 "ASTGRC.nw"
+#line 889 "ASTGRC.nw"
 Status visit(Emit &s) {
   push_onto(context(0), new Action(clone(&s)));
   return Status();
 }
-#line 916 "ASTGRC.nw"
+#line 912 "ASTGRC.nw"
 Status visit(Assign &s) {
   Action *a = new Action(clone(&s));
   *a >> context(0);
   context(0) = a;
   return Status();
 }
-#line 951 "ASTGRC.nw"
+#line 947 "ASTGRC.nw"
 Status visit(IfThenElse &);
-#line 1012 "ASTGRC.nw"
+#line 1008 "ASTGRC.nw"
 Status visit(StatementList &);
-#line 1077 "ASTGRC.nw"
+#line 1073 "ASTGRC.nw"
 Status visit(Loop &);
-#line 1127 "ASTGRC.nw"
+#line 1123 "ASTGRC.nw"
 Status visit(Every &);
-#line 1227 "ASTGRC.nw"
+#line 1223 "ASTGRC.nw"
+Status visit(Repeat &);
+#line 1404 "ASTGRC.nw"
+Status visit(Suspend &);
+#line 1607 "ASTGRC.nw"
+Status visit(Abort &);
+#line 1644 "ASTGRC.nw"
+Status visit(ParallelStatementList &);
+#line 1947 "ASTGRC.nw"
+Status visit(Trap &);
+#line 2016 "ASTGRC.nw"
+Status visit(Signal &);
+#line 2072 "ASTGRC.nw"
+Status visit(Var &);
+#line 2088 "ASTGRC.nw"
+Status visit(Exec &) { return Status(); }
+#line 2102 "ASTGRC.nw"
+Status visit(ProcedureCall &s) {
+  push_onto(context(0), new Action(clone(&s)));
+  return Status();
+}
+#line 785 "ASTGRC.nw"
+};
+#line 3218 "ASTGRC.nw"
+  
+#line 789 "ASTGRC.nw"
+class Depth : public GrcWalker {
+public:
+  Depth(Context &c, GrcSynth &e) : GrcWalker(c, e) {}
+  
+#line 839 "ASTGRC.nw"
+Status visit(Pause &);
+#line 875 "ASTGRC.nw"
+Status visit(Exit &) { return Status(); }
+#line 896 "ASTGRC.nw"
+Status visit(Emit &) { return Status(); }
+#line 921 "ASTGRC.nw"
+Status visit(Assign &) { return Status(); }
+#line 968 "ASTGRC.nw"
+Status visit(IfThenElse &);
+#line 1026 "ASTGRC.nw"
+Status visit(StatementList &);
+#line 1086 "ASTGRC.nw"
+Status visit(Loop &);
+#line 1160 "ASTGRC.nw"
+Status visit(Every &);
+#line 1239 "ASTGRC.nw"
 Status visit(Repeat &);
 #line 1408 "ASTGRC.nw"
 Status visit(Suspend &);
 #line 1611 "ASTGRC.nw"
 Status visit(Abort &);
-#line 1648 "ASTGRC.nw"
+#line 1695 "ASTGRC.nw"
 Status visit(ParallelStatementList &);
 #line 1951 "ASTGRC.nw"
 Status visit(Trap &);
@@ -446,59 +488,13 @@ Status visit(Signal &);
 Status visit(Var &);
 #line 2092 "ASTGRC.nw"
 Status visit(Exec &) { return Status(); }
-#line 2106 "ASTGRC.nw"
-Status visit(ProcedureCall &s) {
-  push_onto(context(0), new Action(clone(&s)));
-  return Status();
-}
-#line 789 "ASTGRC.nw"
-};
-#line 3222 "ASTGRC.nw"
-  
-#line 793 "ASTGRC.nw"
-class Depth : public GrcWalker {
-public:
-  Depth(Context &c, GrcSynth &e) : GrcWalker(c, e) {}
-  
-#line 843 "ASTGRC.nw"
-Status visit(Pause &);
-#line 879 "ASTGRC.nw"
-Status visit(Exit &) { return Status(); }
-#line 900 "ASTGRC.nw"
-Status visit(Emit &) { return Status(); }
-#line 925 "ASTGRC.nw"
-Status visit(Assign &) { return Status(); }
-#line 972 "ASTGRC.nw"
-Status visit(IfThenElse &);
-#line 1030 "ASTGRC.nw"
-Status visit(StatementList &);
-#line 1090 "ASTGRC.nw"
-Status visit(Loop &);
-#line 1164 "ASTGRC.nw"
-Status visit(Every &);
-#line 1243 "ASTGRC.nw"
-Status visit(Repeat &);
-#line 1412 "ASTGRC.nw"
-Status visit(Suspend &);
-#line 1615 "ASTGRC.nw"
-Status visit(Abort &);
-#line 1699 "ASTGRC.nw"
-Status visit(ParallelStatementList &);
-#line 1955 "ASTGRC.nw"
-Status visit(Trap &);
-#line 2024 "ASTGRC.nw"
-Status visit(Signal &);
-#line 2080 "ASTGRC.nw"
-Status visit(Var &);
-#line 2096 "ASTGRC.nw"
-Status visit(Exec &) { return Status(); }
-#line 2113 "ASTGRC.nw"
+#line 2109 "ASTGRC.nw"
 Status visit(ProcedureCall &) { return Status(); }
-#line 797 "ASTGRC.nw"
+#line 793 "ASTGRC.nw"
 };
-#line 3223 "ASTGRC.nw"
+#line 3219 "ASTGRC.nw"
   
-#line 758 "ASTGRC.nw"
+#line 754 "ASTGRC.nw"
 class SelTree : public Visitor {
 protected:
   GrcSynth &environment;
@@ -515,51 +511,51 @@ public:
   void setNode(const ASTNode &, STNode *);
     
   
-#line 813 "ASTGRC.nw"
+#line 809 "ASTGRC.nw"
 Status visit(Pause &);
-#line 860 "ASTGRC.nw"
+#line 856 "ASTGRC.nw"
 Status visit(Exit &s) {
   return Status(new STref());
 }
-#line 885 "ASTGRC.nw"
+#line 881 "ASTGRC.nw"
 Status visit(Emit &) {
   return Status(new STref());
 }
-#line 910 "ASTGRC.nw"
+#line 906 "ASTGRC.nw"
 Status visit(Assign &s) {
   return Status(new STref());
 }
-#line 933 "ASTGRC.nw"
+#line 929 "ASTGRC.nw"
 Status visit(IfThenElse &);
-#line 992 "ASTGRC.nw"
+#line 988 "ASTGRC.nw"
 Status visit(StatementList &s);
-#line 1064 "ASTGRC.nw"
+#line 1060 "ASTGRC.nw"
 Status visit(Loop &s);
-#line 1108 "ASTGRC.nw"
+#line 1104 "ASTGRC.nw"
 Status visit(Every &);
-#line 1214 "ASTGRC.nw"
+#line 1210 "ASTGRC.nw"
 Status visit(Repeat &);
-#line 1404 "ASTGRC.nw"
+#line 1400 "ASTGRC.nw"
 Status visit(Suspend &);
-#line 1607 "ASTGRC.nw"
+#line 1603 "ASTGRC.nw"
 Status visit(Abort &);
-#line 1623 "ASTGRC.nw"
+#line 1619 "ASTGRC.nw"
 Status visit(ParallelStatementList &);
-#line 1947 "ASTGRC.nw"
+#line 1943 "ASTGRC.nw"
 Status visit(Trap &);
-#line 2016 "ASTGRC.nw"
+#line 2012 "ASTGRC.nw"
 Status visit(Signal &);
-#line 2072 "ASTGRC.nw"
+#line 2068 "ASTGRC.nw"
 Status visit(Var &);
-#line 2088 "ASTGRC.nw"
+#line 2084 "ASTGRC.nw"
 Status visit(Exec &) { return Status(new STref()); }
-#line 2102 "ASTGRC.nw"
+#line 2098 "ASTGRC.nw"
 Status visit(ProcedureCall &) { return Status(new STref()); }
-#line 774 "ASTGRC.nw"
+#line 770 "ASTGRC.nw"
 };
-#line 3224 "ASTGRC.nw"
+#line 3220 "ASTGRC.nw"
   
-#line 555 "ASTGRC.nw"
+#line 551 "ASTGRC.nw"
 struct GrcSynth {
   Module *module;
   CompletionCodes &code;
@@ -580,9 +576,9 @@ struct GrcSynth {
   BuiltinConstantSymbol *true_symbol;
 
   
-#line 582 "ASTGRC.nw"
+#line 578 "ASTGRC.nw"
 GrcSynth(Module *, CompletionCodes &);
-#line 623 "ASTGRC.nw"
+#line 619 "ASTGRC.nw"
 GRCgraph *synthesize()
 {
   assert(module->body);
@@ -647,11 +643,11 @@ GRCgraph *synthesize()
 
   return result;
 }
-#line 575 "ASTGRC.nw"
+#line 571 "ASTGRC.nw"
 };
-#line 3225 "ASTGRC.nw"
+#line 3221 "ASTGRC.nw"
   
-#line 2122 "ASTGRC.nw"
+#line 2118 "ASTGRC.nw"
 class RecursiveSynth : public Visitor {
 public:
   Module *module;
@@ -686,53 +682,53 @@ public:
   static void run_before(GRCNode *& b, GRCNode *n) { *n >> b; b = n; }
 
   
-#line 2161 "ASTGRC.nw"
+#line 2157 "ASTGRC.nw"
 RecursiveSynth(Module *, CompletionCodes &);
-#line 2193 "ASTGRC.nw"
+#line 2189 "ASTGRC.nw"
 GRCgraph *synthesize();
-#line 2259 "ASTGRC.nw"
+#line 2255 "ASTGRC.nw"
 map<GRCNode *, bool> visiting;
 void visit(GRCNode *);
-#line 2283 "ASTGRC.nw"
+#line 2279 "ASTGRC.nw"
 Status visit(Pause &);
-#line 2303 "ASTGRC.nw"
+#line 2299 "ASTGRC.nw"
 Status visit(Exit &);
-#line 2321 "ASTGRC.nw"
+#line 2317 "ASTGRC.nw"
 Status visit(Emit &);
-#line 2338 "ASTGRC.nw"
+#line 2334 "ASTGRC.nw"
 Status visit(Assign &);
-#line 2355 "ASTGRC.nw"
+#line 2351 "ASTGRC.nw"
 Status visit(IfThenElse &);
-#line 2397 "ASTGRC.nw"
+#line 2393 "ASTGRC.nw"
 Status visit(StatementList &);
-#line 2439 "ASTGRC.nw"
+#line 2435 "ASTGRC.nw"
 Status visit(Loop &);
-#line 2466 "ASTGRC.nw"
+#line 2462 "ASTGRC.nw"
 Status visit(Every &);
-#line 2530 "ASTGRC.nw"
+#line 2526 "ASTGRC.nw"
 Status visit(Repeat &);
-#line 2562 "ASTGRC.nw"
+#line 2558 "ASTGRC.nw"
 Status visit(Suspend &);
-#line 2637 "ASTGRC.nw"
+#line 2633 "ASTGRC.nw"
 Status visit(Abort &);
-#line 2727 "ASTGRC.nw"
+#line 2723 "ASTGRC.nw"
 Status visit(ParallelStatementList &);
-#line 2801 "ASTGRC.nw"
+#line 2797 "ASTGRC.nw"
 Status visit(Trap &);
-#line 2879 "ASTGRC.nw"
+#line 2875 "ASTGRC.nw"
 Status visit(Signal &);
 Status visit(Var &);
-#line 2924 "ASTGRC.nw"
+#line 2920 "ASTGRC.nw"
 Status visit(ProcedureCall &);
-#line 2943 "ASTGRC.nw"
+#line 2939 "ASTGRC.nw"
 Status visit(Exec &);
-#line 2156 "ASTGRC.nw"
+#line 2152 "ASTGRC.nw"
   virtual ~RecursiveSynth() {}
 };
 
-#line 3227 "ASTGRC.nw"
+#line 3223 "ASTGRC.nw"
   
-#line 2963 "ASTGRC.nw"
+#line 2959 "ASTGRC.nw"
 class Dependencies : public Visitor {
 protected:
   set<GRCNode *> visited;
@@ -747,45 +743,45 @@ public:
   map<SignalSymbol *, SignalNodes> dependencies;
 
   
-#line 3030 "ASTGRC.nw"
+#line 3026 "ASTGRC.nw"
 void dfs(GRCNode *);
-#line 3047 "ASTGRC.nw"
+#line 3043 "ASTGRC.nw"
 Status visit(Action &);
-#line 3051 "ASTGRC.nw"
+#line 3047 "ASTGRC.nw"
 Status visit(Emit &e) {
   dependencies[e.signal].writers.insert(current);
   if (e.value) e.value->welcome(*this);
   return Status();
 }
-#line 3059 "ASTGRC.nw"
+#line 3055 "ASTGRC.nw"
 Status visit(Exit &e) {
   dependencies[e.trap].writers.insert(current);
   if (e.value) e.value->welcome(*this);
   return Status();
 }
-#line 3067 "ASTGRC.nw"
+#line 3063 "ASTGRC.nw"
 Status visit(Assign &a) {
   a.value->welcome(*this);
   return Status();
 }
-#line 3074 "ASTGRC.nw"
+#line 3070 "ASTGRC.nw"
 Status visit(ProcedureCall &c) {
   for ( vector<Expression*>::const_iterator i = c.value_args.begin() ;
         i != c.value_args.end() ; i++ )
     (*i)->welcome(*this);
   return Status();
 }
-#line 3085 "ASTGRC.nw"
+#line 3081 "ASTGRC.nw"
 Status visit(Pause &) { return Status(); }
 Status visit(StartCounter &) { return Status(); }
-#line 3094 "ASTGRC.nw"
+#line 3090 "ASTGRC.nw"
 Status visit(DefineSignal &d) {
   dependencies[d.signal].writers.insert(current);
   return Status();
 }
-#line 3105 "ASTGRC.nw"
+#line 3101 "ASTGRC.nw"
 Status visit(Test &t) { t.predicate->welcome(*this); return Status(); }
-#line 3111 "ASTGRC.nw"
+#line 3107 "ASTGRC.nw"
 Status visit(LoadSignalExpression &e) {
   dependencies[e.signal].readers.insert(current);
   return Status();
@@ -823,12 +819,12 @@ Status visit(FunctionCall &c) {
     (*i)->welcome(*this);
   return Status();
 }
-#line 3153 "ASTGRC.nw"
+#line 3149 "ASTGRC.nw"
 Status visit(Literal &) { return Status(); }
 Status visit(LoadVariableExpression &) { return Status(); }
-#line 3176 "ASTGRC.nw"
+#line 3172 "ASTGRC.nw"
 Status visit(Sync &);
-#line 3184 "ASTGRC.nw"
+#line 3180 "ASTGRC.nw"
 Status visit(EnterGRC &) { return Status(); }
 Status visit(ExitGRC &) { return Status(); }
 Status visit(Nop &) { return Status(); }
@@ -837,12 +833,12 @@ Status visit(STSuspend &) { return Status(); }
 Status visit(Fork &) { return Status(); }
 Status visit(Terminate &) { return Status(); }
 Status visit(Enter &) { return Status(); }
-#line 2977 "ASTGRC.nw"
+#line 2973 "ASTGRC.nw"
   Dependencies() {}
   virtual ~Dependencies() {}
 
   static void compute(GRCNode *);
 };
-#line 3228 "ASTGRC.nw"
+#line 3224 "ASTGRC.nw"
 }
 #endif

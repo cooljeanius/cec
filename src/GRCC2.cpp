@@ -1,4 +1,4 @@
-#line 901 "GRCC2.nw"
+#line 893 "GRCC2.nw"
 #include "GRCC2.hpp"
 #include <set>
 #include <vector>
@@ -636,16 +636,12 @@ void split(Cluster *cluster, map<GRCNode*, Cluster*> &clusterOf,
 	assert(clusterOf.find(*j) != clusterOf.end());
 	if ( clusterOf[*j] != cluster ) {
 	  Nop *nop = new Nop();
-	  char buf[30];
-	  sprintf(buf, "_schedule_%d", cfgmap[*j]);
-	  nop->body = buf;
+	  nop->body = "_schedule_" + std::to_string(cfgmap[*j]);
 	  *nop >> nopchain;
 	  nopchain = nop;
 	  if (labelFor.find(*j) == labelFor.end()) {
 	    // Not yet marked as an entry point.
-	    char buf[30];
-	    sprintf(buf, "L%d", cfgmap[*j]);
-	    labelFor[*j] = buf;
+	    labelFor[*j] = 'L' + std::to_string(cfgmap[*j]);
 	    clusterOf[*j]->entries.push_back(*j);
 	  }
 	}
@@ -695,16 +691,12 @@ void split(Cluster *cluster, map<GRCNode*, Cluster*> &clusterOf,
 
 	    if (labelFor.find(*j) == labelFor.end()) {
 	      // Not yet marked as an entry point.
-	      char buf[30];
-	      sprintf(buf, "L%d", cfgmap[*j]);
-	      labelFor[*j] = buf;
+	      labelFor[*j] = 'L' + std::to_string(cfgmap[*j]);
 	      clusterOf[*j]->entries.push_back(*j);
 	    }
 	    
 	    Nop *nop = new Nop();
-	    char buf[30];
-	    sprintf(buf, "_schedule_%d", cfgmap[*j]);
-	    nop->body = buf;
+	    nop->body = "_schedule_" + std::to_string(cfgmap[*j]);
 	    *j = nop;
 	    nop->predecessors.push_back(node);
 	    *nop >> exitNode;
@@ -724,5 +716,5 @@ void split(Cluster *cluster, map<GRCNode*, Cluster*> &clusterOf,
   assert(exitNode->successors.size() == 0);
   assert(exitNode->predecessors.size() > 0);
 }
-#line 915 "GRCC2.nw"
+#line 907 "GRCC2.nw"
 }

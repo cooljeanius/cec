@@ -132,7 +132,7 @@ cast-to-const-string operator to retrieve the name of the class.
   private:
     const std::string _className;
   public:
-    operator const std::string () { return _className; }
+    operator std::string() const { return _className; }
   };
 @
 
