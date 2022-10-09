@@ -29,6 +29,7 @@ Makefile
 src/EsterelTokenTypes.txt
 src/EsterelTreeParserTokenTypes.txt
 src/cec
+src/test*.*
 cec-strlxml
 cec-xmlstrl
 cec-expandmodules
