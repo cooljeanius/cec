@@ -1,6 +1,7 @@
 #include "IR.hpp"
 #include "AST.hpp"
 #include "ExpandModules.hpp"
+#include <cstring>
 #include <iostream>
 #include <string>
 

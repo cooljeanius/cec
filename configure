@@ -18120,7 +18120,7 @@ options { language="Cpp"; }
 class TestParser extends Parser;
 file : ;
 EOF
-java antlr.Tool test.g > antlr-version 2>&1 || ac_cv_found_antlr=no
+java -cp $ANTLR_HOME/antlr.jar antlr.Tool test.g > antlr-version 2>&1 || ac_cv_found_antlr=no
 antlr_version=`sed 's/^.*Version //
 s/ .*$//' antlr-version`
 rm -f TestParser.cpp TestParser.hpp TestParserTokenTypes.hpp TestParserTokenTypes.txt test.g antlr-version
@@ -18130,7 +18130,7 @@ fi
 if test $ac_cv_found_antlr = yes ; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $antlr_version" >&5
 printf "%s\n" "$antlr_version" >&6; }
-  ANTLR="java antlr.Tool"
+  ANTLR="java -cp $ANTLR_HOME/antlr.jar antlr.Tool"
 else
   ANTLR=""
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5

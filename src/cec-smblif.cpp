@@ -66,15 +66,22 @@ void m2blif(sm* m, ostream &o)
     */
 
     // hold
-    o<<"11"; for(i=0; i<m->no_states; i++) if(m->enc_table[i][j]=='1') o<<"-"; o<<" 1\n";
+    o<<"11";
+   	for(i=0; i<m->no_states; i++)
+		if(m->enc_table[i][j]=='1')
+			o<<"-";
+	o<<" 1\n";
     // normal op
-    for(i=0; i<m->no_states; i++) if(m->enc_table[i][j]=='1'){
-      o<<"--"; 
-      for(k=0; k<m->no_states; k++) if(m->enc_table[k][j]=='1')
-	if(k==i) o<<"1"; else o<<"-";
-      o<<" 1\n";
-    }
-
+    for(i=0; i<m->no_states; i++)
+		if(m->enc_table[i][j]=='1') {
+			o<<"--";
+            for(k=0; k<m->no_states; k++)
+				if(m->enc_table[k][j]=='1') {
+					if(k==i) o<<"1";
+					else o<<"-";
+				}
+			o<<" 1\n";
+    	}
   }
 
   // build flip - flops; TO DO: ff sharing !!!

@@ -3,12 +3,12 @@
 #include "balvm-instructions.h"
 
 unsigned char *program;
-unsigned char* threads[MAX_THREADS];
-unsigned char states[MAX_STATES];
-unsigned char joins[MAX_JOINS];
-unsigned char signals[MAX_SIGNALS];
-int stack[MAX_STACK];
-int registers[MAX_REGISTERS];
+extern unsigned char* threads[MAX_THREADS];
+extern unsigned char states[MAX_STATES];
+extern unsigned char joins[MAX_JOINS];
+extern unsigned char signals[MAX_SIGNALS];
+extern int stack[MAX_STACK];
+extern int registers[MAX_REGISTERS];
 unsigned char *testVectors;
 
 char readProgram(char* filename);

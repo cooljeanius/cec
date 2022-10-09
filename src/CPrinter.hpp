@@ -1,4 +1,4 @@
-#line 1635 "CPrinter.nw"
+#line 1621 "CPrinter.nw"
 #ifndef _CPRINTER_HPP
 #  define _CPRINTER_HPP
 
@@ -19,7 +19,7 @@ namespace CPrinter {
   using std::map;
 
   
-#line 1623 "CPrinter.nw"
+#line 1609 "CPrinter.nw"
 template <class T> bool contains(set<T> &s, T o) {
    return s.find(o) != s.end();
 }
@@ -28,9 +28,9 @@ template <class T, class U> bool contains(map<T, U> &m, T o) {
   return m.find(o) != m.end();
 }
 
-#line 1656 "CPrinter.nw"
+#line 1642 "CPrinter.nw"
   
-#line 1360 "CPrinter.nw"
+#line 1349 "CPrinter.nw"
 class Printer;
 
 struct CStatement {
@@ -81,7 +81,7 @@ struct CCase : CStatement {
   void print(unsigned int = 0);
 };
 
-#line 1658 "CPrinter.nw"
+#line 1644 "CPrinter.nw"
   
 #line 22 "CPrinter.nw"
 class Printer : public Visitor {
@@ -131,18 +131,18 @@ public:
   
 #line 105 "CPrinter.nw"
 string uniqueID(string);
-#line 135 "CPrinter.nw"
+#line 132 "CPrinter.nw"
 void printExpr(ASTNode *n) { n->welcome(*this); }
-#line 144 "CPrinter.nw"
+#line 141 "CPrinter.nw"
 Status visit(Test &t) { printExpr(t.predicate); return Status(); }
 Status visit(Action &a) { printExpr(a.body); return Status(); }
-#line 153 "CPrinter.nw"
+#line 150 "CPrinter.nw"
 Status visit(EnterGRC&) { o << "1 /* EnterGRC */"; return Status(); }
 Status visit(ExitGRC&) { o << "/* ExitGRC */"; return Status(); }
 Status visit(STSuspend&) { o << "/* STSuspend */"; return Status(); }
-#line 164 "CPrinter.nw"
+#line 161 "CPrinter.nw"
 Status visit(Nop& n) { o << n.body; return Status(); }
-#line 172 "CPrinter.nw"
+#line 169 "CPrinter.nw"
 Status visit(Switch &s) {
   STexcl *e = dynamic_cast<STexcl*>(s.st);
   assert(e);
@@ -150,26 +150,26 @@ Status visit(Switch &s) {
   o << stateVar[e];
   return Status();
 }
-#line 189 "CPrinter.nw"
+#line 186 "CPrinter.nw"
 Status visit(Enter &);
-#line 246 "CPrinter.nw"
+#line 243 "CPrinter.nw"
 Status visit(Terminate &);
-#line 283 "CPrinter.nw"
+#line 280 "CPrinter.nw"
 Status visit(Sync &s) {
   if ( contains(terminationVar, &s) )
     o << '~' << terminationVar[&s];
   return Status();
 }
-#line 295 "CPrinter.nw"
+#line 292 "CPrinter.nw"
 Status visit(Fork &f) {
   if (f.sync && contains(terminationVar, f.sync))
     o << terminationVar[f.sync] << " = -1";
   return Status();
 }
-#line 312 "CPrinter.nw"
+#line 309 "CPrinter.nw"
 Status visit(Emit &);
 Status visit(Exit &);
-#line 364 "CPrinter.nw"
+#line 361 "CPrinter.nw"
 Status visit(DefineSignal &d)
 {
   assert(contains(presenceVar, d.signal));
@@ -189,7 +189,7 @@ Status visit(DefineSignal &d)
   o << ';';
   return Status();
 }
-#line 388 "CPrinter.nw"
+#line 385 "CPrinter.nw"
 Status visit(Assign &a) {
   assert(a.variable->type);
   assert(contains(variableVar, a.variable));
@@ -212,17 +212,17 @@ Status visit(Assign &a) {
   }
   return Status();
 }
-#line 417 "CPrinter.nw"
+#line 414 "CPrinter.nw"
 Status visit(StartCounter &);
-#line 437 "CPrinter.nw"
+#line 434 "CPrinter.nw"
 Status visit(CheckCounter &);
-#line 464 "CPrinter.nw"
+#line 461 "CPrinter.nw"
 Status visit(LoadSignalExpression &e) {
   assert(contains(presenceVar, e.signal));
   o << presenceVar[e.signal];
   return Status();
 }
-#line 483 "CPrinter.nw"
+#line 480 "CPrinter.nw"
 Status visit(LoadSignalValueExpression &e) {
   assert(e.signal);
   assert(contains(valueVar, e.signal));
@@ -237,40 +237,40 @@ Status visit(LoadSignalValueExpression &e) {
   }
   return Status();
 }
-#line 502 "CPrinter.nw"
+#line 499 "CPrinter.nw"
 Status visit(LoadVariableExpression &e) {
   assert(contains(variableVar, e.variable));
   o << variableVar[e.variable];
   return Status();
 }
-#line 546 "CPrinter.nw"
+#line 543 "CPrinter.nw"
 Status visit(UnaryOp &);
 Status visit(BinaryOp &);
-#line 553 "CPrinter.nw"
+#line 550 "CPrinter.nw"
 Status visit(Literal &);
-#line 581 "CPrinter.nw"
+#line 578 "CPrinter.nw"
 Status visit(FunctionCall &);
-#line 630 "CPrinter.nw"
+#line 627 "CPrinter.nw"
 Status visit(ProcedureCall &);
-#line 663 "CPrinter.nw"
+#line 660 "CPrinter.nw"
 virtual void printInclude(string);
-#line 711 "CPrinter.nw"
+#line 708 "CPrinter.nw"
 virtual void printDeclarations(string);
-#line 1138 "CPrinter.nw"
+#line 1127 "CPrinter.nw"
 virtual void outputFunctions();
-#line 1169 "CPrinter.nw"
+#line 1158 "CPrinter.nw"
 virtual void resetInputs();
-#line 1197 "CPrinter.nw"
+#line 1186 "CPrinter.nw"
 virtual void ioDefinitions();
-#line 1254 "CPrinter.nw"
+#line 1243 "CPrinter.nw"
 void printStructuredCode(GRCNode *, unsigned int = 0);
-#line 1293 "CPrinter.nw"
+#line 1282 "CPrinter.nw"
 void dfsVisit(GRCNode*);
-#line 1508 "CPrinter.nw"
+#line 1497 "CPrinter.nw"
 CStatement *synthesize(GRCNode*, GRCNode*, bool);
 #line 67 "CPrinter.nw"
 };
-#line 1659 "CPrinter.nw"
+#line 1645 "CPrinter.nw"
 }
 
 #endif

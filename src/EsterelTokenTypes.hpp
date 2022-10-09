@@ -1,8 +1,15 @@
 #ifndef INC_EsterelTokenTypes_hpp_
 #define INC_EsterelTokenTypes_hpp_
 
-/* $ANTLR 2.7.2: "esterel.g" -> "EsterelTokenTypes.hpp"$ */
-struct EsterelTokenTypes {
+/* $ANTLR 2.7.7 (2006-11-01): "esterel.g" -> "EsterelTokenTypes.hpp"$ */
+
+#ifndef CUSTOM_API
+# define CUSTOM_API
+#endif
+
+#ifdef __cplusplus
+struct CUSTOM_API EsterelTokenTypes {
+#endif
 	enum {
 		EOF_ = 1,
 		SIGS = 4,
@@ -128,5 +135,7 @@ struct EsterelTokenTypes {
 		Comment = 124,
 		NULL_TREE_LOOKAHEAD = 3
 	};
+#ifdef __cplusplus
 };
+#endif
 #endif /*INC_EsterelTokenTypes_hpp_*/

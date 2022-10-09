@@ -63,9 +63,9 @@ void state_machine::onehot()
 
 #define LAST 0
 
-char *enc2[2]={"0","1"};
-char *enc3[3]={"1 -","- 1","0 0"};
-char *enc4[4]={"1 0","1 1","0 1","0 0"};
+const char *enc2[2]={"0","1"};
+const char *enc3[3]={"1 -","- 1","0 0"};
+const char *enc4[4]={"1 0","1 1","0 1","0 0"};
 
 void state_machine::fixencoding(int no_ff, char **enc)
 {

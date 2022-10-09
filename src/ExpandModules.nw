@@ -1162,9 +1162,7 @@ for ( SymbolTable::const_iterator i = moduleToCopy->variables->begin() ;
   string newName = baseName;
   int next = 1;
   while (newModule->variables->local_contains(newName)) {
-    char buf[10];
-    sprintf(buf, "%d", next++);
-    newName = baseName + '_' + buf;
+    newName = baseName + '_' + std::to_string(next++);
   }
   TypeSymbol *newType = newcopier.actualSymbol(oldVariable->type);
   Expression *newInitializer = newcopier.copy(oldVariable->initializer);

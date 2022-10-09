@@ -1,4 +1,4 @@
-#line 884 "GRCC2.nw"
+#line 876 "GRCC2.nw"
 #ifndef _GRCC2_HPP
 #  define _GRCC2_HPP
 
@@ -62,7 +62,7 @@ struct Level {
 void levelize(vector<Cluster*> &, vector<Level*> &);
 #line 740 "GRCC2.nw"
 void split(Cluster *, map<GRCNode*, Cluster*> &, map<GRCNode*, string> &);
-#line 893 "GRCC2.nw"
+#line 885 "GRCC2.nw"
 }
 
 #endif

@@ -1,4 +1,4 @@
-#line 1686 "ExpandModules.nw"
+#line 1684 "ExpandModules.nw"
 #include <stdio.h>
 #include "ExpandModules.hpp"
 
@@ -37,7 +37,7 @@ Status FindRoots::visit(Run &s)
   roots.erase(m);
   return Status();
 }
-#line 1693 "ExpandModules.nw"
+#line 1691 "ExpandModules.nw"
   
 #line 445 "ExpandModules.nw"
 void Copier::copySymbolTable(const SymbolTable *source, SymbolTable *dest)
@@ -622,9 +622,7 @@ for ( SymbolTable::const_iterator i = moduleToCopy->variables->begin() ;
   string newName = baseName;
   int next = 1;
   while (newModule->variables->local_contains(newName)) {
-    char buf[10];
-    sprintf(buf, "%d", next++);
-    newName = baseName + '_' + buf;
+    newName = baseName + '_' + std::to_string(next++);
   }
   TypeSymbol *newType = newcopier.actualSymbol(oldVariable->type);
   Expression *newInitializer = newcopier.copy(oldVariable->initializer);
@@ -640,7 +638,7 @@ copiedSymbolTableMap.insert( std::make_pair(moduleToCopy->variables,
 
 #line 595 "ExpandModules.nw"
   
-#line 1189 "ExpandModules.nw"
+#line 1187 "ExpandModules.nw"
 for ( vector<Counter*>::const_iterator i = moduleToCopy->counters.begin() ;
 	i != moduleToCopy->counters.end() ; i++ ) {
   Counter *newCounter = new Counter();
@@ -652,7 +650,7 @@ for ( vector<Counter*>::const_iterator i = moduleToCopy->counters.begin() ;
   Statement *result = newcopier.copy(body);
   return result;
 }
-#line 1225 "ExpandModules.nw"
+#line 1223 "ExpandModules.nw"
 Status Copier::visit(FunctionSymbol &s)
 {
   FunctionSymbol *result = new FunctionSymbol(s.name);
@@ -676,7 +674,7 @@ Status Copier::visit(BuiltinFunctionSymbol &s)
   }
   return result;
 }
-#line 1251 "ExpandModules.nw"
+#line 1249 "ExpandModules.nw"
 Status Copier::visit(ProcedureSymbol &s)
 {
   ProcedureSymbol *result = new ProcedureSymbol(s.name);
@@ -708,7 +706,7 @@ Status Copier::visit(TaskSymbol &s)
   }
   return result;
 }
-#line 1348 "ExpandModules.nw"
+#line 1346 "ExpandModules.nw"
 Status Copier::visit(ProcedureCall &c)
 {
   ProcedureCall *result = new ProcedureCall(actualSymbol(c.procedure));
@@ -724,7 +722,7 @@ Status Copier::visit(ProcedureCall &c)
   }
   return result;
 }
-#line 1375 "ExpandModules.nw"
+#line 1373 "ExpandModules.nw"
 Status Copier::visit(StatementList &l)
 {
   StatementList *result = new StatementList();
@@ -744,7 +742,7 @@ Status Copier::visit(ParallelStatementList &l)
   }
   return result;
 }
-#line 1451 "ExpandModules.nw"
+#line 1449 "ExpandModules.nw"
 Status Copier::visit(Exec &e)
 {
   Exec *result = new Exec();
@@ -771,7 +769,7 @@ Status Copier::visit(Exec &e)
   }
   return result;
 }
-#line 1487 "ExpandModules.nw"
+#line 1485 "ExpandModules.nw"
 void Copier::copyCases(const CaseStatement &source, CaseStatement *dest)
 {  
   assert(dest);
@@ -783,7 +781,7 @@ void Copier::copyCases(const CaseStatement &source, CaseStatement *dest)
 
   dest->default_stmt = copy(source.default_stmt);
 }
-#line 1646 "ExpandModules.nw"
+#line 1644 "ExpandModules.nw"
 Status Copier::visit(FunctionCall &c)
 {
   FunctionCall *result = new FunctionCall(actualSymbol(c.callee));
@@ -794,14 +792,14 @@ Status Copier::visit(FunctionCall &c)
   }
   return result;
 }
-#line 1694 "ExpandModules.nw"
+#line 1692 "ExpandModules.nw"
   
-#line 1593 "ExpandModules.nw"
+#line 1591 "ExpandModules.nw"
 ExpressionCopier::ExpressionCopier(Expression *e, Copier *c)
   : theExpr(e), theCopier(c) { assert(e); assert(c); }
 
 Expression *ExpressionCopier::copy() { return theCopier->copy(theExpr); }
-#line 1695 "ExpandModules.nw"
+#line 1693 "ExpandModules.nw"
   
 #line 94 "ExpandModules.nw"
 Modules *find_roots_and_rewrite(Modules *m)
@@ -824,5 +822,5 @@ Modules *find_roots_and_rewrite(Modules *m)
   
   return result;
 }
-#line 1696 "ExpandModules.nw"
+#line 1694 "ExpandModules.nw"
 }

@@ -1,4 +1,4 @@
-#line 1323 "GRCOpt.nw"
+#line 1332 "GRCOpt.nw"
 #include "GRCOpt.hpp"
 #include "ASTGRC.hpp"
 #include <iostream>
@@ -93,7 +93,7 @@ void bypass(STNode *n)
   n->children.clear(); 
   // delete n; // FIXME: This should work, but it causes problems
 }
-#line 1334 "GRCOpt.nw"
+#line 1343 "GRCOpt.nw"
   
 #line 254 "GRCOpt.nw"
 Simulator::Simulator(GRCgraph &gg) : g(gg)
@@ -172,7 +172,7 @@ for ( map<Sync *, set<int> >::iterator i = sync_levels.begin() ;
 
   for ( vector<GRCNode*>::iterator j = sync->successors.begin() ;
 	j != sync->successors.end() ; j++ ) {
-    if ( *j && !contains(levels, j - sync->successors.begin()) ) {
+    if ( *j && !contains(levels, static_cast<int>(j - sync->successors.begin())) ) {
        erase((*j)->predecessors, (GRCNode*) sync);
        *j = NULL;
     }
@@ -435,7 +435,7 @@ void Simulator::st_walk(STNode *n)
       ch != n->children.end(); ch++)
     st_walk(*ch);
 }
-#line 1335 "GRCOpt.nw"
+#line 1344 "GRCOpt.nw"
   
 #line 816 "GRCOpt.nw"
 void Pass::forward_dfs(GRCNode *n)
@@ -487,9 +487,9 @@ void Pass::transform()
     for (vector<GRCNode *>::reverse_iterator i = topolist.rbegin() ;
 	 i != topolist.rend() ; i++ ) (*i)->welcome(*this);
 }
-#line 1336 "GRCOpt.nw"
+#line 1345 "GRCOpt.nw"
   
-#line 1095 "GRCOpt.nw"
+#line 1104 "GRCOpt.nw"
 Status DanglingST::visit(Enter &s)
 {
   if ( !contains(stkept, s.st) ) {
@@ -507,9 +507,9 @@ Status DanglingST::visit(STSuspend &s)
   }
   return Status();
 }
-#line 1337 "GRCOpt.nw"
+#line 1346 "GRCOpt.nw"
   
-#line 984 "GRCOpt.nw"
+#line 993 "GRCOpt.nw"
 Status PruneSW::visit(Switch &s)
  {
    for ( vector<STNode*>::iterator sch = s.st->children.begin() ;
@@ -543,9 +543,9 @@ Status PruneSW::visit(Switch &s)
     
     return Status();
   }
-#line 1338 "GRCOpt.nw"
+#line 1347 "GRCOpt.nw"
   
-#line 1035 "GRCOpt.nw"
+#line 1044 "GRCOpt.nw"
 Status MergeSW::visit(Switch &s)
 {
 
@@ -587,7 +587,7 @@ Status MergeSW::visit(Switch &s)
 
   return Status();
 }
-#line 1339 "GRCOpt.nw"
+#line 1348 "GRCOpt.nw"
   
 #line 915 "GRCOpt.nw"
 STNode *STSimplify::check_st(STNode *n, STNode *realpar)
@@ -617,21 +617,30 @@ STNode *STSimplify::check_st(STNode *n, STNode *realpar)
       if(c) keep=1;
     }
     
-  if(is_simpleref)
-    if(keep) return c; else return NULL;
+  if(is_simpleref) {
+    if(keep)
+		return c;
+	else
+		return NULL;
+  }
     
-  if(keep) { stkept.insert(n); return n; } else return NULL;
+  if(keep) {
+	stkept.insert(n);
+	return n;
+  }
+  else
+	return NULL;
 }
-#line 1340 "GRCOpt.nw"
+#line 1349 "GRCOpt.nw"
   
-#line 962 "GRCOpt.nw"
+#line 971 "GRCOpt.nw"
 Status RemoveNops::visit(Nop &s){
      bypass(&s);
      return Status();
 };
-#line 1341 "GRCOpt.nw"
+#line 1350 "GRCOpt.nw"
   
-#line 1129 "GRCOpt.nw"
+#line 1138 "GRCOpt.nw"
 Status RedundantEnters::visit(Enter &s)
 {
   assert(s.st);
@@ -642,9 +651,9 @@ Status RedundantEnters::visit(Enter &s)
   }
   return Status();
 }
-#line 1342 "GRCOpt.nw"
+#line 1351 "GRCOpt.nw"
   
-#line 1158 "GRCOpt.nw"
+#line 1167 "GRCOpt.nw"
 struct Dependencies : public ASTGRC::Dependencies {
   Status visit(Sync&) { return Status(); } // disable adding sync dependencies
 };
@@ -677,7 +686,7 @@ UnobservedEmits::UnobservedEmits(Module *m, GRCgraph *g) : Pass(g, false)
       observed.insert(s);
   }
 }
-#line 1195 "GRCOpt.nw"
+#line 1204 "GRCOpt.nw"
 Status UnobservedEmits::visit(Action &s)
 {
   Emit *emit = dynamic_cast<Emit*>(s.body);
@@ -686,17 +695,17 @@ Status UnobservedEmits::visit(Action &s)
   if (exit && observed.find(exit->trap) == observed.end()) bypass(&s);
   return Status();
 }
-#line 1210 "GRCOpt.nw"
+#line 1219 "GRCOpt.nw"
 Status UnobservedEmits::visit(DefineSignal &s)
 {
   if (observed.find(s.signal) == observed.end() &&
       !(s.is_surface && s.signal->initializer)) bypass(&s);
   return Status();
 }
-#line 1343 "GRCOpt.nw"
+#line 1352 "GRCOpt.nw"
 }
 
-#line 1224 "GRCOpt.nw"
+#line 1233 "GRCOpt.nw"
 int main(int argc, char *argv[])
 {   
   try {

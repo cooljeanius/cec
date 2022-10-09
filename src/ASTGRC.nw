@@ -355,9 +355,7 @@ SignalSymbol *cloneLocalSignal(SignalSymbol *s, SymbolTable *st) {
   string name = s->name;
   int next = 1;
   while (st->contains(name)) {
-    char buf[10];
-    sprintf(buf, "%d", next++);
-    name = s->name + '_' + buf;
+    name = s->name + '_' + std::to_string(next++);
   }
   SignalSymbol::kinds kind =
     (s->kind == SignalSymbol::Trap) ? SignalSymbol::Trap : SignalSymbol::Local;
@@ -435,9 +433,7 @@ VariableSymbol *hoistLocalVariable(VariableSymbol *s, SymbolTable *st) {
   string name = s->name;
   int next = 1;
   while (st->contains(name)) {
-    char buf[10];
-    sprintf(buf, "%d", next++);
-    name = s->name + '_' + buf;
+    name = s->name + '_' + std::to_string(next++);
   }
 
   VariableSymbol *result =

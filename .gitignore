@@ -26,7 +26,10 @@ clean-test
 *.dirstamp
 Makefile
 */Makefile
+src/EsterelTokenTypes.txt
+src/EsterelTreeParserTokenTypes.txt
 src/cec
+src/test*.*
 cec-strlxml
 cec-xmlstrl
 cec-expandmodules
@@ -48,3 +51,4 @@ cec-grc3val
 cec-grcbal
 cec-vm
 cec-vm-wrapper
+

@@ -1,7 +1,8 @@
-#include <iostream>
+#include <cstdio>
+#include <cstdlib>
 #include <fstream>
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <limits>
 #include <set>
 #include "IR.hpp"
 #include "AST.hpp"
@@ -9,7 +10,8 @@
 using namespace AST;
 using namespace std;
 
-const int MININT=(-1)<<(2^32-1);
+const int MININT=std::numeric_limits<int>::min();
+// const int MININT=(-1)<<(2^32-1);
 
 //for schedule
 class DPSINFO
@@ -105,7 +107,7 @@ class PDG2CCFG
   int mxnode;
 
   int newvar_counter;  //new signals counter
-  char *newvar_prefix; //unique prefix for new signals
+  const char *newvar_prefix; //unique prefix for new signals
 
   set<GRCNode *> visited;
   int debug;
@@ -126,12 +128,12 @@ class PDG2CCFG
   
 public:
   PDG2CCFG(GRCNode *top, SymbolTable *symtable, GRCNode::NumMap &refmap, int mxnode):
-    top(top),symtable(symtable), refmap(refmap), mxnode(mxnode)
+    top(top),symtable(symtable), refmap(refmap), mxnode(mxnode), newvar_prefix("_DPSCUT_VAR")
   {
     debug = 0;
 
     newvar_counter = 1;
-    newvar_prefix = "_DPSCUT_VAR";
+//    newvar_prefix = "_DPSCUT_VAR";
 
   }
 

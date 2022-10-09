@@ -1,4 +1,4 @@
-#line 1665 "CPrinter.nw"
+#line 1651 "CPrinter.nw"
 #include "CPrinter.hpp"
 #include <stdio.h>
 
@@ -21,31 +21,28 @@ Printer::Printer(std::ostream &o, Module &m, bool three_val)
   // Note: float and double aren't in this list because they are equivalent
   // to Esterel's types of the same name
 
-  char *keywords[] = {
+  const char *keywords[] = {
     "int", "break", "char", "continue", "if", "else",
     "struct", "for", "auto", "do", "extern", "while", "register", "switch",
     "static", "case", "goto", "default", "return", "entry", "sizeof", NULL
   };
 
-  for (char **k = keywords ; *k != NULL ; k++) identifiers.insert(*k);
+  for (const char **k = keywords ; *k != NULL ; k++) identifiers.insert(*k);
 }
 #line 109 "CPrinter.nw"
 string Printer::uniqueID(string name)
 {
   string newname = name;
 
-  char buf[10];
   int version = 1;
-
   while (contains(identifiers, newname)) {
-    sprintf(buf, "%d", version++);
-    newname = name + '_' + buf;
+    newname = name + '_' + std::to_string(version++);
   }
   
   identifiers.insert(newname);
   return newname;
 }
-#line 193 "CPrinter.nw"
+#line 190 "CPrinter.nw"
 Status Printer::visit(Enter &e)
 {
   STexcl *exclusive = 0;
@@ -83,7 +80,7 @@ Status Printer::visit(Enter &e)
 
   return Status();
 }
-#line 250 "CPrinter.nw"
+#line 247 "CPrinter.nw"
 Status Printer::visit(Terminate &t)
 {
   // If we have something other than a single data successor or it is not
@@ -100,7 +97,7 @@ Status Printer::visit(Terminate &t)
     o << terminationVar[s] << " &= -(1 << " << t.code << ")";
   return Status();
 }
-#line 317 "CPrinter.nw"
+#line 314 "CPrinter.nw"
 Status Printer::visit(Emit &e)
 {
   assert(e.signal);
@@ -125,7 +122,7 @@ Status Printer::visit(Emit &e)
   if (e.signal->type) o << ")";
   return Status();
 }
-#line 344 "CPrinter.nw"
+#line 341 "CPrinter.nw"
 Status Printer::visit(Exit &e)
 {
   assert(e.trap);
@@ -139,7 +136,7 @@ Status Printer::visit(Exit &e)
   o << presenceVar[e.trap] << " = 1";
   return Status();
 }
-#line 421 "CPrinter.nw"
+#line 418 "CPrinter.nw"
 Status Printer::visit(StartCounter &s)
 {
   assert(s.counter);
@@ -148,7 +145,7 @@ Status Printer::visit(StartCounter &s)
   printExpr(s.count);
   return Status();
 }
-#line 441 "CPrinter.nw"
+#line 438 "CPrinter.nw"
 Status Printer::visit(CheckCounter &s)
 {
   assert(s.counter);
@@ -165,7 +162,7 @@ Status Printer::visit(CheckCounter &s)
   }
   return Status();
 }
-#line 512 "CPrinter.nw"
+#line 509 "CPrinter.nw"
 Status Printer::visit(UnaryOp &op)
 {
   o << '(';
@@ -177,7 +174,7 @@ Status Printer::visit(UnaryOp &op)
   o << ')';
   return Status();
 }
-#line 526 "CPrinter.nw"
+#line 523 "CPrinter.nw"
 Status Printer::visit(BinaryOp &op)
 {
   o << '(';
@@ -195,7 +192,7 @@ Status Printer::visit(BinaryOp &op)
   o << ')';
   return Status();
 }
-#line 557 "CPrinter.nw"
+#line 554 "CPrinter.nw"
 Status Printer::visit(Literal &l)
 {
   assert(l.type);
@@ -211,7 +208,7 @@ Status Printer::visit(Literal &l)
   }
   return Status();
 }
-#line 585 "CPrinter.nw"
+#line 582 "CPrinter.nw"
 Status Printer::visit(FunctionCall &c)
 {
   assert(c.callee);
@@ -252,7 +249,7 @@ Status Printer::visit(FunctionCall &c)
   }
   return Status();
 }
-#line 634 "CPrinter.nw"
+#line 631 "CPrinter.nw"
 Status Printer::visit(ProcedureCall &c)
 {
   assert(c.procedure);
@@ -274,7 +271,7 @@ Status Printer::visit(ProcedureCall &c)
   o << ")";
   return Status();
 }
-#line 667 "CPrinter.nw"
+#line 664 "CPrinter.nw"
 void Printer::printInclude(string basename)
 {
 
@@ -314,7 +311,7 @@ void Printer::printInclude(string basename)
   if (needInclude)
     o << "#include \"" << basename << ".h\"\n";
 }
-#line 715 "CPrinter.nw"
+#line 712 "CPrinter.nw"
 void Printer::printDeclarations(string basename)
 {
 
@@ -632,9 +629,7 @@ void Printer::printDeclarations(string basename)
   for ( STmap::const_iterator i = stmap.begin() ; i != stmap.end() ; i++ ) {
     STexcl *e = dynamic_cast<STexcl*>((*i).first);
     if (e) {
-      char buf[15];
-      sprintf(buf, "_%d", stmap[e]);
-      stateVar[e] = string("_state.") + string(buf);
+      stateVar[e] = "_state." + std::to_string(stmap[e]);
       unsigned int bits = 1;
       while ( (1 << bits) < e->children.size() ) ++bits;
       o << "  unsigned int " << buf << " : " << bits << ";\n";
@@ -658,9 +653,7 @@ void Printer::printDeclarations(string basename)
   for ( STmap::const_iterator i = stmap.begin() ; i != stmap.end() ; i++ ) {
     STexcl *e = dynamic_cast<STexcl*>((*i).first);
     if (e) {
-      char buf[15];
-      sprintf(buf, "_state_%d", stmap[e]);
-      string var = uniqueID(buf);
+      const string var = uniqueID("_state_" + std::to_string(stmap[e]));
       stateVar[e] = var;
       o << "static unsigned char " << var;
       // Initialization of state of selection-tree root:
@@ -687,9 +680,7 @@ void Printer::printDeclarations(string basename)
 	if (*j) ++successors;
       if (successors > 1) {
 	// If there is more than one non-NULL successor, generate a variable
-	char buf[15];
-	sprintf(buf, "_term_%d", cfgmap[s]);
-	string var = uniqueID(buf);
+	const string var = uniqueID("_term_" + std::to_string(cfgmap[s]));
 	terminationVar[s] = var;
 	o << "static int " << var << ";\n";
       }
@@ -700,9 +691,7 @@ void Printer::printDeclarations(string basename)
 
   for ( vector<Counter*>::const_iterator i = m.counters.begin() ;
 	i != m.counters.end() ; i++ ) {
-    char buf[15];
-    sprintf(buf, "_counter_%d", i-m.counters.begin() );
-    string var = uniqueID(buf);
+    const string var = uniqueID("_counter_" + std::to_string(static_cast<unsigned int>(i-m.counters.begin())));
     counterVar[*i] = var;
     o << "static int " << var << ";\n";
   }
@@ -730,7 +719,7 @@ void Printer::printDeclarations(string basename)
 #endif
 
 }
-#line 1142 "CPrinter.nw"
+#line 1131 "CPrinter.nw"
 void Printer::outputFunctions()
 {
   assert(m.signals);
@@ -751,7 +740,7 @@ void Printer::outputFunctions()
     }
   }
 }
-#line 1173 "CPrinter.nw"
+#line 1162 "CPrinter.nw"
 void Printer::resetInputs()
 {
   assert(m.signals);
@@ -769,7 +758,7 @@ void Printer::resetInputs()
     }
   }  
 }
-#line 1201 "CPrinter.nw"
+#line 1190 "CPrinter.nw"
 void Printer::ioDefinitions()
 {
   // Print input signal function definitions
@@ -806,7 +795,7 @@ void Printer::ioDefinitions()
     }
   }
 }
-#line 1258 "CPrinter.nw"
+#line 1247 "CPrinter.nw"
 void Printer::printStructuredCode(GRCNode *exit_node, unsigned int indent)
 {
   assert(exit_node);
@@ -820,7 +809,7 @@ void Printer::printStructuredCode(GRCNode *exit_node, unsigned int indent)
   dfsVisit(exit_node);
 
   
-#line 1320 "CPrinter.nw"
+#line 1309 "CPrinter.nw"
 ridom.clear();
 
 // Compute immediate dominators on the reverse graph
@@ -857,7 +846,7 @@ do {
   }
 } while (changed);
 
-#line 1272 "CPrinter.nw"
+#line 1261 "CPrinter.nw"
   GRCNode *entry_node = nodes.front();
 
   statementFor.clear();
@@ -871,7 +860,7 @@ do {
 
   delete root;
 }
-#line 1297 "CPrinter.nw"
+#line 1286 "CPrinter.nw"
 void Printer::dfsVisit(GRCNode *n)
 {
   if (!n || nodeNumber.find(n) != nodeNumber.end()) return;
@@ -886,14 +875,14 @@ void Printer::dfsVisit(GRCNode *n)
 
   // std::cerr << "Assigned node " << cfgmap[n] << " = " << nodeNumber[n] << '\n';
 }
-#line 1412 "CPrinter.nw"
+#line 1401 "CPrinter.nw"
 Printer *CStatement::printer = 0;
-#line 1416 "CPrinter.nw"
+#line 1405 "CPrinter.nw"
 void CStatement::indent(unsigned int n)
 {
   for (unsigned int i = 0 ; i < n ; i++) printer->o << "  ";
 }
-#line 1423 "CPrinter.nw"
+#line 1412 "CPrinter.nw"
 void CStatement::begin(unsigned int i)
 {
   if (!label.empty()) {
@@ -902,14 +891,14 @@ void CStatement::begin(unsigned int i)
   }
   indent(i);
 }
-#line 1435 "CPrinter.nw"
+#line 1424 "CPrinter.nw"
 void CStatement::print(unsigned int i)
 {
   begin(i);
   printer->printExpr(node);
   printer->o << ";\n";
 }
-#line 1444 "CPrinter.nw"
+#line 1433 "CPrinter.nw"
 void CIfElse::print(unsigned int i)
 {
   begin(i);
@@ -928,19 +917,19 @@ void CIfElse::print(unsigned int i)
     printer->o << "\n";
   }
 }
-#line 1465 "CPrinter.nw"
+#line 1454 "CPrinter.nw"
 void CGoto::print(unsigned int i)
 {
   begin(i);
   printer->o << "goto " << label << ";\n";
 }
-#line 1473 "CPrinter.nw"
+#line 1462 "CPrinter.nw"
 void CBreak::print(unsigned int i)
 {
   begin(i);
   printer->o << "break;\n";
 }
-#line 1481 "CPrinter.nw"
+#line 1470 "CPrinter.nw"
 void CSwitch::print(unsigned int i)
 {
   begin(i);
@@ -953,7 +942,7 @@ void CSwitch::print(unsigned int i)
   indent(i);
   printer->o << "}\n";
 }
-#line 1496 "CPrinter.nw"
+#line 1485 "CPrinter.nw"
 void CCase::print(unsigned int i)
 {
   indent(i > 0 ? i - 1 : 0);
@@ -961,7 +950,7 @@ void CCase::print(unsigned int i)
   assert(body);
   for ( CStatement *st = body ; st ; st = st->next ) st->print(i);
 }
-#line 1512 "CPrinter.nw"
+#line 1501 "CPrinter.nw"
 CStatement *Printer::synthesize(GRCNode *node, GRCNode *final, bool needBreak)
 {
   assert(node);
@@ -985,11 +974,8 @@ CStatement *Printer::synthesize(GRCNode *node, GRCNode *final, bool needBreak)
   if ( statementFor.find(node) != statementFor.end() ) {
     CStatement *target = statementFor[node];
     if (target->label.empty()) {
-      char buf[20];
-      // sprintf(buf, "L%d", nextLabel++);
       assert(cfgmap.find(node) != cfgmap.end());
-      sprintf(buf, "N%d", cfgmap[node]);
-      target->label = buf;
+      target->label = 'N' + std::to_string(cfgmap[node]);
     }
     return new CGoto(target->label);
   }
@@ -1068,5 +1054,5 @@ CStatement *Printer::synthesize(GRCNode *node, GRCNode *final, bool needBreak)
     result->label = labelFor[node];
   return result;
 }
-#line 1670 "CPrinter.nw"
+#line 1656 "CPrinter.nw"
 }

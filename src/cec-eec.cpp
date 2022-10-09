@@ -798,7 +798,7 @@ public:
   SignalSymbol *NewVariable()
   {
     char new_sig_name[32];
-    char *pref = "_EECCUT_VAR";
+    const char *pref = "_EECCUT_VAR";
 
     cerr<<"A CUT!!!!!!!!!!!!!!!!\n";
     assert(0);

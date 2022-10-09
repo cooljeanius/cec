@@ -1,10 +1,10 @@
-#line 3233 "ASTGRC.nw"
+#line 3229 "ASTGRC.nw"
 #include <cstdio>
 #include "ASTGRC.hpp"
 
 namespace ASTGRC {
   
-#line 586 "ASTGRC.nw"
+#line 582 "ASTGRC.nw"
 GrcSynth::GrcSynth(Module *m, CompletionCodes &c)
   : module(m), code(c),
     surface_context(code.max() + 1),
@@ -35,19 +35,19 @@ GrcSynth::GrcSynth(Module *m, CompletionCodes &c)
     clone.sameVar(s);
   }
 }
-#line 3238 "ASTGRC.nw"
+#line 3234 "ASTGRC.nw"
   
-#line 743 "ASTGRC.nw"
+#line 739 "ASTGRC.nw"
 GrcWalker::GrcWalker(Context &c, GrcSynth &e)
     : context(c), environment(e), clone(e.clone) {}
-#line 748 "ASTGRC.nw"
+#line 744 "ASTGRC.nw"
 STNode *GrcWalker::stnode(const ASTNode &n) {
   assert(environment.ast2st.find(&n) != environment.ast2st.end() );
   return environment.ast2st[&n];
 }
-#line 3239 "ASTGRC.nw"
+#line 3235 "ASTGRC.nw"
   
-#line 831 "ASTGRC.nw"
+#line 827 "ASTGRC.nw"
 Status Surface::visit(Pause &s) {
   Enter *en = new Enter(stnode(s));
   assert(en->st);
@@ -55,14 +55,14 @@ Status Surface::visit(Pause &s) {
   context(0) = en;
   return Status();
 }
-#line 870 "ASTGRC.nw"
+#line 866 "ASTGRC.nw"
 Status Surface::visit(Exit &s) {
   assert(s.trap);
   context(0) = context(environment.code[s.trap]);
   push_onto(context(0), new Action(clone(&s)));
   return Status();
 }
-#line 955 "ASTGRC.nw"
+#line 951 "ASTGRC.nw"
 Status Surface::visit(IfThenElse &s) {
   Enter *en;
   assert(s.predicate);
@@ -74,7 +74,7 @@ Status Surface::visit(IfThenElse &s) {
   push_onto(context(0), en);
   return Status();
 }
-#line 1016 "ASTGRC.nw"
+#line 1012 "ASTGRC.nw"
 Status Surface::visit(StatementList &s) {
 
   for ( vector<Statement*>::reverse_iterator i = s.statements.rbegin() ;
@@ -86,14 +86,14 @@ Status Surface::visit(StatementList &s) {
   push_onto(context(0), new Enter(stnode(s)));
   return Status();
 }
-#line 1081 "ASTGRC.nw"
+#line 1077 "ASTGRC.nw"
 Status Surface::visit(Loop &s) {
   context(0) = synthesize(s.body);
   Enter *en = new Enter(stnode(s));
   push_onto(context(0), en);
   return Status();
 }
-#line 1131 "ASTGRC.nw"
+#line 1127 "ASTGRC.nw"
 Status Surface::visit(Every &s) {
 
   STNode *halt = stnode(s)->children[0]->children[0];
@@ -124,7 +124,7 @@ Status Surface::visit(Every &s) {
 
   return Status();
 }
-#line 1231 "ASTGRC.nw"
+#line 1227 "ASTGRC.nw"
 Status Surface::visit(Repeat &s) {
   context(0) = synthesize(s.body);
   assert(s.counter);
@@ -134,7 +134,7 @@ Status Surface::visit(Repeat &s) {
   push_onto(context(0), en);
   return Status();
 }
-#line 1301 "ASTGRC.nw"
+#line 1297 "ASTGRC.nw"
 Status Surface::visit(Suspend &s)
 {
   assert(s.body);
@@ -175,7 +175,7 @@ Status Surface::visit(Suspend &s)
   context(0) = start;
   return Status();
 }
-#line 1462 "ASTGRC.nw"
+#line 1458 "ASTGRC.nw"
 Status Surface::visit(Abort &s) {
   if (s.is_weak) throw IR::Error("weak abort.  Did the dismantler run?");
 
@@ -239,7 +239,7 @@ Status Surface::visit(Abort &s) {
 
   return Status();
 }
-#line 1652 "ASTGRC.nw"
+#line 1648 "ASTGRC.nw"
 Status Surface::visit(ParallelStatementList &s) {
   Sync *sync = new Sync(stnode(s));
   Fork *fork = new Fork(sync);
@@ -284,7 +284,7 @@ Status Surface::visit(ParallelStatementList &s) {
   push_onto(context(0), new Enter(stnode(s)));
   return Status();
 }
-#line 1810 "ASTGRC.nw"
+#line 1806 "ASTGRC.nw"
 Status Surface::visit(Trap &s) {
 
   assert(s.symbols);
@@ -346,7 +346,7 @@ Status Surface::visit(Trap &s) {
 
   return Status();
 }
-#line 1973 "ASTGRC.nw"
+#line 1969 "ASTGRC.nw"
 Status Surface::visit(Signal &s) {
   for ( SymbolTable::const_iterator i = s.symbols->begin() ;
         i != s.symbols->end() ; i++ ) {
@@ -366,7 +366,7 @@ Status Surface::visit(Signal &s) {
   }
   return Status();
 }
-#line 2042 "ASTGRC.nw"
+#line 2038 "ASTGRC.nw"
 Status Surface::visit(Var &s) {
   for ( SymbolTable::const_iterator i = s.symbols->begin() ;
 	i != s.symbols->end() ; i++ ) {
@@ -379,13 +379,13 @@ Status Surface::visit(Var &s) {
   context(0) = synthesize(s.body);
   return Status();
 }
-#line 3240 "ASTGRC.nw"
+#line 3236 "ASTGRC.nw"
   
-#line 847 "ASTGRC.nw"
+#line 843 "ASTGRC.nw"
 Status Depth::visit(Pause &s) {
   return Status();
 }
-#line 976 "ASTGRC.nw"
+#line 972 "ASTGRC.nw"
 Status Depth::visit(IfThenElse &s) {
   Switch *sw = new Switch(stnode(s));
   *sw >> ( (s.else_part != 0) ? recurse(s.else_part) : context(0))
@@ -393,7 +393,7 @@ Status Depth::visit(IfThenElse &s) {
   context(0) = sw;
   return Status();
 }
-#line 1036 "ASTGRC.nw"
+#line 1032 "ASTGRC.nw"
 Status Depth::visit(StatementList &s) {
   Switch *sw;
   if (!s.statements.empty()) {
@@ -413,7 +413,7 @@ Status Depth::visit(StatementList &s) {
   }
   return Status();
 }
-#line 1094 "ASTGRC.nw"
+#line 1090 "ASTGRC.nw"
 Status Depth::visit(Loop &s) {
   environment.surface_context.push(context);
   // Synthesize the surface
@@ -423,7 +423,7 @@ Status Depth::visit(Loop &s) {
   environment.surface_context.pop();
   return Status();
 }
-#line 1168 "ASTGRC.nw"
+#line 1164 "ASTGRC.nw"
 Status Depth::visit(Every &s) {
 
   Delay *d = dynamic_cast<Delay*>(s.predicate);
@@ -462,7 +462,7 @@ Status Depth::visit(Every &s) {
 
   return Status();
 }
-#line 1247 "ASTGRC.nw"
+#line 1243 "ASTGRC.nw"
 Status Depth::visit(Repeat &s) {
 
   // std::cerr<<"depth visit\n";
@@ -484,7 +484,7 @@ Status Depth::visit(Repeat &s) {
 
   return Status();
 }
-#line 1344 "ASTGRC.nw"
+#line 1340 "ASTGRC.nw"
 Status Depth::visit(Suspend &s) {
 
   assert(s.predicate);
@@ -542,7 +542,7 @@ Status Depth::visit(Suspend &s) {
   context(0) = swimm;
   return Status();
 }
-#line 1534 "ASTGRC.nw"
+#line 1530 "ASTGRC.nw"
 Status Depth::visit(Abort &s) {
   if (s.is_weak) throw IR::Error("weak abort.  Did the dismantler run?");
 
@@ -613,7 +613,7 @@ Status Depth::visit(Abort &s) {
 
   return Status();
 }
-#line 1703 "ASTGRC.nw"
+#line 1699 "ASTGRC.nw"
 Status Depth::visit(ParallelStatementList &s) {
   Sync *sync = new Sync(stnode(s));
   Fork *fork = new Fork(sync);
@@ -662,7 +662,7 @@ Status Depth::visit(ParallelStatementList &s) {
   push_onto(context(0), new Enter(stnode(s))); // hold
   return Status();
 }
-#line 1879 "ASTGRC.nw"
+#line 1875 "ASTGRC.nw"
 Status Depth::visit(Trap &s) {
 
   assert(s.symbols);
@@ -728,7 +728,7 @@ Status Depth::visit(Trap &s) {
   context(0) = topswitch;
   return Status();
 }
-#line 1995 "ASTGRC.nw"
+#line 1991 "ASTGRC.nw"
 Status Depth::visit(Signal &s) {
   for ( SymbolTable::const_iterator i = s.symbols->begin() ;
         i != s.symbols->end() ; i++ ) {
@@ -747,7 +747,7 @@ Status Depth::visit(Signal &s) {
   }
   return Status();
 }
-#line 2057 "ASTGRC.nw"
+#line 2053 "ASTGRC.nw"
 Status Depth::visit(Var &s) {
   for ( SymbolTable::const_iterator i = s.symbols->begin() ;
 	i != s.symbols->end() ; i++ ) {
@@ -760,20 +760,20 @@ Status Depth::visit(Var &s) {
   context(0) = synthesize(s.body);
   return Status();
 }
-#line 3241 "ASTGRC.nw"
+#line 3237 "ASTGRC.nw"
   
-#line 778 "ASTGRC.nw"
+#line 774 "ASTGRC.nw"
 void SelTree::setNode(const ASTNode &n, STNode *sn) {
   assert(sn);
   environment.ast2st[&n] = sn;
 }
-#line 817 "ASTGRC.nw"
+#line 813 "ASTGRC.nw"
 Status SelTree::visit(Pause &s){
   STleaf *leaf = new STleaf();
   setNode(s, leaf);
   return Status(leaf);
 }
-#line 937 "ASTGRC.nw"
+#line 933 "ASTGRC.nw"
 Status SelTree::visit(IfThenElse &s) {  
   STexcl *ite = new STexcl();
   setNode(s, ite);
@@ -783,7 +783,7 @@ Status SelTree::visit(IfThenElse &s) {
 
   return Status(ite);
 }
-#line 996 "ASTGRC.nw"
+#line 992 "ASTGRC.nw"
 Status  SelTree::visit(StatementList &s)
 {
   STexcl *excl = new STexcl();
@@ -799,14 +799,14 @@ Status  SelTree::visit(StatementList &s)
 }
 
 
-#line 1068 "ASTGRC.nw"
+#line 1064 "ASTGRC.nw"
 Status SelTree::visit(Loop &s) {
   STref *lp = new STref();
   setNode(s, lp);
   *lp >> synthesize(s.body);
   return Status(lp);
 }
-#line 1112 "ASTGRC.nw"
+#line 1108 "ASTGRC.nw"
 Status SelTree::visit(Every &s) {
 
   STref *ab = new STref(); ab->setabort(); setNode(s, ab);
@@ -819,14 +819,14 @@ Status SelTree::visit(Every &s) {
   return Status(ab);
 
 }
-#line 1218 "ASTGRC.nw"
+#line 1214 "ASTGRC.nw"
 Status SelTree::visit(Repeat &s) {
   STref *lp = new STref();
   setNode(s, lp);
   *lp >> synthesize(s.body);
   return Status(lp);
 }
-#line 1282 "ASTGRC.nw"
+#line 1278 "ASTGRC.nw"
 Status SelTree::visit(Suspend &s)
 {
   STexcl *ex = new STexcl();
@@ -843,7 +843,7 @@ Status SelTree::visit(Suspend &s)
   setNode(s, ex);
   return Status(ex);
 }
-#line 1424 "ASTGRC.nw"
+#line 1420 "ASTGRC.nw"
 Status SelTree::visit(Abort &s) {
 
   // The selection tree for the body of the abort:
@@ -874,7 +874,7 @@ Status SelTree::visit(Abort &s) {
   setNode(s, exclusive);
   return Status(exclusive);
 }
-#line 1627 "ASTGRC.nw"
+#line 1623 "ASTGRC.nw"
 Status SelTree::visit(ParallelStatementList &s)
 {
   STpar *par = new STpar();
@@ -893,7 +893,7 @@ Status SelTree::visit(ParallelStatementList &s)
 
   return Status(par);
 }
-#line 1766 "ASTGRC.nw"
+#line 1762 "ASTGRC.nw"
 Status SelTree::visit(Trap &s) {
 
   // Create the topmost exclusive node
@@ -929,21 +929,21 @@ Status SelTree::visit(Trap &s) {
   setNode(s, exclusive);
   return Status(exclusive);  
 }
-#line 1965 "ASTGRC.nw"
+#line 1961 "ASTGRC.nw"
 Status SelTree::visit(Signal &s) {
   STNode *st = new STref();
   *st >> synthesize(s.body);
   return Status(st);
 }
-#line 2034 "ASTGRC.nw"
+#line 2030 "ASTGRC.nw"
 Status SelTree::visit(Var &s) {
   STNode *st = new STref();
   *st >> synthesize(s.body);
   return Status(st);
 }
-#line 3242 "ASTGRC.nw"
+#line 3238 "ASTGRC.nw"
   
-#line 2985 "ASTGRC.nw"
+#line 2981 "ASTGRC.nw"
 void Dependencies::compute(GRCNode *root)
 {
   assert(root);
@@ -965,7 +965,7 @@ void Dependencies::compute(GRCNode *root)
     }
   }
 }
-#line 3015 "ASTGRC.nw"
+#line 3011 "ASTGRC.nw"
 void Dependencies::dfs(GRCNode *n)
 {
   if (!n || visited.find(n) != visited.end() ) return;
@@ -978,14 +978,14 @@ void Dependencies::dfs(GRCNode *n)
   for (vector<GRCNode*>::const_iterator i = n->successors.begin() ;
        i < n->successors.end() ; i++ ) dfs(*i);  
 }
-#line 3038 "ASTGRC.nw"
+#line 3034 "ASTGRC.nw"
 Status Dependencies::visit(Action &act)
 {
   assert(act.body);
   act.body->welcome(*this);
   return Status();
 }
-#line 3163 "ASTGRC.nw"
+#line 3159 "ASTGRC.nw"
 Status Dependencies::visit(Sync &s)
 {
   for ( vector<GRCNode*>::const_iterator i = s.predecessors.begin() ;
@@ -996,9 +996,9 @@ Status Dependencies::visit(Sync &s)
   }
   return Status();
 }
-#line 3243 "ASTGRC.nw"
+#line 3239 "ASTGRC.nw"
   
-#line 2165 "ASTGRC.nw"
+#line 2161 "ASTGRC.nw"
 RecursiveSynth::RecursiveSynth(Module *m, CompletionCodes &c)
   : module(m), code(c), context(code.max() + 1) {
   assert(m);
@@ -1024,7 +1024,7 @@ RecursiveSynth::RecursiveSynth(Module *m, CompletionCodes &c)
     clone.sameVar(s);
   }
 }
-#line 2197 "ASTGRC.nw"
+#line 2193 "ASTGRC.nw"
 GRCgraph *RecursiveSynth::synthesize()
 {
   assert(module->body);
@@ -1072,7 +1072,7 @@ GRCgraph *RecursiveSynth::synthesize()
 
   return result;
 }
-#line 2264 "ASTGRC.nw"
+#line 2260 "ASTGRC.nw"
 void RecursiveSynth::visit(GRCNode *n)
 {
   assert(n);
@@ -1087,7 +1087,7 @@ void RecursiveSynth::visit(GRCNode *n)
 
   visiting[n] = false;
 }
-#line 2287 "ASTGRC.nw"
+#line 2283 "ASTGRC.nw"
 Status RecursiveSynth::visit(Pause &s)
 {
   stnode = new STleaf();
@@ -1099,7 +1099,7 @@ Status RecursiveSynth::visit(Pause &s)
 
   return Status();
 }
-#line 2307 "ASTGRC.nw"
+#line 2303 "ASTGRC.nw"
 Status RecursiveSynth::visit(Exit &s)
 {
   assert(s.trap);
@@ -1109,7 +1109,7 @@ Status RecursiveSynth::visit(Exit &s)
   depth = context(0);
   return Status();
 }
-#line 2325 "ASTGRC.nw"
+#line 2321 "ASTGRC.nw"
 Status RecursiveSynth::visit(Emit &s)
 {
   stnode = new STref();
@@ -1118,7 +1118,7 @@ Status RecursiveSynth::visit(Emit &s)
   depth = context(0);
   return Status();
 }
-#line 2342 "ASTGRC.nw"
+#line 2338 "ASTGRC.nw"
 Status RecursiveSynth::visit(Assign &s)
 {
   stnode = new STref();
@@ -1127,7 +1127,7 @@ Status RecursiveSynth::visit(Assign &s)
   depth = context(0);
   return Status();
 }
-#line 2359 "ASTGRC.nw"
+#line 2355 "ASTGRC.nw"
 Status RecursiveSynth::visit(IfThenElse &s)
 {  
   if (s.then_part) {
@@ -1161,7 +1161,7 @@ Status RecursiveSynth::visit(IfThenElse &s)
 
   return Status();
 }
-#line 2401 "ASTGRC.nw"
+#line 2397 "ASTGRC.nw"
 Status RecursiveSynth::visit(StatementList &s)
 {
   if ( s.statements.empty() ) {
@@ -1187,7 +1187,7 @@ Status RecursiveSynth::visit(StatementList &s)
   run_before(surface, new Enter(stnode));
   return Status();
 }
-#line 2443 "ASTGRC.nw"
+#line 2439 "ASTGRC.nw"
 Status RecursiveSynth::visit(Loop &s)
 {
   STref *lp = new STref();
@@ -1206,7 +1206,7 @@ Status RecursiveSynth::visit(Loop &s)
   run_before(surface, new Enter(lp));
   return Status();
 }
-#line 2470 "ASTGRC.nw"
+#line 2466 "ASTGRC.nw"
 Status RecursiveSynth::visit(Every &s)
 {
   STref *stroot = new STref();
@@ -1262,7 +1262,7 @@ Status RecursiveSynth::visit(Every &s)
   stnode = stroot;
   return Status();
 }
-#line 2534 "ASTGRC.nw"
+#line 2530 "ASTGRC.nw"
 Status RecursiveSynth::visit(Repeat &s)
 {
   STref *stroot = new STref();
@@ -1285,7 +1285,7 @@ Status RecursiveSynth::visit(Repeat &s)
   run_before(surface, new Enter(stroot));
   return Status();
 }
-#line 2566 "ASTGRC.nw"
+#line 2562 "ASTGRC.nw"
 Status RecursiveSynth::visit(Suspend &s)
 {
   synthesize(s.body);
@@ -1352,7 +1352,7 @@ Status RecursiveSynth::visit(Suspend &s)
 
   return Status();
 }
-#line 2641 "ASTGRC.nw"
+#line 2637 "ASTGRC.nw"
 Status RecursiveSynth::visit(Abort &s)
 {
   if (s.is_weak) throw IR::Error("weak abort.  Did the dismantler run?");
@@ -1434,7 +1434,7 @@ Status RecursiveSynth::visit(Abort &s)
 
   return Status();
 }
-#line 2731 "ASTGRC.nw"
+#line 2727 "ASTGRC.nw"
 Status RecursiveSynth::visit(ParallelStatementList &s)
 {
   STpar *stroot = new STpar();
@@ -1500,7 +1500,7 @@ Status RecursiveSynth::visit(ParallelStatementList &s)
   stnode = stroot;
   return Status();
 }
-#line 2805 "ASTGRC.nw"
+#line 2801 "ASTGRC.nw"
 Status RecursiveSynth::visit(Trap &s)
 {
   assert(s.body);
@@ -1570,7 +1570,7 @@ Status RecursiveSynth::visit(Trap &s)
   stnode = stroot;
   return Status();
 }
-#line 2884 "ASTGRC.nw"
+#line 2880 "ASTGRC.nw"
 Status RecursiveSynth::visit(Signal &s)
 {
   for ( SymbolTable::const_iterator i = s.symbols->begin() ;
@@ -1606,7 +1606,7 @@ Status RecursiveSynth::visit(Var &s)
   synthesize(s.body);
   return Status();
 }
-#line 2928 "ASTGRC.nw"
+#line 2924 "ASTGRC.nw"
 Status RecursiveSynth::visit(ProcedureCall &s)
 {
   stnode = new STref();
@@ -1615,7 +1615,7 @@ Status RecursiveSynth::visit(ProcedureCall &s)
   depth = context(0);
   return Status();
 }
-#line 2947 "ASTGRC.nw"
+#line 2943 "ASTGRC.nw"
 Status RecursiveSynth::visit(Exec &s)
 {
   stnode = new STref();
@@ -1623,5 +1623,5 @@ Status RecursiveSynth::visit(Exec &s)
   depth = context(0);
   return Status();
 }
-#line 3244 "ASTGRC.nw"
+#line 3240 "ASTGRC.nw"
 }

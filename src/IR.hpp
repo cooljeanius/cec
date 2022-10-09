@@ -45,7 +45,7 @@ namespace IR {
   private:
     const std::string _className;
   public:
-    operator const std::string () { return _className; }
+    operator std::string() const { return _className; }
   };
 #line 781 "IR.nw"
   

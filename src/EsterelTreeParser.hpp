@@ -3,7 +3,7 @@
 
 #include <antlr/config.hpp>
 #include "EsterelTreeParserTokenTypes.hpp"
-/* $ANTLR 2.7.2: "staticsemantics.g" -> "EsterelTreeParser.hpp"$ */
+/* $ANTLR 2.7.7 (2006-11-01): "staticsemantics.g" -> "EsterelTreeParser.hpp"$ */
 #include <antlr/TreeParser.hpp>
 
 #line 1 "staticsemantics.g"
@@ -45,14 +45,14 @@ using namespace AST;
 
 
 #line 48 "EsterelTreeParser.hpp"
-class EsterelTreeParser : public ANTLR_USE_NAMESPACE(antlr)TreeParser, public EsterelTreeParserTokenTypes
+class CUSTOM_API EsterelTreeParser : public ANTLR_USE_NAMESPACE(antlr)TreeParser, public EsterelTreeParserTokenTypes
 {
 #line 125 "staticsemantics.g"
 
 #line 52 "EsterelTreeParser.hpp"
 public:
 	EsterelTreeParser();
-	void initializeASTFactory( ANTLR_USE_NAMESPACE(antlr)ASTFactory& factory );
+	static void initializeASTFactory( ANTLR_USE_NAMESPACE(antlr)ASTFactory& factory );
 	int getNumTokens() const
 	{
 		return EsterelTreeParser::NUM_TOKENS;
@@ -61,6 +61,10 @@ public:
 	{
 		if( type > getNumTokens() ) return 0;
 		return EsterelTreeParser::tokenNames[type];
+	}
+	const char* const* getTokenNames() const
+	{
+		return EsterelTreeParser::tokenNames;
 	}
 	public: void file(RefLineAST _t,
 		Modules *ms, string filename
@@ -122,7 +126,10 @@ public:
 		 Context *oc, Context *nc, TypeSymbol *ts 
 	);
 public:
-	RefLineAST getAST();
+	ANTLR_USE_NAMESPACE(antlr)RefAST getAST()
+	{
+		return ANTLR_USE_NAMESPACE(antlr)RefAST(returnAST);
+	}
 	
 protected:
 	RefLineAST returnAST;

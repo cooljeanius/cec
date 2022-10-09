@@ -86,13 +86,13 @@ Printer::Printer(std::ostream &o, Module &m, bool three_val)
   // Note: float and double aren't in this list because they are equivalent
   // to Esterel's types of the same name
 
-  char *keywords[] = {
+  const char *keywords[] = {
     "int", "break", "char", "continue", "if", "else",
     "struct", "for", "auto", "do", "extern", "while", "register", "switch",
     "static", "case", "goto", "default", "return", "entry", "sizeof", NULL
   };
 
-  for (char **k = keywords ; *k != NULL ; k++) identifiers.insert(*k);
+  for (const char **k = keywords ; *k != NULL ; k++) identifiers.insert(*k);
 }
 @
 
@@ -110,12 +110,9 @@ string Printer::uniqueID(string name)
 {
   string newname = name;
 
-  char buf[10];
   int version = 1;
-
   while (contains(identifiers, newname)) {
-    sprintf(buf, "%d", version++);
-    newname = name + '_' + buf;
+    newname = name + '_' + std::to_string(version++);
   }
   
   identifiers.insert(newname);
@@ -1029,9 +1026,7 @@ void Printer::printDeclarations(string basename)
   for ( STmap::const_iterator i = stmap.begin() ; i != stmap.end() ; i++ ) {
     STexcl *e = dynamic_cast<STexcl*>((*i).first);
     if (e) {
-      char buf[15];
-      sprintf(buf, "_%d", stmap[e]);
-      stateVar[e] = string("_state.") + string(buf);
+      stateVar[e] = "_state." + std::to_string(stmap[e]);
       unsigned int bits = 1;
       while ( (1 << bits) < e->children.size() ) ++bits;
       o << "  unsigned int " << buf << " : " << bits << ";\n";
@@ -1055,9 +1050,7 @@ void Printer::printDeclarations(string basename)
   for ( STmap::const_iterator i = stmap.begin() ; i != stmap.end() ; i++ ) {
     STexcl *e = dynamic_cast<STexcl*>((*i).first);
     if (e) {
-      char buf[15];
-      sprintf(buf, "_state_%d", stmap[e]);
-      string var = uniqueID(buf);
+      const string var = uniqueID("_state_" + std::to_string(stmap[e]));
       stateVar[e] = var;
       o << "static unsigned char " << var;
       // Initialization of state of selection-tree root:
@@ -1084,9 +1077,7 @@ void Printer::printDeclarations(string basename)
 	if (*j) ++successors;
       if (successors > 1) {
 	// If there is more than one non-NULL successor, generate a variable
-	char buf[15];
-	sprintf(buf, "_term_%d", cfgmap[s]);
-	string var = uniqueID(buf);
+	const string var = uniqueID("_term_" + std::to_string(cfgmap[s]));
 	terminationVar[s] = var;
 	o << "static int " << var << ";\n";
       }
@@ -1097,9 +1088,7 @@ void Printer::printDeclarations(string basename)
 
   for ( vector<Counter*>::const_iterator i = m.counters.begin() ;
 	i != m.counters.end() ; i++ ) {
-    char buf[15];
-    sprintf(buf, "_counter_%d", i-m.counters.begin() );
-    string var = uniqueID(buf);
+    const string var = uniqueID("_counter_" + std::to_string(static_cast<unsigned int>(i-m.counters.begin())));
     counterVar[*i] = var;
     o << "static int " << var << ";\n";
   }
@@ -1532,11 +1521,8 @@ CStatement *Printer::synthesize(GRCNode *node, GRCNode *final, bool needBreak)
   if ( statementFor.find(node) != statementFor.end() ) {
     CStatement *target = statementFor[node];
     if (target->label.empty()) {
-      char buf[20];
-      // sprintf(buf, "L%d", nextLabel++);
       assert(cfgmap.find(node) != cfgmap.end());
-      sprintf(buf, "N%d", cfgmap[node]);
-      target->label = buf;
+      target->label = 'N' + std::to_string(cfgmap[node]);
     }
     return new CGoto(target->label);
   }

@@ -1682,6 +1682,7 @@ uninstall-man: uninstall-man1
 
 .nw.sh :
 	$(NOTANGLE) -R$@ $< > $@
+	chmod u+x $@
 
 .nw.tex :
 	$(NOWEAVE) $(NOWEAVEFLAGS) $< > $@

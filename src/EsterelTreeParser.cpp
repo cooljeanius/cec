@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.2: "staticsemantics.g" -> "EsterelTreeParser.cpp"$ */
+/* $ANTLR 2.7.7 (2006-11-01): "staticsemantics.g" -> "EsterelTreeParser.cpp"$ */
 #include "EsterelTreeParser.hpp"
 #include <antlr/Token.hpp>
 #include <antlr/AST.hpp>
@@ -91,7 +91,7 @@ EsterelTreeParser::EsterelTreeParser()
 void EsterelTreeParser::file(RefLineAST _t,
 	Modules *ms, string filename
 ) {
-	RefLineAST file_AST_in = _t;
+	RefLineAST file_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 	
 	try {      // for error handling
 #line 129 "staticsemantics.g"
@@ -102,14 +102,14 @@ void EsterelTreeParser::file(RefLineAST _t,
 		{ // ( ... )+
 		int _cnt3=0;
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			if ((_t->getType() == LITERAL_module)) {
 				module(_t,ms);
 				_t = _retTree;
 			}
 			else {
-				if ( _cnt3>=1 ) { goto _loop3; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+				if ( _cnt3>=1 ) { goto _loop3; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 			}
 			
 			_cnt3++;
@@ -119,7 +119,7 @@ void EsterelTreeParser::file(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -128,16 +128,16 @@ void EsterelTreeParser::file(RefLineAST _t,
 void EsterelTreeParser::module(RefLineAST _t,
 	Modules* modules
 ) {
-	RefLineAST module_AST_in = _t;
-	RefLineAST moduleName = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST module_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST moduleName = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 		RefLineAST __t5 = _t;
 		RefLineAST tmp1_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_module);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_module);
 		_t = _t->getFirstChild();
 		moduleName = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 		_t = _t->getNextSibling();
 #line 137 "staticsemantics.g"
 		
@@ -203,7 +203,7 @@ void EsterelTreeParser::module(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -212,35 +212,35 @@ void EsterelTreeParser::module(RefLineAST _t,
 void EsterelTreeParser::declarations(RefLineAST _t,
 	Context *c
 ) {
-	RefLineAST declarations_AST_in = _t;
+	RefLineAST declarations_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 	
 	try {      // for error handling
 		RefLineAST __t7 = _t;
 		RefLineAST tmp2_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),DECLS);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),DECLS);
 		_t = _t->getFirstChild();
 		{ // ( ... )*
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case LITERAL_type:
 			{
 				RefLineAST __t9 = _t;
 				RefLineAST tmp3_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_type);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_type);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt11=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == ID)) {
 						typeDecl(_t,c);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt11>=1 ) { goto _loop11; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt11>=1 ) { goto _loop11; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt11++;
@@ -255,19 +255,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t12 = _t;
 				RefLineAST tmp4_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_constant);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_constant);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt14=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == CDECL)) {
 						constantDecl(_t,c);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt14>=1 ) { goto _loop14; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt14>=1 ) { goto _loop14; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt14++;
@@ -282,19 +282,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t15 = _t;
 				RefLineAST tmp5_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_input);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_input);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt17=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == SDECL)) {
 						signalDecl(_t,c, "input", true);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt17>=1 ) { goto _loop17; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt17>=1 ) { goto _loop17; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt17++;
@@ -309,19 +309,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t18 = _t;
 				RefLineAST tmp6_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_output);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_output);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt20=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == SDECL)) {
 						signalDecl(_t,c, "output", true );
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt20>=1 ) { goto _loop20; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt20>=1 ) { goto _loop20; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt20++;
@@ -336,19 +336,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t21 = _t;
 				RefLineAST tmp7_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_inputoutput);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_inputoutput);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt23=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == SDECL)) {
 						signalDecl(_t,c, "inputoutput", true);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt23>=1 ) { goto _loop23; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt23>=1 ) { goto _loop23; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt23++;
@@ -363,19 +363,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t24 = _t;
 				RefLineAST tmp8_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_return);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_return);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt26=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == SDECL)) {
 						signalDecl(_t,c, "return", true);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt26>=1 ) { goto _loop26; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt26>=1 ) { goto _loop26; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt26++;
@@ -390,19 +390,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t27 = _t;
 				RefLineAST tmp9_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_function);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_function);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt29=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == FDECL)) {
 						functionDecl(_t,c);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt29>=1 ) { goto _loop29; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt29>=1 ) { goto _loop29; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt29++;
@@ -417,19 +417,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t30 = _t;
 				RefLineAST tmp10_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_procedure);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_procedure);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt32=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == PDECL)) {
 						procedureDecl(_t,c);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt32>=1 ) { goto _loop32; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt32>=1 ) { goto _loop32; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt32++;
@@ -444,19 +444,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t33 = _t;
 				RefLineAST tmp11_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_task);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_task);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt35=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == TADECL)) {
 						taskDecl(_t,c);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt35>=1 ) { goto _loop35; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt35>=1 ) { goto _loop35; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt35++;
@@ -471,19 +471,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t36 = _t;
 				RefLineAST tmp12_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_sensor);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_sensor);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt38=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == SDECL)) {
 						signalDecl(_t,c, "sensor", true);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt38>=1 ) { goto _loop38; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt38>=1 ) { goto _loop38; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt38++;
@@ -498,19 +498,19 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 			{
 				RefLineAST __t39 = _t;
 				RefLineAST tmp13_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_relation);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_relation);
 				_t = _t->getFirstChild();
 				{ // ( ... )+
 				int _cnt41=0;
 				for (;;) {
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					if ((_t->getType() == IMPLIES || _t->getType() == POUND)) {
 						relationDecl(_t,c);
 						_t = _retTree;
 					}
 					else {
-						if ( _cnt41>=1 ) { goto _loop41; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+						if ( _cnt41>=1 ) { goto _loop41; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 					}
 					
 					_cnt41++;
@@ -534,7 +534,7 @@ void EsterelTreeParser::declarations(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -546,46 +546,46 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 414 "staticsemantics.g"
 	Statement *st;
 #line 549 "EsterelTreeParser.cpp"
-	RefLineAST statement_AST_in = _t;
-	RefLineAST esig = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST ssig = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST var = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST proc = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST ife = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST elif = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST expr = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST etrap = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST texpr = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST taskid = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST tsig = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST vdecls = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST module = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST oldMod = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST tID = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST cID = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST func = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST fID = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST pro = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST pID = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST task = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST trID = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST sig = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST sID = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST de = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST statement_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST esig = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST ssig = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST var = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST proc = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST ife = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST elif = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST expr = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST etrap = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST texpr = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST taskid = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST tsig = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST vdecls = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST module = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST oldMod = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST tID = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST cID = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST func = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST fID = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST pro = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST pID = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST task = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST trID = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST sig = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST sID = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST de = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 #line 415 "staticsemantics.g"
 		st = 0;
 #line 580 "EsterelTreeParser.cpp"
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case SEQUENCE:
 		{
 			RefLineAST __t93 = _t;
 			RefLineAST tmp14_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),SEQUENCE);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),SEQUENCE);
 			_t = _t->getFirstChild();
 #line 416 "staticsemantics.g"
 			StatementList *sl = new StatementList();
@@ -593,7 +593,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			{ // ( ... )+
 			int _cnt95=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_tokenSet_0.member(_t->getType()))) {
 					st=statement(_t,c);
@@ -603,7 +603,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 604 "EsterelTreeParser.cpp"
 				}
 				else {
-					if ( _cnt95>=1 ) { goto _loop95; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt95>=1 ) { goto _loop95; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt95++;
@@ -621,7 +621,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t96 = _t;
 			RefLineAST tmp15_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),PARALLEL);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),PARALLEL);
 			_t = _t->getFirstChild();
 #line 421 "staticsemantics.g"
 			ParallelStatementList *sl = new ParallelStatementList();
@@ -629,7 +629,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			{ // ( ... )+
 			int _cnt98=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_tokenSet_0.member(_t->getType()))) {
 					st=statement(_t,c);
@@ -639,7 +639,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 640 "EsterelTreeParser.cpp"
 				}
 				else {
-					if ( _cnt98>=1 ) { goto _loop98; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt98>=1 ) { goto _loop98; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt98++;
@@ -656,7 +656,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		case LITERAL_nothing:
 		{
 			RefLineAST tmp16_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_nothing);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_nothing);
 			_t = _t->getNextSibling();
 #line 425 "staticsemantics.g"
 			st = new Nothing();
@@ -666,7 +666,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		case LITERAL_pause:
 		{
 			RefLineAST tmp17_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_pause);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_pause);
 			_t = _t->getNextSibling();
 #line 427 "staticsemantics.g"
 			st = new Pause();
@@ -676,7 +676,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		case LITERAL_halt:
 		{
 			RefLineAST tmp18_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_halt);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_halt);
 			_t = _t->getNextSibling();
 #line 429 "staticsemantics.g"
 			st = new Halt();
@@ -687,10 +687,10 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t99 = _t;
 			RefLineAST tmp19_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_emit);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_emit);
 			_t = _t->getFirstChild();
 			esig = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 433 "staticsemantics.g"
 			
@@ -704,7 +704,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			
 #line 706 "EsterelTreeParser.cpp"
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case CALL:
@@ -743,7 +743,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -767,10 +767,10 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t101 = _t;
 			RefLineAST tmp20_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_sustain);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_sustain);
 			_t = _t->getFirstChild();
 			ssig = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 457 "staticsemantics.g"
 			
@@ -784,7 +784,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			
 #line 786 "EsterelTreeParser.cpp"
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case CALL:
@@ -823,7 +823,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -850,10 +850,10 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 851 "EsterelTreeParser.cpp"
 			RefLineAST __t103 = _t;
 			RefLineAST tmp21_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),COLEQUALS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),COLEQUALS);
 			_t = _t->getFirstChild();
 			var = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 			e=expression(_t,c);
 			_t = _retTree;
@@ -882,10 +882,10 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t104 = _t;
 			RefLineAST tmp22_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_call);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_call);
 			_t = _t->getFirstChild();
 			proc = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 498 "staticsemantics.g"
 			
@@ -911,19 +911,19 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t105 = _t;
 			RefLineAST tmp23_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_present);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_present);
 			_t = _t->getFirstChild();
 #line 511 "staticsemantics.g"
 			Present *p = new Present();
 #line 919 "EsterelTreeParser.cpp"
 			{ // ( ... )*
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == CASE)) {
 					RefLineAST __t107 = _t;
 					RefLineAST tmp24_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),CASE);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),CASE);
 					_t = _t->getFirstChild();
 #line 512 "staticsemantics.g"
 					Expression *e; Statement *s = 0;
@@ -931,7 +931,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					e=sigExpression(_t,c);
 					_t = _retTree;
 					{
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					switch ( _t->getType()) {
 					case SEQUENCE:
@@ -970,7 +970,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					}
 					default:
 					{
-						throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+						throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 					}
 					}
 					}
@@ -988,14 +988,14 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			_loop109:;
 			} // ( ... )*
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case LITERAL_else:
 			{
 				RefLineAST __t111 = _t;
 				RefLineAST tmp25_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_else);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_else);
 				_t = _t->getFirstChild();
 #line 515 "staticsemantics.g"
 				Statement *s;
@@ -1015,7 +1015,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -1030,26 +1030,26 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t112 = _t;
 			RefLineAST tmp26_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_if);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_if);
 			_t = _t->getFirstChild();
 #line 523 "staticsemantics.g"
 			If *i = new If(); Expression *e;
 #line 1038 "EsterelTreeParser.cpp"
-			ife = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+			ife = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 			e=expression(_t,c);
 			_t = _retTree;
 #line 525 "staticsemantics.g"
 			Statement *s = 0;
 #line 1044 "EsterelTreeParser.cpp"
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case LITERAL_then:
 			{
 				RefLineAST __t114 = _t;
 				RefLineAST tmp27_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_then);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_then);
 				_t = _t->getFirstChild();
 				s=statement(_t,c);
 				_t = _retTree;
@@ -1065,7 +1065,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -1074,12 +1074,12 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 1075 "EsterelTreeParser.cpp"
 			{ // ( ... )*
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == LITERAL_elsif)) {
 					RefLineAST __t116 = _t;
-					elif = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_elsif);
+					elif = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_elsif);
 					_t = _t->getFirstChild();
 					e=expression(_t,c);
 					_t = _retTree;
@@ -1099,14 +1099,14 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			_loop117:;
 			} // ( ... )*
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case LITERAL_else:
 			{
 				RefLineAST __t119 = _t;
 				RefLineAST tmp28_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_else);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_else);
 				_t = _t->getFirstChild();
 				s=statement(_t,c);
 				_t = _retTree;
@@ -1123,7 +1123,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -1138,7 +1138,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t120 = _t;
 			RefLineAST tmp29_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_loop);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_loop);
 			_t = _t->getFirstChild();
 #line 535 "staticsemantics.g"
 			Statement *s; Expression *e;
@@ -1146,7 +1146,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			s=statement(_t,c);
 			_t = _retTree;
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case 3:
@@ -1173,7 +1173,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -1185,19 +1185,19 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t122 = _t;
 			RefLineAST tmp30_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_repeat);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_repeat);
 			_t = _t->getFirstChild();
 #line 542 "staticsemantics.g"
 			bool positive = false; Expression *e;
 #line 1193 "EsterelTreeParser.cpp"
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case LITERAL_positive:
 			{
 				RefLineAST tmp31_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_positive);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_positive);
 				_t = _t->getNextSibling();
 #line 543 "staticsemantics.g"
 				positive = true;
@@ -1234,11 +1234,11 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
-			expr = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+			expr = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 			e=expression(_t,c);
 			_t = _retTree;
 #line 545 "staticsemantics.g"
@@ -1266,19 +1266,19 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t124 = _t;
 			RefLineAST tmp32_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_abort);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_abort);
 			_t = _t->getFirstChild();
 #line 559 "staticsemantics.g"
 			bool isWeak = false; Statement *s;
 #line 1274 "EsterelTreeParser.cpp"
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case LITERAL_weak:
 			{
 				RefLineAST tmp33_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_weak);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_weak);
 				_t = _t->getNextSibling();
 #line 560 "staticsemantics.g"
 				isWeak = true;
@@ -1315,7 +1315,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -1327,12 +1327,12 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			{ // ( ... )+
 			int _cnt129=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == CASE)) {
 					RefLineAST __t127 = _t;
 					RefLineAST tmp34_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),CASE);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),CASE);
 					_t = _t->getFirstChild();
 #line 563 "staticsemantics.g"
 					Expression *e; s = 0;
@@ -1340,7 +1340,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					e=delayExpression(_t,c);
 					_t = _retTree;
 					{
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					switch ( _t->getType()) {
 					case SEQUENCE:
@@ -1379,7 +1379,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					}
 					default:
 					{
-						throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+						throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 					}
 					}
 					}
@@ -1390,7 +1390,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 1391 "EsterelTreeParser.cpp"
 				}
 				else {
-					if ( _cnt129>=1 ) { goto _loop129; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt129>=1 ) { goto _loop129; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt129++;
@@ -1408,7 +1408,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t130 = _t;
 			RefLineAST tmp35_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_await);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_await);
 			_t = _t->getFirstChild();
 #line 569 "staticsemantics.g"
 			Await *a = new Await();
@@ -1416,12 +1416,12 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			{ // ( ... )+
 			int _cnt134=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == CASE)) {
 					RefLineAST __t132 = _t;
 					RefLineAST tmp36_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),CASE);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),CASE);
 					_t = _t->getFirstChild();
 #line 570 "staticsemantics.g"
 					Expression *e; Statement *s = 0;
@@ -1429,7 +1429,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					e=delayExpression(_t,c);
 					_t = _retTree;
 					{
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					switch ( _t->getType()) {
 					case SEQUENCE:
@@ -1468,7 +1468,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					}
 					default:
 					{
-						throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+						throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 					}
 					}
 					}
@@ -1479,7 +1479,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 1480 "EsterelTreeParser.cpp"
 				}
 				else {
-					if ( _cnt134>=1 ) { goto _loop134; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt134>=1 ) { goto _loop134; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt134++;
@@ -1497,7 +1497,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t135 = _t;
 			RefLineAST tmp37_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_every);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_every);
 			_t = _t->getFirstChild();
 #line 576 "staticsemantics.g"
 			Expression *e; Statement *s;
@@ -1517,7 +1517,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t136 = _t;
 			RefLineAST tmp38_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_suspend);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_suspend);
 			_t = _t->getFirstChild();
 #line 581 "staticsemantics.g"
 			Expression *e; Statement *s;
@@ -1537,7 +1537,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t137 = _t;
 			RefLineAST tmp39_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_trap);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_trap);
 			_t = _t->getFirstChild();
 #line 587 "staticsemantics.g"
 			
@@ -1552,19 +1552,19 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 1553 "EsterelTreeParser.cpp"
 			RefLineAST __t138 = _t;
 			RefLineAST tmp40_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TRAPS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TRAPS);
 			_t = _t->getFirstChild();
 			{ // ( ... )+
 			int _cnt140=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == TDECL)) {
 					trapDecl(_t,&nc);
 					_t = _retTree;
 				}
 				else {
-					if ( _cnt140>=1 ) { goto _loop140; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt140>=1 ) { goto _loop140; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt140++;
@@ -1580,12 +1580,12 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 1581 "EsterelTreeParser.cpp"
 			{ // ( ... )*
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == LITERAL_handle)) {
 					RefLineAST __t142 = _t;
 					RefLineAST tmp41_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_handle);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_handle);
 					_t = _t->getFirstChild();
 					e=trapExpression(_t,&nc);
 					_t = _retTree;
@@ -1615,16 +1615,16 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t144 = _t;
 			RefLineAST tmp42_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_exit);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_exit);
 			_t = _t->getFirstChild();
 			etrap = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 606 "staticsemantics.g"
 			Expression *e = 0;
 #line 1626 "EsterelTreeParser.cpp"
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case CALL:
@@ -1653,7 +1653,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			case LITERAL_false:
 			case StringConstant:
 			{
-				texpr = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+				texpr = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 				e=expression(_t,c);
 				_t = _retTree;
 				break;
@@ -1664,7 +1664,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -1697,7 +1697,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t146 = _t;
 			RefLineAST tmp43_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_exec);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_exec);
 			_t = _t->getFirstChild();
 #line 628 "staticsemantics.g"
 			Exec *ex = new Exec();
@@ -1705,15 +1705,15 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			{ // ( ... )+
 			int _cnt150=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == CASE)) {
 					RefLineAST __t148 = _t;
 					RefLineAST tmp44_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),CASE);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),CASE);
 					_t = _t->getFirstChild();
 					taskid = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 #line 630 "staticsemantics.g"
 					
@@ -1729,7 +1729,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					procArgs(_t,c, tc);
 					_t = _retTree;
 					tsig = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 #line 641 "staticsemantics.g"
 					
@@ -1745,7 +1745,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					
 #line 1747 "EsterelTreeParser.cpp"
 					{
-					if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+					if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 						_t = ASTNULL;
 					switch ( _t->getType()) {
 					case SEQUENCE:
@@ -1787,7 +1787,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					}
 					default:
 					{
-						throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+						throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 					}
 					}
 					}
@@ -1795,7 +1795,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					_t = _t->getNextSibling();
 				}
 				else {
-					if ( _cnt150>=1 ) { goto _loop150; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt150>=1 ) { goto _loop150; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt150++;
@@ -1813,7 +1813,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t151 = _t;
 			RefLineAST tmp45_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_var);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_var);
 			_t = _t->getFirstChild();
 #line 659 "staticsemantics.g"
 			
@@ -1827,20 +1827,20 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 1828 "EsterelTreeParser.cpp"
 			RefLineAST __t152 = _t;
 			RefLineAST tmp46_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),VARS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),VARS);
 			_t = _t->getFirstChild();
 			{ // ( ... )+
 			int _cnt155=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == COLON)) {
 					RefLineAST __t154 = _t;
 					RefLineAST tmp47_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),COLON);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),COLON);
 					_t = _t->getFirstChild();
 					vdecls = _t;
-					if ( _t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) ) throw ANTLR_USE_NAMESPACE(antlr)MismatchedTokenException();
+					if ( _t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) ) throw ANTLR_USE_NAMESPACE(antlr)MismatchedTokenException();
 					_t = _t->getNextSibling();
 					ts=type(_t,c);
 					_t = _retTree;
@@ -1851,7 +1851,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 1852 "EsterelTreeParser.cpp"
 				}
 				else {
-					if ( _cnt155>=1 ) { goto _loop155; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt155>=1 ) { goto _loop155; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt155++;
@@ -1879,7 +1879,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t156 = _t;
 			RefLineAST tmp48_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_signal);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_signal);
 			_t = _t->getFirstChild();
 #line 681 "staticsemantics.g"
 			
@@ -1891,19 +1891,19 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 #line 1892 "EsterelTreeParser.cpp"
 			RefLineAST __t157 = _t;
 			RefLineAST tmp49_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),SIGS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),SIGS);
 			_t = _t->getFirstChild();
 			{ // ( ... )+
 			int _cnt159=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == SDECL)) {
 					signalDecl(_t,&nc, "local", false);
 					_t = _retTree;
 				}
 				else {
-					if ( _cnt159>=1 ) { goto _loop159; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt159>=1 ) { goto _loop159; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt159++;
@@ -1931,22 +1931,22 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t160 = _t;
 			RefLineAST tmp50_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),RUN);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),RUN);
 			_t = _t->getFirstChild();
 			module = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 696 "staticsemantics.g"
 			Run *r = new Run(module->getText(), c->signals);
 #line 1942 "EsterelTreeParser.cpp"
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case ID:
 			{
 				oldMod = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 				_t = _t->getNextSibling();
 #line 697 "staticsemantics.g"
 				r->old_name = oldMod->getText();
@@ -1965,20 +1965,20 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
 			{ // ( ... )*
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				switch ( _t->getType()) {
 				case TRENAME:
 				{
 					RefLineAST __t163 = _t;
 					RefLineAST tmp51_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TRENAME);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TRENAME);
 					_t = _t->getFirstChild();
 #line 698 "staticsemantics.g"
 					TypeSymbol *t;
@@ -1986,7 +1986,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					t=type(_t,c);
 					_t = _retTree;
 					tID = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 					_t = __t163;
 					_t = _t->getNextSibling();
@@ -1999,7 +1999,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 				{
 					RefLineAST __t164 = _t;
 					RefLineAST tmp52_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),CRENAME);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),CRENAME);
 					_t = _t->getFirstChild();
 #line 700 "staticsemantics.g"
 					Expression *e;
@@ -2007,7 +2007,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 					e=expression(_t,c);
 					_t = _retTree;
 					cID = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 					_t = __t164;
 					_t = _t->getNextSibling();
@@ -2021,13 +2021,13 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 				{
 					RefLineAST __t165 = _t;
 					RefLineAST tmp53_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),FRENAME);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),FRENAME);
 					_t = _t->getFirstChild();
-					func = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+					func = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 					funcName(_t);
 					_t = _retTree;
 					fID = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 #line 704 "staticsemantics.g"
 					
@@ -2048,13 +2048,13 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 				{
 					RefLineAST __t166 = _t;
 					RefLineAST tmp54_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),PRENAME);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),PRENAME);
 					_t = _t->getFirstChild();
 					pro = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 					pID = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 #line 715 "staticsemantics.g"
 					
@@ -2076,13 +2076,13 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 				{
 					RefLineAST __t167 = _t;
 					RefLineAST tmp55_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TARENAME);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TARENAME);
 					_t = _t->getFirstChild();
 					task = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 					trID = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 #line 727 "staticsemantics.g"
 					
@@ -2104,13 +2104,13 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 				{
 					RefLineAST __t168 = _t;
 					RefLineAST tmp56_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),SRENAME);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),SRENAME);
 					_t = _t->getFirstChild();
 					sig = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 					sID = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 #line 739 "staticsemantics.g"
 					
@@ -2146,18 +2146,18 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t170 = _t;
 			RefLineAST tmp57_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),DOWATCHING);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),DOWATCHING);
 			_t = _t->getFirstChild();
 #line 753 "staticsemantics.g"
 			Expression *e; Statement *s1, *s2 = 0;
 #line 2154 "EsterelTreeParser.cpp"
 			s1=statement(_t,c);
 			_t = _retTree;
-			de = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+			de = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 			e=delayExpression(_t,c);
 			_t = _retTree;
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case SEQUENCE:
@@ -2196,7 +2196,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -2211,7 +2211,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		{
 			RefLineAST __t172 = _t;
 			RefLineAST tmp58_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),DOUPTO);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),DOUPTO);
 			_t = _t->getFirstChild();
 #line 760 "staticsemantics.g"
 			Expression *e; Statement *s;
@@ -2229,7 +2229,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
@@ -2241,7 +2241,7 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -2251,12 +2251,12 @@ Statement * EsterelTreeParser::statement(RefLineAST _t,
 void EsterelTreeParser::typeDecl(RefLineAST _t,
 	Context *c
 ) {
-	RefLineAST typeDecl_AST_in = _t;
-	RefLineAST typeName = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST typeDecl_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST typeName = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 		typeName = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 		_t = _t->getNextSibling();
 #line 211 "staticsemantics.g"
 		
@@ -2269,7 +2269,7 @@ void EsterelTreeParser::typeDecl(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -2278,11 +2278,11 @@ void EsterelTreeParser::typeDecl(RefLineAST _t,
 void EsterelTreeParser::constantDecl(RefLineAST _t,
 	Context *c
 ) {
-	RefLineAST constantDecl_AST_in = _t;
-	RefLineAST constantName = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST expr = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST typeToken = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST ids = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST constantDecl_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST constantName = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST expr = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST typeToken = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST ids = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 #line 219 "staticsemantics.g"
 	
 	Expression *e = 0;
@@ -2293,31 +2293,31 @@ void EsterelTreeParser::constantDecl(RefLineAST _t,
 	try {      // for error handling
 		RefLineAST __t45 = _t;
 		RefLineAST tmp59_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),CDECL);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),CDECL);
 		_t = _t->getFirstChild();
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case ID:
 		{
 			constantName = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 226 "staticsemantics.g"
 			string name = constantName->getText();
 #line 2310 "EsterelTreeParser.cpp"
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case EQUALS:
 			{
 				RefLineAST __t48 = _t;
 				RefLineAST tmp60_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),EQUALS);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),EQUALS);
 				_t = _t->getFirstChild();
-				expr = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+				expr = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 				e=expression(_t,c);
 				_t = _retTree;
 				_t = __t48;
@@ -2330,11 +2330,11 @@ void EsterelTreeParser::constantDecl(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
-			typeToken = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+			typeToken = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 			t=type(_t,c);
 			_t = _retTree;
 #line 229 "staticsemantics.g"
@@ -2345,21 +2345,21 @@ void EsterelTreeParser::constantDecl(RefLineAST _t,
 		case COMMA:
 		{
 			RefLineAST __t49 = _t;
-			ids = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),COMMA);
+			ids = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),COMMA);
 			_t = _t->getFirstChild();
 			{ // ( ... )+
 			int _cnt51=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == ID)) {
 					RefLineAST tmp61_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 				}
 				else {
-					if ( _cnt51>=1 ) { goto _loop51; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt51>=1 ) { goto _loop51; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt51++;
@@ -2381,7 +2381,7 @@ void EsterelTreeParser::constantDecl(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
@@ -2390,7 +2390,7 @@ void EsterelTreeParser::constantDecl(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -2399,20 +2399,20 @@ void EsterelTreeParser::constantDecl(RefLineAST _t,
 void EsterelTreeParser::signalDecl(RefLineAST _t,
 	Context *c, string direction, bool isGlobal
 ) {
-	RefLineAST signalDecl_AST_in = _t;
-	RefLineAST signalName = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST expr = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST typeToken = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST func = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST pcf = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST signalDecl_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST signalName = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST expr = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST typeToken = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST func = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST pcf = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 		RefLineAST __t53 = _t;
 		RefLineAST tmp62_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),SDECL);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),SDECL);
 		_t = _t->getFirstChild();
 		signalName = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 		_t = _t->getNextSibling();
 #line 243 "staticsemantics.g"
 		
@@ -2423,16 +2423,16 @@ void EsterelTreeParser::signalDecl(RefLineAST _t,
 		
 #line 2425 "EsterelTreeParser.cpp"
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case COLEQUALS:
 		{
 			RefLineAST __t55 = _t;
 			RefLineAST tmp63_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),COLEQUALS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),COLEQUALS);
 			_t = _t->getFirstChild();
-			expr = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+			expr = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 			e=expression(_t,c);
 			_t = _retTree;
 			_t = __t55;
@@ -2446,7 +2446,7 @@ void EsterelTreeParser::signalDecl(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
@@ -2454,22 +2454,22 @@ void EsterelTreeParser::signalDecl(RefLineAST _t,
 		TypeSymbol *t = 0; FunctionSymbol *fs = 0;
 #line 2456 "EsterelTreeParser.cpp"
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case ID:
 		{
-			typeToken = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+			typeToken = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 			t=type(_t,c);
 			_t = _retTree;
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case ID:
 			{
 				func = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 				_t = _t->getNextSibling();
 #line 253 "staticsemantics.g"
 				
@@ -2488,7 +2488,7 @@ void EsterelTreeParser::signalDecl(RefLineAST _t,
 			case LITERAL_or:
 			case LITERAL_and:
 			{
-				pcf = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+				pcf = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 				predefinedCombineFunction(_t);
 				_t = _retTree;
 #line 262 "staticsemantics.g"
@@ -2508,7 +2508,7 @@ void EsterelTreeParser::signalDecl(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -2520,7 +2520,7 @@ void EsterelTreeParser::signalDecl(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
@@ -2548,7 +2548,7 @@ void EsterelTreeParser::signalDecl(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -2557,16 +2557,16 @@ void EsterelTreeParser::signalDecl(RefLineAST _t,
 void EsterelTreeParser::functionDecl(RefLineAST _t,
 	Context *c
 ) {
-	RefLineAST functionDecl_AST_in = _t;
-	RefLineAST functionName = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST functionDecl_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST functionName = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 		RefLineAST __t65 = _t;
 		RefLineAST tmp64_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),FDECL);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),FDECL);
 		_t = _t->getFirstChild();
 		functionName = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 		_t = _t->getNextSibling();
 #line 322 "staticsemantics.g"
 		
@@ -2580,11 +2580,11 @@ void EsterelTreeParser::functionDecl(RefLineAST _t,
 #line 2581 "EsterelTreeParser.cpp"
 		RefLineAST __t66 = _t;
 		RefLineAST tmp65_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TYPES);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TYPES);
 		_t = _t->getFirstChild();
 		{ // ( ... )*
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			if ((_t->getType() == ID)) {
 				ts=type(_t,c);
@@ -2612,7 +2612,7 @@ void EsterelTreeParser::functionDecl(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -2621,16 +2621,16 @@ void EsterelTreeParser::functionDecl(RefLineAST _t,
 void EsterelTreeParser::procedureDecl(RefLineAST _t,
 	Context *c
 ) {
-	RefLineAST procedureDecl_AST_in = _t;
-	RefLineAST procedureName = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST procedureDecl_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST procedureName = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 		RefLineAST __t70 = _t;
 		RefLineAST tmp66_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),PDECL);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),PDECL);
 		_t = _t->getFirstChild();
 		procedureName = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 		_t = _t->getNextSibling();
 #line 337 "staticsemantics.g"
 		
@@ -2645,11 +2645,11 @@ void EsterelTreeParser::procedureDecl(RefLineAST _t,
 #line 2646 "EsterelTreeParser.cpp"
 		RefLineAST __t71 = _t;
 		RefLineAST tmp67_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TYPES);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TYPES);
 		_t = _t->getFirstChild();
 		{ // ( ... )*
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			if ((_t->getType() == ID)) {
 				ts=type(_t,c);
@@ -2669,11 +2669,11 @@ void EsterelTreeParser::procedureDecl(RefLineAST _t,
 		_t = _t->getNextSibling();
 		RefLineAST __t74 = _t;
 		RefLineAST tmp68_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TYPES);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TYPES);
 		_t = _t->getFirstChild();
 		{ // ( ... )*
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			if ((_t->getType() == ID)) {
 				ts=type(_t,c);
@@ -2696,7 +2696,7 @@ void EsterelTreeParser::procedureDecl(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -2705,16 +2705,16 @@ void EsterelTreeParser::procedureDecl(RefLineAST _t,
 void EsterelTreeParser::taskDecl(RefLineAST _t,
 	Context *c
 ) {
-	RefLineAST taskDecl_AST_in = _t;
-	RefLineAST taskName = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST taskDecl_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST taskName = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 		RefLineAST __t78 = _t;
 		RefLineAST tmp69_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TADECL);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TADECL);
 		_t = _t->getFirstChild();
 		taskName = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 		_t = _t->getNextSibling();
 #line 353 "staticsemantics.g"
 		
@@ -2728,11 +2728,11 @@ void EsterelTreeParser::taskDecl(RefLineAST _t,
 #line 2729 "EsterelTreeParser.cpp"
 		RefLineAST __t79 = _t;
 		RefLineAST tmp70_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TYPES);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TYPES);
 		_t = _t->getFirstChild();
 		{ // ( ... )*
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			if ((_t->getType() == ID)) {
 				ts=type(_t,c);
@@ -2752,11 +2752,11 @@ void EsterelTreeParser::taskDecl(RefLineAST _t,
 		_t = _t->getNextSibling();
 		RefLineAST __t82 = _t;
 		RefLineAST tmp71_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TYPES);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TYPES);
 		_t = _t->getFirstChild();
 		{ // ( ... )*
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			if ((_t->getType() == ID)) {
 				ts=type(_t,c);
@@ -2779,7 +2779,7 @@ void EsterelTreeParser::taskDecl(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -2788,26 +2788,26 @@ void EsterelTreeParser::taskDecl(RefLineAST _t,
 void EsterelTreeParser::relationDecl(RefLineAST _t,
 	Context *c
 ) {
-	RefLineAST relationDecl_AST_in = _t;
-	RefLineAST sig1 = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST sig2 = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST sig = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST relationDecl_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST sig1 = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST sig2 = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST sig = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case IMPLIES:
 		{
 			RefLineAST __t86 = _t;
 			RefLineAST tmp72_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),IMPLIES);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),IMPLIES);
 			_t = _t->getFirstChild();
 			sig1 = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 			sig2 = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 			_t = __t86;
 			_t = _t->getNextSibling();
@@ -2832,7 +2832,7 @@ void EsterelTreeParser::relationDecl(RefLineAST _t,
 		{
 			RefLineAST __t87 = _t;
 			RefLineAST tmp73_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),POUND);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),POUND);
 			_t = _t->getFirstChild();
 #line 382 "staticsemantics.g"
 			
@@ -2843,11 +2843,11 @@ void EsterelTreeParser::relationDecl(RefLineAST _t,
 			{ // ( ... )+
 			int _cnt89=0;
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_t->getType() == ID)) {
 					sig = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 					_t = _t->getNextSibling();
 #line 387 "staticsemantics.g"
 					
@@ -2862,7 +2862,7 @@ void EsterelTreeParser::relationDecl(RefLineAST _t,
 #line 2863 "EsterelTreeParser.cpp"
 				}
 				else {
-					if ( _cnt89>=1 ) { goto _loop89; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+					if ( _cnt89>=1 ) { goto _loop89; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 				}
 				
 				_cnt89++;
@@ -2875,13 +2875,13 @@ void EsterelTreeParser::relationDecl(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -2893,10 +2893,10 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 #line 829 "staticsemantics.g"
 	Expression *e;
 #line 2896 "EsterelTreeParser.cpp"
-	RefLineAST expression_AST_in = _t;
-	RefLineAST sig = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST trap = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST func = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST expression_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST sig = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST trap = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST func = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 #line 831 "staticsemantics.g"
@@ -2906,13 +2906,13 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		
 #line 2908 "EsterelTreeParser.cpp"
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case Integer:
 		{
 			RefLineAST tmp74_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),Integer);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),Integer);
 			_t = _t->getNextSibling();
 #line 836 "staticsemantics.g"
 			e = new Literal(expression_AST_in->getText(), c->integer_type);
@@ -2922,7 +2922,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		case FloatConst:
 		{
 			RefLineAST tmp75_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),FloatConst);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),FloatConst);
 			_t = _t->getNextSibling();
 #line 837 "staticsemantics.g"
 			e = new Literal(expression_AST_in->getText(), c->float_type);
@@ -2932,7 +2932,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		case DoubleConst:
 		{
 			RefLineAST tmp76_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),DoubleConst);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),DoubleConst);
 			_t = _t->getNextSibling();
 #line 838 "staticsemantics.g"
 			e = new Literal(expression_AST_in->getText(), c->double_type);
@@ -2942,7 +2942,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		case LITERAL_true:
 		{
 			RefLineAST tmp77_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_true);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_true);
 			_t = _t->getNextSibling();
 #line 839 "staticsemantics.g"
 			e = new LoadVariableExpression(c->true_constant);
@@ -2952,7 +2952,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		case LITERAL_false:
 		{
 			RefLineAST tmp78_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_false);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_false);
 			_t = _t->getNextSibling();
 #line 840 "staticsemantics.g"
 			e = new LoadVariableExpression(c->false_constant);
@@ -2962,7 +2962,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		case StringConstant:
 		{
 			RefLineAST tmp79_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),StringConstant);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),StringConstant);
 			_t = _t->getNextSibling();
 #line 841 "staticsemantics.g"
 			e = new Literal(expression_AST_in->getText(), c->string_type);
@@ -2972,7 +2972,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		case ID:
 		{
 			RefLineAST tmp80_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 843 "staticsemantics.g"
 			
@@ -2992,10 +2992,10 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t190 = _t;
 			RefLineAST tmp81_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),QUESTION);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),QUESTION);
 			_t = _t->getFirstChild();
 			sig = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 			_t = __t190;
 			_t = _t->getNextSibling();
@@ -3017,10 +3017,10 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t191 = _t;
 			RefLineAST tmp82_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),DQUESTION);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),DQUESTION);
 			_t = _t->getFirstChild();
 			trap = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 			_t = __t191;
 			_t = _t->getNextSibling();
@@ -3042,10 +3042,10 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t192 = _t;
 			RefLineAST tmp83_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),CALL);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),CALL);
 			_t = _t->getFirstChild();
 			func = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 876 "staticsemantics.g"
 			
@@ -3060,7 +3060,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 #line 3061 "EsterelTreeParser.cpp"
 			{ // ( ... )*
 			for (;;) {
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				if ((_tokenSet_1.member(_t->getType()))) {
 					e1=expression(_t,c);
@@ -3094,7 +3094,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t195 = _t;
 			RefLineAST tmp84_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_or);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_or);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3111,7 +3111,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t196 = _t;
 			RefLineAST tmp85_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_and);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_and);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3128,7 +3128,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t197 = _t;
 			RefLineAST tmp86_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_not);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_not);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3147,7 +3147,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t198 = _t;
 			RefLineAST tmp87_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),PLUS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),PLUS);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3164,12 +3164,12 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t199 = _t;
 			RefLineAST tmp88_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),DASH);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),DASH);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
 			{
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			switch ( _t->getType()) {
 			case 3:
@@ -3221,7 +3221,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 			}
 			default:
 			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 			}
 			}
 			}
@@ -3233,7 +3233,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t201 = _t;
 			RefLineAST tmp89_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),STAR);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),STAR);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3250,7 +3250,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t202 = _t;
 			RefLineAST tmp90_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),SLASH);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),SLASH);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3267,7 +3267,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t203 = _t;
 			RefLineAST tmp91_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_mod);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_mod);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3284,7 +3284,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t204 = _t;
 			RefLineAST tmp92_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),EQUALS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),EQUALS);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3301,7 +3301,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t205 = _t;
 			RefLineAST tmp93_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),NEQUAL);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),NEQUAL);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3318,7 +3318,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t206 = _t;
 			RefLineAST tmp94_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LESSTHAN);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LESSTHAN);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3335,7 +3335,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t207 = _t;
 			RefLineAST tmp95_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LEQUAL);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LEQUAL);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3352,7 +3352,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t208 = _t;
 			RefLineAST tmp96_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),GREATERTHAN);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),GREATERTHAN);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3369,7 +3369,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		{
 			RefLineAST __t209 = _t;
 			RefLineAST tmp97_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),GEQUAL);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),GEQUAL);
 			_t = _t->getFirstChild();
 			e1=expression(_t,c);
 			_t = _retTree;
@@ -3385,7 +3385,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		case LITERAL_pre:
 		{
 			RefLineAST tmp98_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_pre);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_pre);
 			_t = _t->getNextSibling();
 #line 943 "staticsemantics.g"
 			throw LineError(expression_AST_in, "pre not supported");
@@ -3394,7 +3394,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
@@ -3407,7 +3407,7 @@ Expression * EsterelTreeParser::expression(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -3420,15 +3420,15 @@ TypeSymbol * EsterelTreeParser::type(RefLineAST _t,
 #line 400 "staticsemantics.g"
 	TypeSymbol *t;
 #line 3423 "EsterelTreeParser.cpp"
-	RefLineAST type_AST_in = _t;
-	RefLineAST type = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST type_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST type = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 #line 401 "staticsemantics.g"
 		t = 0;
 #line 3430 "EsterelTreeParser.cpp"
 		type = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 		_t = _t->getNextSibling();
 #line 403 "staticsemantics.g"
 		
@@ -3443,7 +3443,7 @@ TypeSymbol * EsterelTreeParser::type(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -3451,49 +3451,49 @@ TypeSymbol * EsterelTreeParser::type(RefLineAST _t,
 }
 
 void EsterelTreeParser::predefinedCombineFunction(RefLineAST _t) {
-	RefLineAST predefinedCombineFunction_AST_in = _t;
+	RefLineAST predefinedCombineFunction_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 	
 	try {      // for error handling
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case PLUS:
 		{
 			RefLineAST tmp99_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),PLUS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),PLUS);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case STAR:
 		{
 			RefLineAST tmp100_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),STAR);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),STAR);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case LITERAL_or:
 		{
 			RefLineAST tmp101_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_or);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_or);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case LITERAL_and:
 		{
 			RefLineAST tmp102_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_and);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_and);
 			_t = _t->getNextSibling();
 			break;
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -3502,16 +3502,16 @@ void EsterelTreeParser::predefinedCombineFunction(RefLineAST _t) {
 void EsterelTreeParser::trapDecl(RefLineAST _t,
 	Context *c
 ) {
-	RefLineAST trapDecl_AST_in = _t;
-	RefLineAST trapName = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST trapDecl_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST trapName = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 		RefLineAST __t60 = _t;
 		RefLineAST tmp103_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),TDECL);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),TDECL);
 		_t = _t->getFirstChild();
 		trapName = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 		_t = _t->getNextSibling();
 #line 300 "staticsemantics.g"
 		
@@ -3522,14 +3522,14 @@ void EsterelTreeParser::trapDecl(RefLineAST _t,
 		
 #line 3524 "EsterelTreeParser.cpp"
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case COLEQUALS:
 		{
 			RefLineAST __t62 = _t;
 			RefLineAST tmp104_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),COLEQUALS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),COLEQUALS);
 			_t = _t->getFirstChild();
 			e=expression(_t,c);
 			_t = _retTree;
@@ -3544,7 +3544,7 @@ void EsterelTreeParser::trapDecl(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
@@ -3552,7 +3552,7 @@ void EsterelTreeParser::trapDecl(RefLineAST _t,
 		TypeSymbol *ts = NULL;
 #line 3554 "EsterelTreeParser.cpp"
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case ID:
@@ -3567,7 +3567,7 @@ void EsterelTreeParser::trapDecl(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
@@ -3585,7 +3585,7 @@ void EsterelTreeParser::trapDecl(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -3594,21 +3594,21 @@ void EsterelTreeParser::trapDecl(RefLineAST _t,
 void EsterelTreeParser::procArgs(RefLineAST _t,
 	Context *c, ProcedureCall *pc
 ) {
-	RefLineAST procArgs_AST_in = _t;
-	RefLineAST var = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST procArgs_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST var = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 		RefLineAST __t182 = _t;
 		RefLineAST tmp105_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),VARS);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),VARS);
 		_t = _t->getFirstChild();
 		{ // ( ... )*
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			if ((_t->getType() == ID)) {
 				var = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 				_t = _t->getNextSibling();
 #line 813 "staticsemantics.g"
 				
@@ -3633,14 +3633,14 @@ void EsterelTreeParser::procArgs(RefLineAST _t,
 		_t = _t->getNextSibling();
 		RefLineAST __t185 = _t;
 		RefLineAST tmp106_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ARGS);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ARGS);
 		_t = _t->getFirstChild();
 #line 824 "staticsemantics.g"
 		Expression *e;
 #line 3641 "EsterelTreeParser.cpp"
 		{ // ( ... )*
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			if ((_tokenSet_1.member(_t->getType()))) {
 				e=expression(_t,c);
@@ -3661,7 +3661,7 @@ void EsterelTreeParser::procArgs(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -3673,22 +3673,22 @@ Expression * EsterelTreeParser::sigExpression(RefLineAST _t,
 #line 951 "staticsemantics.g"
 	Expression *e;
 #line 3676 "EsterelTreeParser.cpp"
-	RefLineAST sigExpression_AST_in = _t;
-	RefLineAST sig = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST sigExpression_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST sig = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 #line 952 "staticsemantics.g"
 		Expression *e1, *e2; e = 0;
 #line 3683 "EsterelTreeParser.cpp"
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case LITERAL_and:
 		{
 			RefLineAST __t212 = _t;
 			RefLineAST tmp107_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_and);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_and);
 			_t = _t->getFirstChild();
 			e1=sigExpression(_t,c);
 			_t = _retTree;
@@ -3705,7 +3705,7 @@ Expression * EsterelTreeParser::sigExpression(RefLineAST _t,
 		{
 			RefLineAST __t213 = _t;
 			RefLineAST tmp108_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_or);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_or);
 			_t = _t->getFirstChild();
 			e1=sigExpression(_t,c);
 			_t = _retTree;
@@ -3722,7 +3722,7 @@ Expression * EsterelTreeParser::sigExpression(RefLineAST _t,
 		{
 			RefLineAST __t214 = _t;
 			RefLineAST tmp109_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_not);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_not);
 			_t = _t->getFirstChild();
 			e1=sigExpression(_t,c);
 			_t = _retTree;
@@ -3736,7 +3736,7 @@ Expression * EsterelTreeParser::sigExpression(RefLineAST _t,
 		case LITERAL_pre:
 		{
 			RefLineAST tmp110_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_pre);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_pre);
 			_t = _t->getNextSibling();
 #line 960 "staticsemantics.g"
 			throw LineError(sigExpression_AST_in, "pre not supported");
@@ -3746,7 +3746,7 @@ Expression * EsterelTreeParser::sigExpression(RefLineAST _t,
 		case ID:
 		{
 			sig = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 962 "staticsemantics.g"
 			
@@ -3761,14 +3761,14 @@ Expression * EsterelTreeParser::sigExpression(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -3781,15 +3781,15 @@ Expression * EsterelTreeParser::delayExpression(RefLineAST _t,
 #line 972 "staticsemantics.g"
 	Expression *e;
 #line 3784 "EsterelTreeParser.cpp"
-	RefLineAST delayExpression_AST_in = _t;
-	RefLineAST expr2 = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST delayExpression_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST expr2 = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 #line 973 "staticsemantics.g"
 		Expression *e1, *e2; e = 0;
 #line 3791 "EsterelTreeParser.cpp"
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case ID:
@@ -3806,7 +3806,7 @@ Expression * EsterelTreeParser::delayExpression(RefLineAST _t,
 		{
 			RefLineAST __t217 = _t;
 			RefLineAST tmp111_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_immediate);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_immediate);
 			_t = _t->getFirstChild();
 			e1=sigExpression(_t,c);
 			_t = _retTree;
@@ -3821,9 +3821,9 @@ Expression * EsterelTreeParser::delayExpression(RefLineAST _t,
 		{
 			RefLineAST __t218 = _t;
 			RefLineAST tmp112_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),DELAY);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),DELAY);
 			_t = _t->getFirstChild();
-			expr2 = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+			expr2 = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 			e2=expression(_t,c);
 			_t = _retTree;
 			e1=sigExpression(_t,c);
@@ -3844,14 +3844,14 @@ Expression * EsterelTreeParser::delayExpression(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -3864,22 +3864,22 @@ Expression * EsterelTreeParser::trapExpression(RefLineAST _t,
 #line 989 "staticsemantics.g"
 	Expression *e;
 #line 3867 "EsterelTreeParser.cpp"
-	RefLineAST trapExpression_AST_in = _t;
-	RefLineAST trap = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST trapExpression_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST trap = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 #line 990 "staticsemantics.g"
 		Expression *e1, *e2; e = 0;
 #line 3874 "EsterelTreeParser.cpp"
 		{
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case LITERAL_and:
 		{
 			RefLineAST __t221 = _t;
 			RefLineAST tmp113_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_and);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_and);
 			_t = _t->getFirstChild();
 			e1=trapExpression(_t,c);
 			_t = _retTree;
@@ -3896,7 +3896,7 @@ Expression * EsterelTreeParser::trapExpression(RefLineAST _t,
 		{
 			RefLineAST __t222 = _t;
 			RefLineAST tmp114_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_or);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_or);
 			_t = _t->getFirstChild();
 			e1=trapExpression(_t,c);
 			_t = _retTree;
@@ -3913,7 +3913,7 @@ Expression * EsterelTreeParser::trapExpression(RefLineAST _t,
 		{
 			RefLineAST __t223 = _t;
 			RefLineAST tmp115_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_not);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_not);
 			_t = _t->getFirstChild();
 			e1=trapExpression(_t,c);
 			_t = _retTree;
@@ -3927,7 +3927,7 @@ Expression * EsterelTreeParser::trapExpression(RefLineAST _t,
 		case ID:
 		{
 			trap = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 #line 998 "staticsemantics.g"
 			
@@ -3944,14 +3944,14 @@ Expression * EsterelTreeParser::trapExpression(RefLineAST _t,
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 		}
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -3959,126 +3959,126 @@ Expression * EsterelTreeParser::trapExpression(RefLineAST _t,
 }
 
 void EsterelTreeParser::funcName(RefLineAST _t) {
-	RefLineAST funcName_AST_in = _t;
+	RefLineAST funcName_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 	
 	try {      // for error handling
-		if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = ASTNULL;
 		switch ( _t->getType()) {
 		case ID:
 		{
 			RefLineAST tmp116_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case LITERAL_and:
 		{
 			RefLineAST tmp117_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_and);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_and);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case LITERAL_or:
 		{
 			RefLineAST tmp118_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_or);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_or);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case LITERAL_not:
 		{
 			RefLineAST tmp119_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_not);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_not);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case PLUS:
 		{
 			RefLineAST tmp120_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),PLUS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),PLUS);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case DASH:
 		{
 			RefLineAST tmp121_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),DASH);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),DASH);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case STAR:
 		{
 			RefLineAST tmp122_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),STAR);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),STAR);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case SLASH:
 		{
 			RefLineAST tmp123_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),SLASH);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),SLASH);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case LITERAL_mod:
 		{
 			RefLineAST tmp124_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LITERAL_mod);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LITERAL_mod);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case LESSTHAN:
 		{
 			RefLineAST tmp125_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LESSTHAN);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LESSTHAN);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case GREATERTHAN:
 		{
 			RefLineAST tmp126_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),GREATERTHAN);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),GREATERTHAN);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case LEQUAL:
 		{
 			RefLineAST tmp127_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),LEQUAL);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),LEQUAL);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case GEQUAL:
 		{
 			RefLineAST tmp128_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),GEQUAL);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),GEQUAL);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case NEQUAL:
 		{
 			RefLineAST tmp129_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),NEQUAL);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),NEQUAL);
 			_t = _t->getNextSibling();
 			break;
 		}
 		case EQUALS:
 		{
 			RefLineAST tmp130_AST_in = _t;
-			match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),EQUALS);
+			match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),EQUALS);
 			_t = _t->getNextSibling();
 			break;
 		}
 		default:
 		{
-			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 		}
 		}
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
@@ -4087,42 +4087,42 @@ void EsterelTreeParser::funcName(RefLineAST _t) {
 void EsterelTreeParser::variableDeclList(RefLineAST _t,
 	 Context *oc, Context *nc, TypeSymbol *ts 
 ) {
-	RefLineAST variableDeclList_AST_in = _t;
-	RefLineAST variableName = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
-	RefLineAST varexpr = static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST variableDeclList_AST_in = (_t == RefLineAST(ASTNULL)) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+	RefLineAST variableName = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
+	RefLineAST varexpr = RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST);
 	
 	try {      // for error handling
 		RefLineAST __t174 = _t;
 		RefLineAST tmp131_AST_in = _t;
-		match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),VARS);
+		match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),VARS);
 		_t = _t->getFirstChild();
 		{ // ( ... )+
 		int _cnt179=0;
 		for (;;) {
-			if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+			if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 				_t = ASTNULL;
 			if ((_t->getType() == VDECL)) {
 				RefLineAST __t176 = _t;
 				RefLineAST tmp132_AST_in = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),VDECL);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),VDECL);
 				_t = _t->getFirstChild();
 				variableName = _t;
-				match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),ID);
+				match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),ID);
 				_t = _t->getNextSibling();
 #line 773 "staticsemantics.g"
 				Expression *e = 0;
 #line 4115 "EsterelTreeParser.cpp"
 				{
-				if (_t == static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+				if (_t == RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 					_t = ASTNULL;
 				switch ( _t->getType()) {
 				case COLEQUALS:
 				{
 					RefLineAST __t178 = _t;
 					RefLineAST tmp133_AST_in = _t;
-					match(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t),COLEQUALS);
+					match(ANTLR_USE_NAMESPACE(antlr)RefAST(_t),COLEQUALS);
 					_t = _t->getFirstChild();
-					varexpr = (_t == ASTNULL) ? static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
+					varexpr = (_t == ASTNULL) ? RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) : _t;
 					e=expression(_t,oc);
 					_t = _retTree;
 					_t = __t178;
@@ -4135,7 +4135,7 @@ void EsterelTreeParser::variableDeclList(RefLineAST _t,
 				}
 				default:
 				{
-					throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));
+					throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));
 				}
 				}
 				}
@@ -4156,7 +4156,7 @@ void EsterelTreeParser::variableDeclList(RefLineAST _t,
 				_t = _t->getNextSibling();
 			}
 			else {
-				if ( _cnt179>=1 ) { goto _loop179; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(static_cast<ANTLR_USE_NAMESPACE(antlr)RefAST>(_t));}
+				if ( _cnt179>=1 ) { goto _loop179; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(ANTLR_USE_NAMESPACE(antlr)RefAST(_t));}
 			}
 			
 			_cnt179++;
@@ -4168,18 +4168,13 @@ void EsterelTreeParser::variableDeclList(RefLineAST _t,
 	}
 	catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& ex) {
 		reportError(ex);
-		if ( _t != static_cast<RefLineAST>(ANTLR_USE_NAMESPACE(antlr)nullAST) )
+		if ( _t != RefLineAST(ANTLR_USE_NAMESPACE(antlr)nullAST) )
 			_t = _t->getNextSibling();
 	}
 	_retTree = _t;
 }
 
-RefLineAST EsterelTreeParser::getAST()
-{
-	return returnAST;
-}
-
-void EsterelTreeParser::initializeASTFactory( ANTLR_USE_NAMESPACE(antlr)ASTFactory& factory )
+void EsterelTreeParser::initializeASTFactory( ANTLR_USE_NAMESPACE(antlr)ASTFactory& )
 {
 }
 const char* EsterelTreeParser::tokenNames[] = {

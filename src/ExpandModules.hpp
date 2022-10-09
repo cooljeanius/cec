@@ -1,4 +1,4 @@
-#line 1661 "ExpandModules.nw"
+#line 1659 "ExpandModules.nw"
 #ifndef _DISMANTLE_HPP
 #  define _DISMANTLE_HPP
 
@@ -119,10 +119,10 @@ Status visit(Abort &s) {
 }
 #line 128 "ExpandModules.nw"
 };
-#line 1677 "ExpandModules.nw"
+#line 1675 "ExpandModules.nw"
   class Copier;
   
-#line 1583 "ExpandModules.nw"
+#line 1581 "ExpandModules.nw"
 class ExpressionCopier {
   Expression *theExpr;
   Copier *theCopier;
@@ -130,7 +130,7 @@ public:
   ExpressionCopier(Expression*, Copier*);
   Expression *copy();
 };
-#line 1679 "ExpandModules.nw"
+#line 1677 "ExpandModules.nw"
   
 #line 346 "ExpandModules.nw"
 class Copier : public Visitor {
@@ -216,7 +216,7 @@ Status visit(Implication &e) {
 }
 #line 543 "ExpandModules.nw"
 Status visit(Run &);
-#line 1203 "ExpandModules.nw"
+#line 1201 "ExpandModules.nw"
 Status visit(TypeSymbol &s) { return new TypeSymbol(s.name); }
 
 Status visit(BuiltinTypeSymbol &s) { return new BuiltinTypeSymbol(s.name); }
@@ -229,12 +229,12 @@ Status visit(BuiltinConstantSymbol &s) {
   return new BuiltinConstantSymbol(s.name, actualSymbol(s.type), 
                                    copy(s.initializer));
 }
-#line 1218 "ExpandModules.nw"
+#line 1216 "ExpandModules.nw"
 Status visit(FunctionSymbol&);
 Status visit(BuiltinFunctionSymbol&);
 Status visit(ProcedureSymbol&);
 Status visit(TaskSymbol&);
-#line 1286 "ExpandModules.nw"
+#line 1284 "ExpandModules.nw"
 Status visit(SignalSymbol &s)
 {
   // std::cerr << "Copy signal " << s.name << std::endl;
@@ -250,15 +250,15 @@ Status visit(BuiltinSignalSymbol &s)
 	                     (SignalSymbol::kinds) s.kind,
 			     actualSymbol(s.combine));
 }
-#line 1304 "ExpandModules.nw"
+#line 1302 "ExpandModules.nw"
 Status visit(VariableSymbol &s) {
   return new VariableSymbol(s.name, actualSymbol(s.type), copy(s.initializer));
 }
-#line 1314 "ExpandModules.nw"
+#line 1312 "ExpandModules.nw"
 Status visit(Nothing &) { return new Nothing(); }
 Status visit(Pause &) { return new Pause(); }
 Status visit(Halt &) { return new Halt(); }
-#line 1322 "ExpandModules.nw"
+#line 1320 "ExpandModules.nw"
 Status visit(Emit &e) {
   return new Emit(actualSymbol(e.signal), copy(e.value));
 }
@@ -266,66 +266,66 @@ Status visit(Emit &e) {
 Status visit(Sustain &s) {
   return new Sustain(actualSymbol(s.signal), copy(s.value));
 }
-#line 1334 "ExpandModules.nw"
+#line 1332 "ExpandModules.nw"
 Status visit(Assign &a) {
   return new Assign(actualSymbol(a.variable), copy(a.value));
 }
-#line 1340 "ExpandModules.nw"
+#line 1338 "ExpandModules.nw"
 Status visit(Exit &e) { return new Exit(actualSymbol(e.trap), copy(e.value)); }
-#line 1344 "ExpandModules.nw"
+#line 1342 "ExpandModules.nw"
 Status visit(ProcedureCall &);
-#line 1370 "ExpandModules.nw"
+#line 1368 "ExpandModules.nw"
 Status visit(StatementList&);
 Status visit(ParallelStatementList&);
-#line 1399 "ExpandModules.nw"
+#line 1397 "ExpandModules.nw"
 Status visit(IfThenElse &s) {
   return new IfThenElse(copy(s.predicate), copy(s.then_part),
 			copy(s.else_part));
 }
-#line 1406 "ExpandModules.nw"
+#line 1404 "ExpandModules.nw"
 Status visit(Loop &s) { return new Loop(copy(s.body)); }
-#line 1410 "ExpandModules.nw"
+#line 1408 "ExpandModules.nw"
 Status visit(Repeat &s) {
   return new Repeat(copy(s.body), copy(s.count), s.is_positive,
                     newCounter(s.counter));
 }
-#line 1417 "ExpandModules.nw"
+#line 1415 "ExpandModules.nw"
 Status visit(LoopEach &s) {
   return new LoopEach( copy(s.body), copy(s.predicate));
 }
-#line 1423 "ExpandModules.nw"
+#line 1421 "ExpandModules.nw"
 Status visit(Every &s) {
   return new Every( copy(s.body), copy(s.predicate));
 }
-#line 1429 "ExpandModules.nw"
+#line 1427 "ExpandModules.nw"
 Status visit(Suspend &s) {
   return new Suspend( copy(s.body), copy(s.predicate));
 }
-#line 1435 "ExpandModules.nw"
+#line 1433 "ExpandModules.nw"
 Status visit(DoWatching &s) {
   return new DoWatching( copy(s.body), copy(s.predicate), copy(s.timeout));
 }
-#line 1441 "ExpandModules.nw"
+#line 1439 "ExpandModules.nw"
 Status visit(DoUpto &s) {
   return new DoUpto( copy(s.body), copy(s.predicate));
 }
-#line 1447 "ExpandModules.nw"
+#line 1445 "ExpandModules.nw"
 Status visit(Exec &);
-#line 1483 "ExpandModules.nw"
+#line 1481 "ExpandModules.nw"
 void copyCases(const CaseStatement &, CaseStatement *);
-#line 1501 "ExpandModules.nw"
+#line 1499 "ExpandModules.nw"
 Status visit(Abort &s) {
   Abort *result = new Abort(copy(s.body), s.is_weak);
   copyCases(s, result);
   return result;
 }
-#line 1509 "ExpandModules.nw"
+#line 1507 "ExpandModules.nw"
 Status visit(Await &s) {
   Await *result = new Await();
   copyCases(s, result);
   return result;
 }
-#line 1517 "ExpandModules.nw"
+#line 1515 "ExpandModules.nw"
 Status visit(Present &s) {
   Present *result = new Present();
   copyCases(s, result);
@@ -337,7 +337,7 @@ Status visit(If &s) {
   copyCases(s, result);
   return result;
 }
-#line 1533 "ExpandModules.nw"
+#line 1531 "ExpandModules.nw"
 Status visit(Var &s) {
   Var *result = new Var();
   result->symbols = new SymbolTable();
@@ -345,7 +345,7 @@ Status visit(Var &s) {
   result->body = copy(s.body);
   return result;
 }
-#line 1543 "ExpandModules.nw"
+#line 1541 "ExpandModules.nw"
 Status visit(Signal &s) {
   Signal *result = new Signal();
   result->symbols = new SymbolTable();
@@ -353,7 +353,7 @@ Status visit(Signal &s) {
   result->body = copy(s.body);
   return result;
 }
-#line 1553 "ExpandModules.nw"
+#line 1551 "ExpandModules.nw"
 Status visit(Trap &s) {
   Trap *result = new Trap();
   result->symbols = new SymbolTable();
@@ -366,9 +366,9 @@ Status visit(Trap &s) {
   }
   return result;
 }
-#line 1573 "ExpandModules.nw"
+#line 1571 "ExpandModules.nw"
 Status visit(Literal &l) { return new Literal(l.value, actualSymbol(l.type)); }
-#line 1600 "ExpandModules.nw"
+#line 1598 "ExpandModules.nw"
 Status visit(LoadVariableExpression &e) {
   // std::cerr << "copying variable load " << e.variable->name << std::endl;
   ConstantSymbol *cs = dynamic_cast<ConstantSymbol*>(e.variable);
@@ -380,7 +380,7 @@ Status visit(LoadVariableExpression &e) {
   }
   return new LoadVariableExpression(actualSymbol(e.variable));
 }
-#line 1614 "ExpandModules.nw"
+#line 1612 "ExpandModules.nw"
 Status visit(LoadSignalExpression &e) {
   return new LoadSignalExpression(e.type, actualSymbol(e.signal));
 }
@@ -388,12 +388,12 @@ Status visit(LoadSignalExpression &e) {
 Status visit(LoadSignalValueExpression &e) {
   return new LoadSignalValueExpression(actualSymbol(e.signal));
 }
-#line 1624 "ExpandModules.nw"
+#line 1622 "ExpandModules.nw"
 Status visit(Delay &d) {
   return new Delay(actualSymbol(d.type), copy(d.predicate),
 		   copy(d.count), d.is_immediate, newCounter(d.counter));
 }
-#line 1631 "ExpandModules.nw"
+#line 1629 "ExpandModules.nw"
 Status visit(UnaryOp &o) {
   return new UnaryOp(actualSymbol(o.type), o.op, copy(o.source));
 }
@@ -402,14 +402,14 @@ Status visit(BinaryOp &o) {
   return new BinaryOp(actualSymbol(o.type), o.op,
 		      copy(o.source1), copy(o.source2));
 }
-#line 1642 "ExpandModules.nw"
+#line 1640 "ExpandModules.nw"
 Status visit(FunctionCall &);
 #line 357 "ExpandModules.nw"
 };
-#line 1680 "ExpandModules.nw"
+#line 1678 "ExpandModules.nw"
   
 #line 90 "ExpandModules.nw"
 Modules *find_roots_and_rewrite(Modules *);
-#line 1681 "ExpandModules.nw"
+#line 1679 "ExpandModules.nw"
 }
 #endif

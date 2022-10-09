@@ -179,8 +179,10 @@ namespace CVER {
 	
 	ov<<"  $monitor($time,";
 	for(vector<wire*>::iterator w=wires.begin(); w!=wires.end(); w++)
-	  if((*w)->input || (*w)->output) ov<<",\" \","<<(*w)->name; else
-	    if(debugsignals && (*w)->monitor>=monitor_level) ov<<",\" \",u_top.u_main."<<(*w)->name;
+	  if((*w)->input || (*w)->output)
+		  ov<<",\" \","<<(*w)->name;
+	  else if(debugsignals && (*w)->monitor>=monitor_level)
+		  ov<<",\" \",u_top.u_main."<<(*w)->name;
 	ov<<");\n";
     
 	// link all inputs to 0 : no stimulus
@@ -565,9 +567,12 @@ namespace CVER {
     string label;
 
     label = (input || output || monitor >= monitor_level) ? name : "";
-    if(this==w_0) label="0"; if(this==w_1) label="1";
-    if(name=="w_finished") label="STOP";
-
+    if(this==w_0)
+	   label="0";
+	if(this==w_1)
+		label="1";
+    if(name=="w_finished")
+		label="STOP";
 
     current->odot<<name<<" [ label=\""<<label<<"\" color="<<color<<" fixed_size=true height=\"0.2\" width=\"0.2\" ";
     current->odot <<" fontsize=\"10\" ]\n";

@@ -2,7 +2,7 @@
 #define INC_EsterelLexer_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.2: "esterel.g" -> "EsterelLexer.hpp"$ */
+/* $ANTLR 2.7.7 (2006-11-01): "esterel.g" -> "EsterelLexer.hpp"$ */
 #include <antlr/CommonToken.hpp>
 #include <antlr/InputBuffer.hpp>
 #include <antlr/BitSet.hpp>
@@ -13,7 +13,7 @@
 #include "LineAST.hpp"
 
 #line 16 "EsterelLexer.hpp"
-class EsterelLexer : public ANTLR_USE_NAMESPACE(antlr)CharScanner, public EsterelTokenTypes
+class CUSTOM_API EsterelLexer : public ANTLR_USE_NAMESPACE(antlr)CharScanner, public EsterelTokenTypes
 {
 #line 1 "esterel.g"
 #line 20 "EsterelLexer.hpp"

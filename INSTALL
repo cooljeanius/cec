@@ -312,6 +312,13 @@ workaround:
 
      CONFIG_SHELL=/bin/bash ./configure CONFIG_SHELL=/bin/bash
 
+Addendum
+--------
+In order for the configure script to pick up the antlr 2.x tool, please
+add the ANTLR_HOME environment variable, either through your user profile
+or by prefixing the ./configure command: e.g.
+	ANTLR_HOME=/usr/share/java ./configure CXXFLAGS=-DANTLR_REALLY_NO_STRCASECMP
+
 'configure' Invocation
 ======================
 

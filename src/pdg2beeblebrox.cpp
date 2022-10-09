@@ -1,3 +1,6 @@
+
+#include <cstring>
+
 #include "pdg2beeblebrox.hpp"
 
 
