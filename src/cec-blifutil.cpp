@@ -150,8 +150,8 @@ int main(int argc, char *argv[])
 	    break;
 	  default:
 	    {
-	      char buf[5];
-	      sprintf(buf, "%4d", i);
+	      char buf[11];
+	      snprintf(buf, sizeof(buf), "%4d", i);
 	      std::cout << buf;
 	      for ( std::vector<BLIF::Gate*>::const_iterator j =
 		      sim.outputs.begin() ;

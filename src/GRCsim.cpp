@@ -489,8 +489,8 @@ void GRCsim::execute_max(int maxticks)
 
   do {
     if (debug) cerr << "######## TICK " << ntick << endl;
-    char buf[5];
-    sprintf(buf, "%4d ", ntick);
+    char buf[12];
+    snprintf(buf, sizeof(buf), "%4d ", ntick);
     outf << buf;
     ntick++;
     clear_inputs();
@@ -549,8 +549,8 @@ void GRCsim::execute_vectors(std::istream &vf)
 	}
     
     if (debug) cerr << "######## TICK " << ntick <<" TV :"<<line<< endl;
-    char buf[5];
-    sprintf(buf, "%4d ", ntick);
+    char buf[12];
+    snprintf(buf, sizeof(buf), "%4d ", ntick);
     outf << buf;
     ntick++;
 
