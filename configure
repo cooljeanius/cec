@@ -18451,6 +18451,20 @@ then :
 
 fi
 
+if test "x${ac_cv_func_strcasecmp}" = "xno"
+then :
+
+  if test "x${CXXFLAGS}" = "x"
+then :
+
+    test -z "${CXXFLAGS}" && export CXXFLAGS=-DANTLR_REALLY_NO_STRCASECMP
+
+else $as_nop
+
+    test -n "${CXXFLAGS}" && export CXXFLAGS="${CXXFLAGS} -DANTLR_REALLY_NO_STRCASECMP"
+
+fi
+fi
 # Output.
 ac_config_files="$ac_config_files Makefile src/Makefile tests/Makefile libantlr/Makefile"
 

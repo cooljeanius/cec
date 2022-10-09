@@ -18,6 +18,10 @@
 #include <cctype>
 #endif
 
+#if defined(HAVE_STRINGS_H) || defined(__APPLE__)
+# include <strings.h>
+#endif /* HAVE_STRINGS_H || __APPLE__ */
+
 #include <antlr/TokenStream.hpp>
 #include <antlr/RecognitionException.hpp>
 #include <antlr/MismatchedCharException.hpp>

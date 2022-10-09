@@ -88,7 +88,7 @@ dnl# Except in unusual embedded environments, you can safely include all
 dnl# ISO C90 headers unconditionally.
 AC_CHECK_INCLUDES_DEFAULT
 AC_HEADER_STDBOOL dnl# also "_CHECK"s it
-AC_CHECK_HEADERS_ONCE([stdlib.h string.h])dnl
+AC_CHECK_HEADERS_ONCE([stdlib.h string.h strings.h])dnl
 
 # These progs are useful for development, but aren't necessary for building:
 AC_PATH_PROG([NOTANGLE],[notangle])
@@ -128,6 +128,14 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_FUNC_ERROR_AT_LINE
 AC_CHECK_FUNCS([alarm select strcasecmp strdup])dnl
+
+AS_IF([test "x${ac_cv_func_strcasecmp}" = "xno"],[
+  AS_IF([test "x${CXXFLAGS}" = "x"],[
+    test -z "${CXXFLAGS}" && export CXXFLAGS=-DANTLR_REALLY_NO_STRCASECMP
+  ],[
+    test -n "${CXXFLAGS}" && export CXXFLAGS="${CXXFLAGS} -DANTLR_REALLY_NO_STRCASECMP"
+  ])dnl
+])dnl
 
 # Output.
 AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile libantlr/Makefile])
