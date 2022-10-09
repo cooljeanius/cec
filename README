@@ -45,3 +45,10 @@ The static semantic checker is in staticsemantics.g
 This compiler is built using Terrance Parr et al.'s ANTLR system.
 A unmodified copy of the C++ runtime library from ANTLR 2.7.2 is
 included in the libantlr/ directory to reduce compilation dependencies.
+
+Addendum (copied from INSTALL which is liable to get overwritten)
+-----------------------------------------------------------------
+In order for the configure script to pick up the antlr 2.x tool, please
+add the ANTLR_HOME environment variable, either through your user profile
+or by prefixing the ./configure command: e.g.
+	ANTLR_HOME=/usr/share/java ./configure CXXFLAGS=-DANTLR_REALLY_NO_STRCASECMP
