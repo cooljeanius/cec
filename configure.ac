@@ -26,7 +26,9 @@ AC_DEFUN([AC_REQUIRE_PROGS],[
   AC_REQUIRE([AC_PROG_MAKE_SET])dnl
   AC_REQUIRE([AC_PROG_CC])dnl
   AC_REQUIRE([AM_PROG_CC_C_O])dnl
+  AC_REQUIRE([AC_PROG_GREP])dnl
   AC_REQUIRE([AC_PROG_EGREP])dnl
+  AC_REQUIRE([AC_PROG_SED])dnl
 ])dnl
 AC_REQUIRE_PROGS
 AC_LANG([C])dnl
@@ -93,6 +95,12 @@ AC_CHECK_HEADERS_ONCE([stdlib.h string.h strings.h])dnl
 # These progs are useful for development, but aren't necessary for building:
 AC_PATH_PROG([NOTANGLE],[notangle])
 AC_PATH_PROG([NOWEAVE],[noweave])dnl
+
+# More documentation tools:
+AC_PATH_PROG([LATEX],[latex],[latex])
+AC_PATH_PROG([DVIPS],[dvips],[dvips])
+AC_PATH_PROG([PS2PDF],[ps2pdf],[ps2pdf])
+AC_PATH_PROG([GROFF],[groff],[groff])dnl
 
 # Check for the ability to run ANTLR -- necessary for development, but not
 # for a build

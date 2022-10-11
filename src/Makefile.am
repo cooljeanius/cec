@@ -33,18 +33,18 @@ SUFFIXES = .nw .hpp .cpp .tex .dvi .ps .pdf .sh
 	$(NOWEAVE) $(NOWEAVEFLAGS) $< > $@
 
 .tex.dvi :
-	latex $< < /dev/null
-	while grep -s 'Rerun to get cross' $*.log; \
-	  do latex $< < /dev/null; done
+	$(LATEX) $< < /dev/null
+	while $(GREP) -s 'Rerun to get cross' $*.log; \
+	  do $(LATEX) $< < /dev/null; done
 
 .dvi.ps :
-	dvips -K -Pcmz -t letter -z -o $@ $<
+	$(DVIPS) -K -Pcmz -t letter -z -o $@ $<
 
 .ps.pdf :
-	ps2pdf $<
+	$(PS2PDF) $<
 
 .1.ps :
-	groff -T ps -man $< > $@
+	$(GROFF) -T ps -man $< > $@
 
 bin_PROGRAMS = \
 	cec-strlxml \
@@ -336,9 +336,12 @@ clean-test :
 	    *.c.simout \
 	    *.exe
 
+.PHONY: distclean-local
+distclean-local: clean-test
+	-rm -rf .deps || rmdir .deps
 
 EsterelGrammar.tex : EsterelParser.html
 	echo "\documentclass{article}\title{Esterel Grammar}\date{}\begin{document}\maketitle\begin{verbatim}" > EsterelGrammar.tex
-	sed -n '/<PRE>/,/<.PRE>/ p' EsterelParser.html | sed 's/<[^>]*>//g' | sed 's/	/  /g' | sed 's/\&quot\;/"/g' >> EsterelGrammar.tex
+	$(SED) -n '/<PRE>/,/<.PRE>/ p' EsterelParser.html | $(SED) 's/<[^>]*>//g' | sed 's/	/  /g' | sed 's/\&quot\;/"/g' >> EsterelGrammar.tex
 	echo "\end{verbatim}" >> EsterelGrammar.tex
 	echo "\end{document}" >> EsterelGrammar.tex

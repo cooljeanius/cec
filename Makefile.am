@@ -22,3 +22,7 @@ EXTRA_DIST = \
 	ANNOUNCE-0.4
 
 DISTCLEANFILES = *~
+
+.PHONY: distclean-local
+distclean-local:
+	-rm -rf autom4te.cache || rmdir autom4te.cache

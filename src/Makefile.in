@@ -566,6 +566,7 @@ DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
+DVIPS = @DVIPS@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
@@ -575,11 +576,13 @@ EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 FILECMD = @FILECMD@
 GREP = @GREP@
+GROFF = @GROFF@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+LATEX = @LATEX@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -609,6 +612,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PS2PDF = @PS2PDF@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -1547,7 +1551,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/prblif.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-tags
+	distclean-local distclean-tags
 
 dvi: dvi-am
 
@@ -1658,19 +1662,19 @@ uninstall-man: uninstall-man1
 .PHONY: CTAGS GTAGS TAGS all all-am am--depfiles check check-TESTS \
 	check-am clean clean-binPROGRAMS clean-generic clean-libtool \
 	cscopelist-am ctags ctags-am distclean distclean-compile \
-	distclean-generic distclean-libtool distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-binSCRIPTS install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-man1 install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	recheck tags tags-am uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-binSCRIPTS uninstall-man \
-	uninstall-man1
+	distclean-generic distclean-libtool distclean-local \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-binPROGRAMS install-binSCRIPTS \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-man1 \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am recheck tags tags-am uninstall \
+	uninstall-am uninstall-binPROGRAMS uninstall-binSCRIPTS \
+	uninstall-man uninstall-man1
 
 .PRECIOUS: Makefile
 
@@ -1688,18 +1692,18 @@ uninstall-man: uninstall-man1
 	$(NOWEAVE) $(NOWEAVEFLAGS) $< > $@
 
 .tex.dvi :
-	latex $< < /dev/null
-	while grep -s 'Rerun to get cross' $*.log; \
-	  do latex $< < /dev/null; done
+	$(LATEX) $< < /dev/null
+	while $(GREP) -s 'Rerun to get cross' $*.log; \
+	  do $(LATEX) $< < /dev/null; done
 
 .dvi.ps :
-	dvips -K -Pcmz -t letter -z -o $@ $<
+	$(DVIPS) -K -Pcmz -t letter -z -o $@ $<
 
 .ps.pdf :
-	ps2pdf $<
+	$(PS2PDF) $<
 
 .1.ps :
-	groff -T ps -man $< > $@
+	$(GROFF) -T ps -man $< > $@
 
 $(esterel_ANTLRGEN) : esterel.g
 	rm -f $(esterel_ANTLRGEN)
@@ -1795,9 +1799,13 @@ clean-test :
 	    *.c.simout \
 	    *.exe
 
+.PHONY: distclean-local
+distclean-local: clean-test
+	-rm -rf .deps || rmdir .deps
+
 EsterelGrammar.tex : EsterelParser.html
 	echo "\documentclass{article}\title{Esterel Grammar}\date{}\begin{document}\maketitle\begin{verbatim}" > EsterelGrammar.tex
-	sed -n '/<PRE>/,/<.PRE>/ p' EsterelParser.html | sed 's/<[^>]*>//g' | sed 's/	/  /g' | sed 's/\&quot\;/"/g' >> EsterelGrammar.tex
+	$(SED) -n '/<PRE>/,/<.PRE>/ p' EsterelParser.html | $(SED) 's/<[^>]*>//g' | sed 's/	/  /g' | sed 's/\&quot\;/"/g' >> EsterelGrammar.tex
 	echo "\end{verbatim}" >> EsterelGrammar.tex
 	echo "\end{document}" >> EsterelGrammar.tex
 
