@@ -64,12 +64,14 @@ jobs:
         # queries: security-extended,security-and-quality
 
     - name: Dependencies
-      run: sudo apt-get update && sudo apt-get install antlr libantlr-java noweb
+      run: sudo apt-get update && sudo apt-get install antlr libantlr-java expat ghostscript noweb
 
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
+      env:
+        ANTLR_HOME: /usr/share/java
 
     # Command-line programs to run using the OS shell.
     # See:

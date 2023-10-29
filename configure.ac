@@ -3,17 +3,18 @@ dnl# Run aclocal to generate aclocal.m4
 dnl# then run automake
 dnl# then run autoconf
 
-AC_PREREQ([2.70])
-AC_INIT([cec],[0.4],[cec-users@lists.cs.columbia.edu])
-AC_CONFIG_SRCDIR([src/cec-strlxml.cpp])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_AUX_DIR([build-aux])
-AC_REQUIRE_AUX_FILE([mkinstalldirs])
-AM_INIT_AUTOMAKE([subdir-objects])
+AC_PREREQ([2.70])dnl
+AC_INIT([cec],[0.4],[cec-users@lists.cs.columbia.edu])dnl
+AC_CONFIG_SRCDIR([src/cec-strlxml.cpp])dnl
+AC_CONFIG_HEADERS([config.h])dnl
+AC_CONFIG_MACRO_DIR([m4])dnl
+AC_CONFIG_AUX_DIR([build-aux])dnl
+AC_REQUIRE_AUX_FILE([depcomp])dnl
+AC_REQUIRE_AUX_FILE([mkinstalldirs])dnl
+AM_INIT_AUTOMAKE([subdir-objects])dnl
 AM_MAINTAINER_MODE
 AM_SANITY_CHECK
-AC_SEARCH_LIBS([strerror],[cposix])
+AC_SEARCH_LIBS([strerror],[cposix])dnl
 AM_SET_LEADING_DOT
 AC_EXEEXT
 AC_CANONICAL_HOST
@@ -127,7 +128,7 @@ else
   ANTLR=""
   AC_MSG_RESULT([no])
 fi
-AC_PATH_PROGS([ANTLR_BIN],[antlr antlr2 antlr3 antlr.jar])dnl
+AC_PATH_PROGS([ANTLR_BIN],[antlr antlr2 "java antlr.Tool"])dnl
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
