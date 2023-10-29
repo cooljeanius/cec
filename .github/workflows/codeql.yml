@@ -64,7 +64,7 @@ jobs:
         # queries: security-extended,security-and-quality
 
     - name: Dependencies
-      run: sudo apt-get update && sudo apt-get install antlr libantlr-java expat ghostscript noweb
+      run: sudo apt-get update && sudo apt-get install antlr libantlr-java expat ghostscript mlocate findutils noweb
 
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
     # If this step fails, then you should remove it and run the build manually (see below)
@@ -72,6 +72,23 @@ jobs:
       uses: github/codeql-action/autobuild@v2
       env:
         ANTLR_HOME: /usr/share/java
+
+    - name: Debug failure
+      if: failure()
+      run: |
+        if test -x "$(which locate)"; then \
+          locate antlr; \
+        elif test -x "$(which glocate)"; then \
+          glocate antlr;
+        elif test -x "$(which mlocate)"; then \
+          mlocate antlr; \
+        elif test -x "$(which plocate)"; then \
+          plocate antlr; \
+        elif test -x "$(which mdfind)"; then \
+          mdfind antlr; \
+        elif test -x "$(which find)"; then \
+          find / -name antlr; \
+        fi
 
     # Command-line programs to run using the OS shell.
     # See:
