@@ -124,31 +124,27 @@ staticsemantics_ANTLRGEN = EsterelTreeParser.cpp EsterelTreeParser.hpp \
 	EsterelTreeParserTokenTypes.hpp
 
 $(esterel_ANTLRGEN) : esterel.g
-	mv $(esterel_ANTLRGEN) $(esterel_ANTLRGEN).bak
+	rm -f $(esterel_ANTLRGEN)
 	if test -n "$(ANTLR)"; then \
 	  $(ANTLR) $<; \
 	elif test -n "$(ANTLR_BIN)"; then \
 	  $(ANTLR_BIN) $<; \
 	elif test -x "`which antlr`"; then \
 	  antlr $<; \
-	elif mv $(esterel_ANTLRGEN).bak $(esterel_ANTLRGEN) 2>/dev/null; then \
-	  stat $(esterel_ANTLRGEN); \
 	else \
-	  echo "antlr required to generate $(esterel_ANTLRGEN)!" >&2; exit 1; \
+	  echo "antlr required to (re)generate $(esterel_ANTLRGEN)!" >&2; exit 1; \
 	fi
 
 $(staticsemantics_ANTLRGEN) : staticsemantics.g
-	mv $(staticsemantics_ANTLRGEN) $(staticsemantics_ANTLRGEN).bak
+	rm -f $(staticsemantics_ANTLRGEN)
 	if test -n "$(ANTLR)"; then \
 	  $(ANTLR) $<; \
 	elif test -n "$(ANTLR_BIN)"; then \
 	  $(ANTLR_BIN) $<; \
 	elif test -x "`which antlr`"; then \
 	  antlr $<; \
-	elif mv $(staticsemantics_ANTLRGEN).bak $(staticsemantics_ANTLRGEN) 2>/dev/null; then \
-	  stat $(staticsemantics_ANTLRGEN); \
 	else \
-	  echo "antlr required to generate $(staticsemantics_ANTLRGEN)!" >&2; \
+	  echo "antlr required to (re)generate $(staticsemantics_ANTLRGEN)!" >&2; \
 	  exit 1; \
 	fi
 
