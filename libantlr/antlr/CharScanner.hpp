@@ -18,9 +18,19 @@
 #include <cctype>
 #endif
 
-#if defined(HAVE_STRINGS_H) || defined(__APPLE__)
+#ifndef __has_include
+# define __has_include(foo) 0
+#endif /* !__has_include */
+
+#if defined(HAVE_STRINGS_H) || defined(__APPLE__) || __has_include(<strings.h>)
 # include <strings.h>
-#endif /* HAVE_STRINGS_H || __APPLE__ */
+#elif defined(__cplusplus)
+# include <cstring>
+#endif /* HAVE_STRINGS_H || __APPLE__ || __cplusplus */
+
+#if defined(HAVE_XLOCALE_H) || __has_include(<xlocale.h>)
+# include <xlocale.h>
+#endif /* HAVE_XLOCALE_H */
 
 #include <antlr/TokenStream.hpp>
 #include <antlr/RecognitionException.hpp>

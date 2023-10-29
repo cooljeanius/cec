@@ -675,7 +675,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 NOTANGLECLINES = -L'\#line %L "%F"%N'
 NOWEAVEFLAGS = -delay -index
-AM_CXXFLAGS = -Wall -g -O
+AM_CXXFLAGS = -Wall -g -O1
 AM_CPPFLAGS = -I../libantlr
 SUFFIXES = .nw .hpp .cpp .tex .dvi .ps .pdf .sh
 #	cec-grcvhdl \

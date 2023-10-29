@@ -14,7 +14,7 @@ NOWEAVEFLAGS = -delay -index
 
 ANTLR = @ANTLR@
 
-AM_CXXFLAGS = -Wall -g -O
+AM_CXXFLAGS = -Wall -g -O1
 
 AM_CPPFLAGS = -I../libantlr
 

@@ -90,7 +90,7 @@ dnl# Except in unusual embedded environments, you can safely include all
 dnl# ISO C90 headers unconditionally.
 AC_CHECK_INCLUDES_DEFAULT
 AC_HEADER_STDBOOL dnl# also "_CHECK"s it
-AC_CHECK_HEADERS_ONCE([stdlib.h string.h strings.h])dnl
+AC_CHECK_HEADERS_ONCE([stdlib.h string.h strings.h xlocale.h])dnl
 
 # These progs are useful for development, but aren't necessary for building:
 AC_PATH_PROG([NOTANGLE],[notangle])
@@ -120,8 +120,8 @@ antlr_version=`sed 's/^.*Version //
 s/ .*$//' antlr-version`
 rm -f TestParser.cpp TestParser.hpp TestParserTokenTypes.hpp TestParserTokenTypes.txt test.g antlr-version
 ])
-if test $ac_cv_found_antlr = yes ; then
-  AC_MSG_RESULT([$antlr_version])
+if test "x${ac_cv_found_antlr}" = "xyes"; then
+  AC_MSG_RESULT([${antlr_version}])
   ANTLR="java antlr.Tool"
 else
   ANTLR=""
