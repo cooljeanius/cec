@@ -127,7 +127,7 @@ else
   ANTLR=""
   AC_MSG_RESULT([no])
 fi
-AC_PATH_PROG([ANTLR_BIN],[antlr])dnl
+AC_PATH_PROGS([ANTLR_BIN],[antlr antlr2 antlr3 antlr.jar])dnl
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE

@@ -12,6 +12,8 @@ NOTANGLECLINES = -L'\#line %L "%F"%N'
 NOWEAVE = @NOWEAVE@
 NOWEAVEFLAGS = -delay -index
 
+DISTCLEANFILES = *.bak
+
 ANTLR = @ANTLR@
 
 AM_CXXFLAGS = -Wall -g -O1
@@ -122,17 +124,46 @@ staticsemantics_ANTLRGEN = EsterelTreeParser.cpp EsterelTreeParser.hpp \
 	EsterelTreeParserTokenTypes.hpp
 
 $(esterel_ANTLRGEN) : esterel.g
-	rm -f $(esterel_ANTLRGEN)
-	$(ANTLR) $<
+	mv $(esterel_ANTLRGEN) $(esterel_ANTLRGEN).bak
+	if test -n "$(ANTLR)"; then \
+	  $(ANTLR) $<; \
+	elif test -n "$(ANTLR_BIN)"; then \
+	  $(ANTLR_BIN) $<; \
+	elif test -x "`which antlr`"; then \
+	  antlr $<; \
+	elif mv $(esterel_ANTLRGEN).bak $(esterel_ANTLRGEN) 2>/dev/null; then \
+	  stat $(esterel_ANTLRGEN); \
+	else \
+	  echo "antlr required to generate $(esterel_ANTLRGEN)!" >&2; exit 1; \
+	fi
 
 $(staticsemantics_ANTLRGEN) : staticsemantics.g
-	rm -f $(staticsemantics_ANTLRGEN)
-	$(ANTLR) $<
+	mv $(staticsemantics_ANTLRGEN) $(staticsemantics_ANTLRGEN).bak
+	if test -n "$(ANTLR)"; then \
+	  $(ANTLR) $<; \
+	elif test -n "$(ANTLR_BIN)"; then \
+	  $(ANTLR_BIN) $<; \
+	elif test -x "`which antlr`"; then \
+	  antlr $<; \
+	elif mv $(staticsemantics_ANTLRGEN).bak $(staticsemantics_ANTLRGEN) 2>/dev/null; then \
+	  stat $(staticsemantics_ANTLRGEN); \
+	else \
+	  echo "antlr required to generate $(staticsemantics_ANTLRGEN)!" >&2; \
+	  exit 1; \
+	fi
 
 # Automatically-generated HTML documentation for the grammar
 
 EsterelParser.html : esterel.g
-	$(ANTLR) -html $<
+	if test -n "$(ANTLR)"; then \
+	  $(ANTLR) -html $<; \
+	elif test -n "$(ANTLR_BIN)"; then \
+	  $(ANTLR_BIN) -html $<; \
+	elif test -x "`which antlr`"; then \
+	  antlr -html $<; \
+	else \
+	  echo "antlr required to generate EsterelParser.html!" >&2; exit 1; \
+	fi
 
 AST.sh : AST.nw
 
