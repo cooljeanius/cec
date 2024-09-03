@@ -21,7 +21,7 @@ EXTRA_DIST = \
 	ANNOUNCE-0.3 \
 	ANNOUNCE-0.4
 
-DISTCLEANFILES = *~
+DISTCLEANFILES = *~ build-aux/*~ autoscan.log
 
 .PHONY: distclean-local
 distclean-local:

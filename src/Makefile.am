@@ -1,4 +1,4 @@
-## Process this file with automake to produce Makefile.in
+## src/Makefile.am: Process this file with automake to produce Makefile.in
 ##
 ## Automake file for CEC, the Columbia Esterel Compiler
 ##
@@ -8,6 +8,7 @@
 ##
 
 NOTANGLE = @NOTANGLE@
+## FIXME: automake complains about escaping comment marker here:
 NOTANGLECLINES = -L'\#line %L "%F"%N'
 NOWEAVE = @NOWEAVE@
 NOWEAVEFLAGS = -delay -index
@@ -70,11 +71,13 @@ bin_PROGRAMS = \
 	cec-grcbal \
 	cec-vm \
 	cec-vm-wrapper
-#	cec-grcvhdl \
-#	cec-merge-simout
-#	cec-v5-vinterface
-#	cec-ublaze-interface
-#	cec-vvpout
+
+unused_CEC_PROGS = \
+	cec-grcvhdl \
+	cec-merge-simout \
+	cec-v5-vinterface \
+	cec-ublaze-interface \
+	cec-vvpout
 
 bin_SCRIPTS = cec cec-balasm
 
@@ -126,11 +129,11 @@ staticsemantics_ANTLRGEN = EsterelTreeParser.cpp EsterelTreeParser.hpp \
 $(esterel_ANTLRGEN) : esterel.g
 	rm -f $(esterel_ANTLRGEN)
 	if test -n "$(ANTLR)"; then \
-	  $(ANTLR) $<; \
+	  echo "ANTLR is '$(ANTLR)'" && $(ANTLR) $<; \
 	elif test -n "$(ANTLR_BIN)"; then \
-	  $(ANTLR_BIN) $<; \
+	  echo "ANTLR_BIN is '$(ANTLR_BIN)'" && $(ANTLR_BIN) $<; \
 	elif test -x "`which antlr`"; then \
-	  antlr $<; \
+	  which antlr && antlr $<; \
 	else \
 	  echo "antlr required to (re)generate $(esterel_ANTLRGEN)!" >&2; exit 1; \
 	fi
@@ -138,11 +141,11 @@ $(esterel_ANTLRGEN) : esterel.g
 $(staticsemantics_ANTLRGEN) : staticsemantics.g
 	rm -f $(staticsemantics_ANTLRGEN)
 	if test -n "$(ANTLR)"; then \
-	  $(ANTLR) $<; \
+	  echo "ANTLR is '$(ANTLR)'" && $(ANTLR) $<; \
 	elif test -n "$(ANTLR_BIN)"; then \
-	  $(ANTLR_BIN) $<; \
+	  echo "ANTLR_BIN is '$(ANTLR_BIN)'" && $(ANTLR_BIN) $<; \
 	elif test -x "`which antlr`"; then \
-	  antlr $<; \
+	  which antlr && antlr $<; \
 	else \
 	  echo "antlr required to (re)generate $(staticsemantics_ANTLRGEN)!" >&2; \
 	  exit 1; \
@@ -152,11 +155,11 @@ $(staticsemantics_ANTLRGEN) : staticsemantics.g
 
 EsterelParser.html : esterel.g
 	if test -n "$(ANTLR)"; then \
-	  $(ANTLR) -html $<; \
+	  echo "ANTLR is '$(ANTLR)'" && $(ANTLR) -html $<; \
 	elif test -n "$(ANTLR_BIN)"; then \
-	  $(ANTLR_BIN) -html $<; \
+	  echo "ANTLR_BIN is '$(ANTLR_BIN)'" && $(ANTLR_BIN) -html $<; \
 	elif test -x "`which antlr`"; then \
-	  antlr -html $<; \
+	  which antlr && antlr -html $<; \
 	else \
 	  echo "antlr required to generate EsterelParser.html!" >&2; exit 1; \
 	fi

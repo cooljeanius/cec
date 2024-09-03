@@ -85,6 +85,7 @@ jobs:
         uses: github/codeql-action/autobuild@v3
         env:
           ANTLR_HOME: /usr/share/java
+          CODEQL_EXTRACTOR_CPP_AUTOINSTALL_DEPENDENCIES: false
 
       - name: Debug failure
         if: failure()
@@ -100,7 +101,8 @@ jobs:
           elif test -x "$(which mdfind)"; then \
             mdfind antlr; \
           elif test -x "$(which find)"; then \
-            find / -name antlr; \
+            which -a find; \
+            find / -name antlr -perm +r -user "$(whoami)" 2>/dev/null; \
           else \
             echo "unable to find antlr!"; \
           fi

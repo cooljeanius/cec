@@ -30,6 +30,9 @@ AC_DEFUN([AC_REQUIRE_PROGS],[
   AC_REQUIRE([AC_PROG_GREP])dnl
   AC_REQUIRE([AC_PROG_EGREP])dnl
   AC_REQUIRE([AC_PROG_SED])dnl
+  m4_ifdef([AC_PROG_AR],[
+    AC_REQUIRE([AC_PROG_AR])dnl
+  ])dnl
 ])dnl
 AC_REQUIRE_PROGS
 AC_LANG([C])dnl
@@ -38,7 +41,6 @@ AC_PROG_CPP
 AC_PROG_CXX
 AC_LANG([C++])
 AC_PROG_RANLIB
-AC_PROG_GCC_TRADITIONAL
 LT_INIT
 LT_LANG([C])
 LT_LANG([C++])dnl
@@ -61,7 +63,7 @@ using std::map;
 vector<int> anothervect;
 map<char*, int> anothermap;
 ])
-],[AC_MSG_RESULT(yes)],[AC_MSG_RESULT(no: Warning compilation likely to fail)])
+],[AC_MSG_RESULT([yes])],[AC_MSG_RESULT([no: Warning compilation likely to fail])])
 # AX_* macros are from the autoconf-archive package
 AX_CXX_GCC_ABI_DEMANGLE
 AX_CXX_GNUCXX_HASHMAP
@@ -91,7 +93,12 @@ dnl# Except in unusual embedded environments, you can safely include all
 dnl# ISO C90 headers unconditionally.
 AC_CHECK_INCLUDES_DEFAULT
 AC_HEADER_STDBOOL dnl# also "_CHECK"s it
-AC_CHECK_HEADERS_ONCE([stdlib.h string.h strings.h xlocale.h])dnl
+AC_CHECK_HEADERS_ONCE([stdlib.h string.h xlocale.h])dnl
+
+if test "x${ac_cv_header_strings_h}" = "x"; then
+  test -z "${ac_cv_header_strings_h}" || unset ac_cv_header_strings_h
+  AC_CHECK_HEADERS([strings.h])
+fi
 
 # These progs are useful for development, but aren't necessary for building:
 AC_PATH_PROG([NOTANGLE],[notangle])

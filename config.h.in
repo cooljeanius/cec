@@ -1,6 +1,6 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define to 1 if you have the `alarm' function. */
+/* Define to 1 if you have the 'alarm' function. */
 #undef HAVE_ALARM
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
@@ -15,7 +15,7 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the `expat' library (-lexpat). */
+/* Define to 1 if you have the 'expat' library (-lexpat). */
 #undef HAVE_LIBEXPAT
 
 /* define if the compiler implements namespaces */
@@ -24,7 +24,7 @@
 /* Define if g++ supports namespace std. */
 #undef HAVE_NAMESPACE_STD
 
-/* Define to 1 if you have the `select' function. */
+/* Define to 1 if you have the 'select' function. */
 #undef HAVE_SELECT
 
 /* define if the compiler supports ISO C++ standard library */
@@ -45,10 +45,10 @@
 /* define if the compiler supports Standard Template Library */
 #undef HAVE_STL
 
-/* Define to 1 if you have the `strcasecmp' function. */
+/* Define to 1 if you have the 'strcasecmp' function. */
 #undef HAVE_STRCASECMP
 
-/* Define to 1 if you have the `strdup' function. */
+/* Define to 1 if you have the 'strdup' function. */
 #undef HAVE_STRDUP
 
 /* Define to 1 if you have the <strings.h> header file. */
@@ -72,7 +72,7 @@
 /* Define to 1 if you have the <xlocale.h> header file. */
 #undef HAVE_XLOCALE_H
 
-/* Define to 1 if the system has the type `_Bool'. */
+/* Define to 1 if the system has the type '_Bool'. */
 #undef HAVE__BOOL
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
@@ -99,7 +99,7 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
-/* Define to 1 if all of the C90 standard headers exist (not just the ones
+/* Define to 1 if all of the C89 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
    backward compatibility; new code need not use it. */
 #undef STDC_HEADERS
@@ -107,11 +107,11 @@
 /* Version number of package */
 #undef VERSION
 
-/* Define to `__inline__' or `__inline' if that's what the C compiler
+/* Define to '__inline__' or '__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
 #ifndef __cplusplus
 #undef inline
 #endif
 
-/* Define to `unsigned int' if <sys/types.h> does not define. */
+/* Define as 'unsigned int' if <stddef.h> doesn't define. */
 #undef size_t
