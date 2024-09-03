@@ -3,7 +3,7 @@
 
 #include <antlr/config.hpp>
 #include "EsterelTreeParserTokenTypes.hpp"
-/* $ANTLR 2.7.7 (2006-11-01): "staticsemantics.g" -> "EsterelTreeParser.hpp"$ */
+/* $ANTLR 2.7.7 (20200704): "staticsemantics.g" -> "EsterelTreeParser.hpp"$ */
 #include <antlr/TreeParser.hpp>
 
 #line 1 "staticsemantics.g"

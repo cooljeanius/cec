@@ -1,7 +1,7 @@
 #ifndef INC_EsterelTreeParserTokenTypes_hpp_
 #define INC_EsterelTreeParserTokenTypes_hpp_
 
-/* $ANTLR 2.7.7 (2006-11-01): "staticsemantics.g" -> "EsterelTreeParserTokenTypes.hpp"$ */
+/* $ANTLR 2.7.7 (20200704): "staticsemantics.g" -> "EsterelTreeParserTokenTypes.hpp"$ */
 
 #ifndef CUSTOM_API
 # define CUSTOM_API

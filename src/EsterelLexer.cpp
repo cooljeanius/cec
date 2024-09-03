@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.7 (2006-11-01): "esterel.g" -> "EsterelLexer.cpp"$ */
+/* $ANTLR 2.7.7 (20200704): "esterel.g" -> "EsterelLexer.cpp"$ */
 #include "EsterelLexer.hpp"
 #include <antlr/CharBuffer.hpp>
 #include <antlr/TokenStreamException.hpp>

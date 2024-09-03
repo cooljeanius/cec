@@ -1,7 +1,7 @@
 #ifndef INC_EsterelTokenTypes_hpp_
 #define INC_EsterelTokenTypes_hpp_
 
-/* $ANTLR 2.7.7 (2006-11-01): "esterel.g" -> "EsterelTokenTypes.hpp"$ */
+/* $ANTLR 2.7.7 (20200704): "esterel.g" -> "EsterelTokenTypes.hpp"$ */
 
 #ifndef CUSTOM_API
 # define CUSTOM_API

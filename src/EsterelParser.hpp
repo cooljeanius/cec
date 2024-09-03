@@ -2,7 +2,7 @@
 #define INC_EsterelParser_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.7 (2006-11-01): "esterel.g" -> "EsterelParser.hpp"$ */
+/* $ANTLR 2.7.7 (20200704): "esterel.g" -> "EsterelParser.hpp"$ */
 #include <antlr/TokenStream.hpp>
 #include <antlr/TokenBuffer.hpp>
 #include "EsterelTokenTypes.hpp"

@@ -9,3 +9,5 @@ build-aux/mkinstalldirs linguist-vendored
 build-aux/test-driver linguist-vendored
 ChangeLog    merge=cl-merge
 *.g linguist-language=ANTLR
+src/EsterelTokenTypes.txt linguist-generated
+src/EsterelTreeParserTokenTypes.txt linguist-generated

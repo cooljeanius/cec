@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.7 (2006-11-01): "staticsemantics.g" -> "EsterelTreeParser.cpp"$ */
+/* $ANTLR 2.7.7 (20200704): "staticsemantics.g" -> "EsterelTreeParser.cpp"$ */
 #include "EsterelTreeParser.hpp"
 #include <antlr/Token.hpp>
 #include <antlr/AST.hpp>

@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.7 (2006-11-01): "esterel.g" -> "EsterelParser.cpp"$ */
+/* $ANTLR 2.7.7 (20200704): "esterel.g" -> "EsterelParser.cpp"$ */
 #include "EsterelParser.hpp"
 #include <antlr/NoViableAltException.hpp>
 #include <antlr/SemanticException.hpp>

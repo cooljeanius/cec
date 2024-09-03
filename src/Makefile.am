@@ -295,9 +295,11 @@ balvm.c : cec
 
 # GRC to VHDL translator
 
-#cec_grcvhdl_SOURCES = IR.hpp IR.cpp AST.hpp AST.cpp \
-	#cec-grcvhdl.cpp  VHDLPrinter.hpp VHDLPrinter.cpp \
-	#EsterelPrinter.hpp EsterelPrinter.cpp
+if FALSE
+cec_grcvhdl_SOURCES = IR.hpp IR.cpp AST.hpp AST.cpp \
+	cec-grcvhdl.cpp  VHDLPrinter.hpp VHDLPrinter.cpp \
+	EsterelPrinter.hpp EsterelPrinter.cpp
+endif
 
 # Undocumented programs:
 
@@ -307,13 +309,15 @@ cec_v5_cmain_SOURCES = IR.hpp IR.cpp AST.hpp AST.cpp CPrinter.hpp \
 cec_vm_wrapper_SOURCES = IR.hpp IR.cpp AST.hpp AST.cpp CPrinter.hpp \
 	CPrinter.cpp cec-vm-wrapper.cpp
 
-#cec_vvpout_SOURCES = vvp2out.cpp
-#cec_merge_simout_SOURCES = merge_simout.cpp
-#cec_v5_vinterface_SOURCES = IR.hpp IR.cpp AST.hpp AST.cpp \
-#	cverilog.cpp cverilog_gates.cpp cverilog.hpp prblif.cpp\
-#	v5_vinterface.cpp
-#cec_ublaze_interface_SOURCES = IR.hpp IR.cpp AST.hpp AST.cpp \
-#	ublaze_interface.cpp
+if FALSE
+cec_vvpout_SOURCES = vvp2out.cpp
+cec_merge_simout_SOURCES = merge_simout.cpp
+cec_v5_vinterface_SOURCES = IR.hpp IR.cpp AST.hpp AST.cpp \
+	cverilog.cpp cverilog_gates.cpp cverilog.hpp prblif.cpp\
+	v5_vinterface.cpp
+cec_ublaze_interface_SOURCES = IR.hpp IR.cpp AST.hpp AST.cpp \
+	ublaze_interface.cpp
+endif
 
 # 
 # Executables end
