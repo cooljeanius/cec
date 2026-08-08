@@ -60,7 +60,7 @@ jobs:
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+        uses: github/codeql-action/init@v4.37.4
         with:
           languages: ${{ matrix.language }}
           # If you wish to specify custom queries, you can do so here or in a
@@ -82,10 +82,11 @@ jobs:
       # Autobuild attempts to build any compiled languages
       # (C/C++, C#, Go, Java, or Swift).
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v4
+        uses: github/codeql-action/autobuild@v4.37.4
         env:
           ANTLR_HOME: /usr/share/java
           CODEQL_EXTRACTOR_CPP_AUTOINSTALL_DEPENDENCIES: false
+          MAKEFLAGS: -w
 
       - name: Debug failure
         if: failure()
@@ -102,12 +103,12 @@ jobs:
             mdfind antlr; \
           elif test -x "$(which find)"; then \
             which -a find; \
-            find / -name antlr -perm +r -user "$(whoami)" 2>/dev/null; \
+            find / -name antlr -perm +r -user "$(whoami)" 2>&1; \
           else \
-            echo "unable to find antlr!"; \
+            echo "unable to find antlr!" >&2; \
           fi
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
+        uses: github/codeql-action/analyze@v4.37.4
         with:
           category: "/language:${{matrix.language}}"
