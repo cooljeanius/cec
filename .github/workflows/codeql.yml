@@ -86,6 +86,7 @@ jobs:
         env:
           ANTLR_HOME: /usr/share/java
           CODEQL_EXTRACTOR_CPP_AUTOINSTALL_DEPENDENCIES: false
+          MAKEFLAGS: -w
 
       - name: Debug failure
         if: failure()
@@ -102,9 +103,9 @@ jobs:
             mdfind antlr; \
           elif test -x "$(which find)"; then \
             which -a find; \
-            find / -name antlr -perm +r -user "$(whoami)" 2>/dev/null; \
+            find / -name antlr -perm +r -user "$(whoami)" 2>&1; \
           else \
-            echo "unable to find antlr!"; \
+            echo "unable to find antlr!" >&2; \
           fi
 
       - name: Perform CodeQL Analysis
