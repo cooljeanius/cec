@@ -21,6 +21,12 @@ AM_CXXFLAGS = -Wall -g -O1
 
 AM_CPPFLAGS = -I../libantlr
 
+## hacks to extend the verbosity control:
+AM_V_v = $(am__v_v_@AM_V@)
+am__v_v_ = $(am__v_v_@AM_DEFAULT_V@)
+am__v_v_0 =
+am__v_v_1 = -v
+
 SUFFIXES = .nw .hpp .cpp .tex .dvi .ps .pdf .sh
 
 .nw.hpp :
@@ -169,7 +175,7 @@ AST.sh : AST.nw
 # Automatically-generated classes for AST objects
 
 AST.hpp AST.cpp : AST.sh
-	echo "running $< for $@" && sh -x AST.sh
+	echo "running $< for $@" && sh $(AM_V_v) AST.sh
 
 ##############################
 #
