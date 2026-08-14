@@ -129,9 +129,9 @@ staticsemantics_ANTLRGEN = EsterelTreeParser.cpp EsterelTreeParser.hpp \
 $(esterel_ANTLRGEN) : esterel.g
 	rm -f $(esterel_ANTLRGEN)
 	if test -n "$(ANTLR)"; then \
-	  echo "ANTLR is '$(ANTLR)'" && $(ANTLR) $<; \
+	  echo "using ANTLR '$(ANTLR)' to make $@ from $<" && $(ANTLR) $<; \
 	elif test -n "$(ANTLR_BIN)"; then \
-	  echo "ANTLR_BIN is '$(ANTLR_BIN)'" && $(ANTLR_BIN) $<; \
+	  echo "using ANTLR_BIN '$(ANTLR_BIN)' to make $@ from $<" && $(ANTLR_BIN) $<; \
 	elif test -x "`which antlr`"; then \
 	  which antlr && antlr $<; \
 	else \
@@ -141,9 +141,9 @@ $(esterel_ANTLRGEN) : esterel.g
 $(staticsemantics_ANTLRGEN) : staticsemantics.g
 	rm -f $(staticsemantics_ANTLRGEN)
 	if test -n "$(ANTLR)"; then \
-	  echo "ANTLR is '$(ANTLR)'" && $(ANTLR) $<; \
+	  echo "using ANTLR '$(ANTLR)' to make $@ from $<" && $(ANTLR) $<; \
 	elif test -n "$(ANTLR_BIN)"; then \
-	  echo "ANTLR_BIN is '$(ANTLR_BIN)'" && $(ANTLR_BIN) $<; \
+	  echo "using ANTLR_BIN '$(ANTLR_BIN)' to make $@ from $<" && $(ANTLR_BIN) $<; \
 	elif test -x "`which antlr`"; then \
 	  which antlr && antlr $<; \
 	else \
@@ -155,9 +155,9 @@ $(staticsemantics_ANTLRGEN) : staticsemantics.g
 
 EsterelParser.html : esterel.g
 	if test -n "$(ANTLR)"; then \
-	  echo "ANTLR is '$(ANTLR)'" && $(ANTLR) -html $<; \
+	  echo "using ANTLR '$(ANTLR)' to make $@ from $<" && $(ANTLR) -html $<; \
 	elif test -n "$(ANTLR_BIN)"; then \
-	  echo "ANTLR_BIN is '$(ANTLR_BIN)'" && $(ANTLR_BIN) -html $<; \
+	  echo "using ANTLR_BIN '$(ANTLR_BIN)' to make $@ from $<" && $(ANTLR_BIN) -html $<; \
 	elif test -x "`which antlr`"; then \
 	  which antlr && antlr -html $<; \
 	else \
@@ -169,7 +169,7 @@ AST.sh : AST.nw
 # Automatically-generated classes for AST objects
 
 AST.hpp AST.cpp : AST.sh
-	sh AST.sh
+	echo "running $< for $@" && sh -x AST.sh
 
 ##############################
 #
