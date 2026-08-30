@@ -79,6 +79,19 @@ jobs:
           sudo apt-get -qq update
           sudo apt-get -y install antlr libantlr-java expat ghostscript noweb
 
+      - name: Adjust timestamps
+        run: |
+          cd src
+          if test -s EsterelParser.cpp && test EsterelParser.cpp -ot esterel.g; then \
+            touch EsterelParser.cpp; \
+          fi
+          if test -s AST.cpp && test AST.cpp -ot AST.sh; then \
+            touch AST.cpp; \
+          fi
+          if test -s AST.hpp && test AST.hpp -ot AST.sh; then \
+            touch AST.hpp; \
+          fi
+
       # Autobuild attempts to build any compiled languages
       # (C/C++, C#, Go, Java, or Swift).
       - name: Autobuild
@@ -104,7 +117,19 @@ jobs:
             mdfind antlr; \
           elif test -x "$(which find)"; then \
             which -a find; \
-            find / -name antlr -perm +r -user "$(whoami)" 2>&1; \
+            if test -w config.log; then \
+              find / -name antlr -perm +r -user "$(whoami)" 2>>config.log; \
+              if test -r . && test -r config.log; then \
+                find . -name config.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
+              fi; \
+            elif test -w autoscan.log; then \
+              find / -name antlr -perm +r -user "$(whoami)" 2>>autoscan.log; \
+              if test -r . && test -r autoscan.log; then \
+                find . -name autoscan.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
+              fi; \
+            else \
+              find / -name antlr -perm +r -user "$(whoami)" 2>&1; \
+            fi; \
           else \
             echo "unable to find antlr!" >&2; \
           fi
