@@ -87,6 +87,7 @@ jobs:
           ANTLR_HOME: /usr/share/java
           CODEQL_EXTRACTOR_CPP_AUTOINSTALL_DEPENDENCIES: false
           MAKEFLAGS: -w
+          CXXFLAGS: -fpermissive
 
       - name: Debug failure
         if: failure()
