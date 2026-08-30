@@ -108,7 +108,6 @@ jobs:
           CODEQL_EXTRACTOR_CPP_AUTOINSTALL_DEPENDENCIES: false
           MAKEFLAGS: -w
           CXXFLAGS: -fpermissive
-          LDFLAGS: --allow-multiple-definition --allow-shlib-undefined
 
       - name: Debug failure
         if: failure()
@@ -129,6 +128,7 @@ jobs:
               echo "redirecting errors from find(1) to config.log" | tee -a config.log; \
               find / -name antlr -perm +r -user "$(whoami)" 2>>config.log; \
               if test -r . && test -r config.log; then \
+                echo "grepping for errors in config.log"; \
                 find . -name config.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
               elif test -s config.log; then \
                 stat config.log; \
@@ -137,6 +137,7 @@ jobs:
               echo "redirecting errors from find(1) to autoscan.log" | tee -a autoscan.log; \
               find / -name antlr -perm +r -user "$(whoami)" 2>>autoscan.log; \
               if test -r . && test -r autoscan.log; then \
+                echo "grepping for errors in autoscan.log"; \
                 find . -name autoscan.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
               elif test -s autoscan.log; then \
                 stat autoscan.log; \

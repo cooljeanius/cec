@@ -41,7 +41,7 @@ AC_PROG_CPP
 AC_PROG_CXX
 AC_LANG([C++])
 AC_PROG_RANLIB
-LT_INIT
+LT_INIT([win32-dll])dnl
 LT_LANG([C])
 LT_LANG([C++])dnl
 
