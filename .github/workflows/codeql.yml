@@ -90,10 +90,12 @@ jobs:
           if test -s EsterelParser.cpp && test EsterelParser.cpp -ot esterel.g; then \
             echo "touch EsterelParser.cpp" && touch EsterelParser.cpp; \
           else sync && echo "1: OK"; fi
-          if test -s AST.cpp && test AST.cpp -ot AST.sh; then \
+          # shellcheck disable=SC2235
+          if test -s AST.cpp && (test AST.cpp -ot AST.sh || test AST.cpp -ot AST.nw); then \
             echo "touch AST.cpp" && touch AST.cpp; \
           else sync && echo "2: OK"; fi
-          if test -s AST.hpp && test AST.hpp -ot AST.sh; then \
+          # shellcheck disable=SC2235
+          if test -s AST.hpp && (test AST.hpp -ot AST.sh || test AST.hpp -ot AST.nw); then \
             echo "touch AST.hpp" && touch AST.hpp; \
           else sync && echo "3: OK"; fi
 
@@ -129,7 +131,7 @@ jobs:
                 find . -name config.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
               elif test -s config.log; then \
                 stat config.log; \
-              fi; \
+              else ls ./*.log; fi; \
             elif test -w autoscan.log; then \
               echo "redirecting errors from find(1) to autoscan.log"; \
               find / -name antlr -perm +r -user "$(whoami)" 2>>autoscan.log; \
@@ -137,7 +139,7 @@ jobs:
                 find . -name autoscan.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
               elif test -s autoscan.log; then \
                 stat autoscan.log; \
-              fi; \
+              else ls ./*.log; fi; \
             else \
               find / -name antlr -perm +r -user "$(whoami)" 2>&1; \
             fi; \
