@@ -84,14 +84,17 @@ jobs:
         if: matrix.language == 'c-cpp'
         run: |
           cd src && sync
+          if test -s EsterelLexer.cpp && test EsterelLexer.cpp -ot esterel.g; then \
+            echo "touch EsterelLexer.cpp" && touch EsterelLexer.cpp; \
+          else sync && echo "0: OK"; fi
           if test -s EsterelParser.cpp && test EsterelParser.cpp -ot esterel.g; then \
-            touch EsterelParser.cpp; \
+            echo "touch EsterelParser.cpp" && touch EsterelParser.cpp; \
           else sync && echo "1: OK"; fi
           if test -s AST.cpp && test AST.cpp -ot AST.sh; then \
-            touch AST.cpp; \
+            echo "touch AST.cpp" && touch AST.cpp; \
           else sync && echo "2: OK"; fi
           if test -s AST.hpp && test AST.hpp -ot AST.sh; then \
-            touch AST.hpp; \
+            echo "touch AST.hpp" && touch AST.hpp; \
           else sync && echo "3: OK"; fi
 
       # Autobuild attempts to build any compiled languages
@@ -120,14 +123,20 @@ jobs:
           elif test -x "$(which find)"; then \
             which -a find; \
             if test -w config.log; then \
+              echo "redirecting errors from find(1) to config.log"; \
               find / -name antlr -perm +r -user "$(whoami)" 2>>config.log; \
               if test -r . && test -r config.log; then \
                 find . -name config.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
+              elif test -s config.log; then \
+                stat config.log; \
               fi; \
             elif test -w autoscan.log; then \
+              echo "redirecting errors from find(1) to autoscan.log"; \
               find / -name antlr -perm +r -user "$(whoami)" 2>>autoscan.log; \
               if test -r . && test -r autoscan.log; then \
                 find . -name autoscan.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
+              elif test -s autoscan.log; then \
+                stat autoscan.log; \
               fi; \
             else \
               find / -name antlr -perm +r -user "$(whoami)" 2>&1; \
