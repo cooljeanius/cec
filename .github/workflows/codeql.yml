@@ -75,22 +75,24 @@ jobs:
           # queries: security-extended,security-and-quality
 
       - name: Dependencies
+        if: matrix.language == 'c-cpp'
         run: |
           sudo apt-get -qq update
           sudo apt-get -y install antlr libantlr-java expat ghostscript noweb
 
       - name: Adjust timestamps
+        if: matrix.language == 'c-cpp'
         run: |
-          cd src
+          cd src && sync
           if test -s EsterelParser.cpp && test EsterelParser.cpp -ot esterel.g; then \
             touch EsterelParser.cpp; \
-          fi
+          else sync && echo "1: OK"; fi
           if test -s AST.cpp && test AST.cpp -ot AST.sh; then \
             touch AST.cpp; \
-          fi
+          else sync && echo "2: OK"; fi
           if test -s AST.hpp && test AST.hpp -ot AST.sh; then \
             touch AST.hpp; \
-          fi
+          else sync && echo "3: OK"; fi
 
       # Autobuild attempts to build any compiled languages
       # (C/C++, C#, Go, Java, or Swift).
