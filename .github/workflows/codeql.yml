@@ -108,6 +108,7 @@ jobs:
           CODEQL_EXTRACTOR_CPP_AUTOINSTALL_DEPENDENCIES: false
           MAKEFLAGS: -w
           CXXFLAGS: -fpermissive
+          LDFLAGS: --allow-multiple-definition --allow-shlib-undefined
 
       - name: Debug failure
         if: failure()
@@ -125,7 +126,7 @@ jobs:
           elif test -x "$(which find)"; then \
             which -a find; \
             if test -w config.log; then \
-              echo "redirecting errors from find(1) to config.log"; \
+              echo "redirecting errors from find(1) to config.log" | tee -a config.log; \
               find / -name antlr -perm +r -user "$(whoami)" 2>>config.log; \
               if test -r . && test -r config.log; then \
                 find . -name config.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
@@ -133,7 +134,7 @@ jobs:
                 stat config.log; \
               else ls ./*.log; fi; \
             elif test -w autoscan.log; then \
-              echo "redirecting errors from find(1) to autoscan.log"; \
+              echo "redirecting errors from find(1) to autoscan.log" | tee -a autoscan.log; \
               find / -name antlr -perm +r -user "$(whoami)" 2>>autoscan.log; \
               if test -r . && test -r autoscan.log; then \
                 find . -name autoscan.log -print0 | xargs -0 cat | grep -i error | sort | uniq; \
