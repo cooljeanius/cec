@@ -16,7 +16,7 @@ void writeSignals(int tick, FILE * pFile);
 void initializeVars();
 void debugProgram();
 char readTestVectors(char* filename);
-char initializeVarsForTick();
+char initializeVarsForTick(FILE *);
 
 int main(int argc, char* argv[]){
   if(argc < 4){
